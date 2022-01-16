@@ -7,15 +7,28 @@
     android:background="@color/main_color"
     tools:context=".presentation.screens.episode_screen.EpisodeFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EPISODE FRAGMENT"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srl_direction="both"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srl_direction="both">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/episodeMainRecyclerView"
@@ -28,13 +41,13 @@
 
     </com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout>
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         style="@style/FilterButton"
         android:id="@+id/filterFloatingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/filter_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

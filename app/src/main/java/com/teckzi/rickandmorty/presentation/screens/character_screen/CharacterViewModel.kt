@@ -10,5 +10,8 @@ class CharacterViewModel @Inject constructor(
     private val useCases: UseCases
 ) : ViewModel() {
 
+    private val _getAllCharacters = useCases.getAllCharactersUseCase()
+    val getAllCharacters = _getAllCharacters
+
 
 }

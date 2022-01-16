@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class GetSearchedCharacterUseCase(
     private val repository: Repository
 ) {
-    operator fun invoke(
+    suspend operator fun invoke(
         name: String?,
         status: String?,
         species: String?,

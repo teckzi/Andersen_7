@@ -15,10 +15,14 @@ class Repository @Inject constructor(
         return remote.getAllCharacters()
     }
     suspend fun getSelectedCharacter(characterId: Int): CharacterModel {
-        return local.getSelectedCharacter(id = characterId)
+        return try {
+            remote.getCharacterById(id = characterId)
+        }catch (e:Exception) {
+            local.getSelectedCharacter(id = characterId)
+        }
     }
 
-    fun searchCharacters(
+    suspend fun searchCharacters(
         name: String?,
         status: String?,
         species: String?,
