@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">RickAndMorty</string>
+    <string name="some_text">Some text</string>
+    <string name="alive">Alive</string>
+    <string name="dead">Dead</string>
+    <string name="unknown">Unknown</string>
+    <string name="status">Status</string>
+    <string name="genderless">Genderless</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="type">Type</string>
+    <string name="dimension">Dimension</string>
+    <string name="apply">Apply</string>
+    <string name="episode">Episode</string>
+    <string name="filter_button">Filter Button</string>
+    <string name="gender">Gender</string>
+    <string name="species">Species</string>
+    <string name="origin">Origin</string>
+    <string name="location">Location</string>
+    <string name="image_background">image background</string>
+    <string name="character_image">character image</string>
+</resources>
