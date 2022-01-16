@@ -5,6 +5,7 @@ import com.teckzi.rickandmorty.data.mappers.toCharacterModel
 import com.teckzi.rickandmorty.domain.model.CharacterModel
 import com.teckzi.rickandmorty.domain.repository.LocalDataSource
 
+
 class LocalDataSourceImpl(rickAndMortyDatabase: RickAndMortyDatabase) : LocalDataSource {
 
     private val characterDao = rickAndMortyDatabase.characterDao()

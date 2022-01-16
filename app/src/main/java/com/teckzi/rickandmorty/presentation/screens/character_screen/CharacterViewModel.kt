@@ -1,8 +1,16 @@
 package com.teckzi.rickandmorty.presentation.screens.character_screen
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.teckzi.rickandmorty.domain.model.CharacterModel
 import com.teckzi.rickandmorty.domain.use_cases.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -14,4 +22,26 @@ class CharacterViewModel @Inject constructor(
     val getAllCharacters = _getAllCharacters
 
 
+    private val _searchCharacter = MutableStateFlow<PagingData<CharacterModel>>(PagingData.empty())
+    val searchCharacter = _searchCharacter
+
+    fun searchCharacter(
+        name: String?,
+        status: String?,
+        species: String?,
+        type: String?,
+        gender: String?
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            useCases.getSearchedCharacterUseCase(
+                name = name,
+                status = status,
+                species = species,
+                type = type,
+                gender = gender
+            ).cachedIn(viewModelScope).collect {
+                _searchCharacter.value = it
+            }
+        }
+    }
 }

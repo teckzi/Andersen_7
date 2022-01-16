@@ -6,9 +6,11 @@ import androidx.paging.PagingData
 import com.teckzi.rickandmorty.data.local.RickAndMortyDatabase
 import com.teckzi.rickandmorty.data.mappers.toCharacterModel
 import com.teckzi.rickandmorty.data.network.RickAndMortyApi
-import com.teckzi.rickandmorty.data.paging_source.CharacterPagingSource
+import com.teckzi.rickandmorty.data.paging_source.character_paging.CharacterPagingSource
+import com.teckzi.rickandmorty.data.paging_source.character_paging.SearchCharacterSource
 import com.teckzi.rickandmorty.domain.model.CharacterModel
 import com.teckzi.rickandmorty.domain.repository.RemoteDataSource
+import com.teckzi.rickandmorty.util.Constants.ITEMS_PER_PAGE
 import kotlinx.coroutines.flow.Flow
 
 class RemoteDataSourceImpl(
@@ -18,7 +20,7 @@ class RemoteDataSourceImpl(
 
 
     override fun getAllCharacters() = Pager(
-        config = PagingConfig(enablePlaceholders = false, pageSize = 20),
+        config = PagingConfig(enablePlaceholders = true, pageSize = ITEMS_PER_PAGE),
         pagingSourceFactory = {
             CharacterPagingSource(
                 rickAndMortyApi = rickAndMortyApi,
@@ -39,6 +41,19 @@ class RemoteDataSourceImpl(
         type: String?,
         gender: String?
     ): Flow<PagingData<CharacterModel>> {
-        TODO("Not yet implemented")
+        return Pager(
+            config = PagingConfig(pageSize = ITEMS_PER_PAGE),
+            pagingSourceFactory = {
+                SearchCharacterSource(
+                    rickAndMortyApi = rickAndMortyApi,
+                    rickAndMortyDatabase = rickAndMortyDatabase,
+                    name = name,
+                    status = status,
+                    species = species,
+                    type = type,
+                    gender = gender
+                )
+            }
+        ).flow
     }
 }
