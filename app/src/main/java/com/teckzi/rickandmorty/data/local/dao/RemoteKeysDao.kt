@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.teckzi.rickandmorty.data.local.model.remote_keys.CharacterRemoteKeysDbo
-import com.teckzi.rickandmorty.domain.model.remote_keys.CharacterRemoteKeys
 
 @Dao
 interface RemoteKeysDao {

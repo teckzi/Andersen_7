@@ -5,12 +5,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
@@ -111,6 +109,7 @@ class CharacterFragment : Fragment(R.layout.fragment_character), SearchView.OnQu
         searchView?.queryHint = "Search character..."
         searchView?.setOnQueryTextListener(this)
     }
+
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         val search = menu.findItem(R.id.search)
@@ -118,6 +117,7 @@ class CharacterFragment : Fragment(R.layout.fragment_character), SearchView.OnQu
         searchView?.isIconified = true
         searchView?.isIconified = true
     }
+
     override fun onQueryTextSubmit(query: String?): Boolean {
         return true
     }

@@ -5,5 +5,5 @@ import com.teckzi.rickandmorty.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EpisodeFragment:Fragment(R.layout.fragment_episode) {
+class EpisodeFragment : Fragment(R.layout.fragment_episode) {
 }

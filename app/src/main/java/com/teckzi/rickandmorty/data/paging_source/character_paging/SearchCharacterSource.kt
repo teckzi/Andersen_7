@@ -12,6 +12,7 @@ import com.teckzi.rickandmorty.domain.model.CharacterModel
 import javax.inject.Inject
 
 private const val TAG = "TAG SearchCharacterSource"
+
 class SearchCharacterSource @Inject constructor(
     private val rickAndMortyApi: RickAndMortyApi,
     private val rickAndMortyDatabase: RickAndMortyDatabase,
@@ -32,7 +33,7 @@ class SearchCharacterSource @Inject constructor(
         var nextKey: Int? = null
 
         try {
-            rickAndMortyApi.getCharacters(page,name, status, species, type, gender).apply {
+            rickAndMortyApi.getCharacters(page, name, status, species, type, gender).apply {
 
                 if (this.info.next != null) {
                     val uri = Uri.parse(this.info.next)

@@ -11,6 +11,7 @@ import com.teckzi.rickandmorty.data.network.RickAndMortyApi
 import com.teckzi.rickandmorty.domain.model.CharacterModel
 
 private const val TAG = "TAG CharacterPagingSource"
+
 class CharacterPagingSource(
     private val rickAndMortyDatabase: RickAndMortyDatabase,
     private val rickAndMortyApi: RickAndMortyApi

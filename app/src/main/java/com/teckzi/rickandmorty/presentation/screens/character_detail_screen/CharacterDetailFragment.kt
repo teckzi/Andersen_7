@@ -2,7 +2,6 @@ package com.teckzi.rickandmorty.presentation.screens.character_detail_screen
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +12,12 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import coil.transform.BlurTransformation
 import coil.transform.CircleCropTransformation
-import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.FragmentCharacterDetailBinding
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 private const val TAG = "TAG CharacterDetailFragment"
+
 class CharacterDetailFragment : Fragment() {
     private val viewModel by viewModels<CharacterDetailViewModel>()
     private var binding: FragmentCharacterDetailBinding? = null
@@ -39,9 +37,6 @@ class CharacterDetailFragment : Fragment() {
 //        }
         return view
     }
-
-
-
 
 
     private fun getCharacters() {

@@ -9,7 +9,7 @@
         android:id="@+id/characterFragment"
         android:name="com.teckzi.rickandmorty.presentation.screens.character_screen.CharacterFragment"
         android:label="Characters"
-        tools:layout="@layout/fragment_character" >
+        tools:layout="@layout/fragment_character">
         <action
             android:id="@+id/action_characterFragment_to_characterDetailScreen"
             app:destination="@id/characterDetailScreen" />
@@ -27,8 +27,9 @@
     <fragment
         android:id="@+id/characterDetailScreen"
         android:name="com.teckzi.rickandmorty.presentation.screens.character_detail_screen.CharacterDetailFragment"
-        android:label="CharacterDetailScreen" >
-        <argument android:name="characterId"
+        android:label="CharacterDetailScreen">
+        <argument
+            android:name="characterId"
             app:argType="integer" />
     </fragment>
 </navigation>

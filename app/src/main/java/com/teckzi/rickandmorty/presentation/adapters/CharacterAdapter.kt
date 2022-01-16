@@ -18,6 +18,7 @@ import com.teckzi.rickandmorty.domain.model.CharacterModel
 import com.teckzi.rickandmorty.presentation.screens.character_screen.CharacterFragmentDirections
 
 private const val TAG = "TAG CharacterAdapter"
+
 class CharacterAdapter(context: Context) :
     PagingDataAdapter<CharacterModel, CharacterViewHolder>(DiffUtil()) {
 
