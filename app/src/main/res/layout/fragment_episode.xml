@@ -7,15 +7,44 @@
     android:background="@color/main_color"
     tools:context=".presentation.screens.episode_screen.EpisodeFragment">
 
-    <TextView
+    <ImageView
+        android:id="@+id/errorImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_network_error"
+        android:textAlignment="center"
+        android:textSize="32sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/error_image" />
+
+    <ProgressBar
+        android:id="@+id/episodeProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EPISODE FRAGMENT"
-        android:textSize="32sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/errorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Network error"
+        android:textColor="@color/small_text_color"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/errorImage" />
 
 
     <com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout

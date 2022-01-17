@@ -2,6 +2,8 @@ package com.teckzi.rickandmorty.data.network
 
 import com.teckzi.rickandmorty.data.network.model.ApiResponse
 import com.teckzi.rickandmorty.data.network.model.CharacterDto
+import com.teckzi.ricks.data.network.model.EpisodeDto
+import com.teckzi.ricks.data.network.model.LocationDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -21,4 +23,28 @@ interface RickAndMortyApi {
     @GET("character/{id}")
     suspend fun getCharacterById(@Path("id") id: Int): CharacterDto
 
+    @GET("location")
+    suspend fun getLocations(
+        @Query("page") page: Int = 1,
+        @Query("name") name: String? = null,
+        @Query("type") type: String? = null,
+        @Query("dimension") dimension: String? = null
+    ): ApiResponse<LocationDto>
+
+    @GET("location/{locationId}")
+    suspend fun getLocationById(
+        @Path("locationId") id: Int
+    ): LocationDto
+
+    @GET("episode")
+    suspend fun getEpisodes(
+        @Query("page") page: Int = 1,
+        @Query("name") name: String? = null,
+        @Query("episode") episode: String? = null
+    ): ApiResponse<EpisodeDto>
+
+    @GET("episode/{episodeId}")
+    suspend fun getEpisodeById(
+        @Path("episodeId") id: Int
+    ): EpisodeDto
 }

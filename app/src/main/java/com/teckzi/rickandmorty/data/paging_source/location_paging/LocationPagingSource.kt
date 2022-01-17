@@ -1,30 +1,30 @@
-package com.teckzi.rickandmorty.data.paging_source.character_paging
+package com.teckzi.rickandmorty.data.paging_source.location_paging
 
 import android.net.Uri
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.teckzi.rickandmorty.data.local.RickAndMortyDatabase
-import com.teckzi.rickandmorty.data.mappers.toCharacterDbo
-import com.teckzi.rickandmorty.data.mappers.toCharacterModel
+import com.teckzi.rickandmorty.data.mappers.toLocationDbo
+import com.teckzi.rickandmorty.data.mappers.toLocationModel
 import com.teckzi.rickandmorty.data.network.RickAndMortyApi
-import com.teckzi.rickandmorty.domain.model.CharacterModel
+import com.teckzi.rickandmorty.domain.model.LocationModel
 
-class CharacterPagingSource(
+class LocationPagingSource(
     private val rickAndMortyDatabase: RickAndMortyDatabase,
     private val rickAndMortyApi: RickAndMortyApi
-) : PagingSource<Int, CharacterModel>() {
+) : PagingSource<Int, LocationModel>() {
 
-    private val characterDao = rickAndMortyDatabase.characterDao()
+    private val locationDao = rickAndMortyDatabase.locationDao()
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharacterModel> {
-        var results: List<CharacterModel>
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LocationModel> {
+        var results: List<LocationModel>
 
         val page: Int = params.key ?: 1
         val pageSize = params.loadSize
         var nextKey: Int? = null
 
         try {
-            rickAndMortyApi.getCharacters(page).apply {
+            rickAndMortyApi.getLocations(page).apply {
 
                 if (this.info.next != null) {
                     val uri = Uri.parse(this.info.next)
@@ -32,24 +32,24 @@ class CharacterPagingSource(
                     nextKey = nextPageQuery?.toInt()
                 }
 
-                results = this.results.map { it.toCharacterModel() }
+                results = this.results.map { it.toLocationModel() }
 
-                results.let { characterList ->
-                    characterDao.addCharacters(characterList.map { it.toCharacterDbo() })
+                results.let { locationsList ->
+                    locationDao.addLocations(locationsList.map { it.toLocationDbo() })
                 }
 
             }
         } catch (e: Exception) {
-            characterDao.getAllCharacters().apply {
+            locationDao.getAllLocations().apply {
                 nextKey = if (size < pageSize) null else nextKey?.plus(1)
-                results = this.map { it.toCharacterModel() }
+                results = this.map { it.toLocationModel() }
             }
         }
 
         return LoadResult.Page(data = results, prevKey = null, nextKey = nextKey)
     }
 
-    override fun getRefreshKey(state: PagingState<Int, CharacterModel>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, LocationModel>): Int? {
         return state.anchorPosition?.let {
             state.closestPageToPosition(it)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(it)?.nextKey?.minus(1)

@@ -1,30 +1,33 @@
-package com.teckzi.rickandmorty.data.paging_source.character_paging
+package com.teckzi.rickandmorty.data.paging_source.episode_paging
 
 import android.net.Uri
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.teckzi.rickandmorty.data.local.RickAndMortyDatabase
-import com.teckzi.rickandmorty.data.mappers.toCharacterDbo
-import com.teckzi.rickandmorty.data.mappers.toCharacterModel
+import com.teckzi.rickandmorty.data.mappers.toEpisodeDbo
+import com.teckzi.rickandmorty.data.mappers.toEpisodeModel
 import com.teckzi.rickandmorty.data.network.RickAndMortyApi
-import com.teckzi.rickandmorty.domain.model.CharacterModel
+import com.teckzi.rickandmorty.domain.model.EpisodeModel
+import javax.inject.Inject
 
-class CharacterPagingSource(
+class SearchEpisodeSource @Inject constructor(
+    private val rickAndMortyApi: RickAndMortyApi,
     private val rickAndMortyDatabase: RickAndMortyDatabase,
-    private val rickAndMortyApi: RickAndMortyApi
-) : PagingSource<Int, CharacterModel>() {
+    private val name: String?,
+    private val episode: String?
+) : PagingSource<Int, EpisodeModel>() {
 
-    private val characterDao = rickAndMortyDatabase.characterDao()
+    private val episodeDao = rickAndMortyDatabase.episodeDao()
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharacterModel> {
-        var results: List<CharacterModel>
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, EpisodeModel> {
+        var results: List<EpisodeModel>
 
         val page: Int = params.key ?: 1
         val pageSize = params.loadSize
         var nextKey: Int? = null
 
         try {
-            rickAndMortyApi.getCharacters(page).apply {
+            rickAndMortyApi.getEpisodes(page = page, name = name, episode = episode).apply {
 
                 if (this.info.next != null) {
                     val uri = Uri.parse(this.info.next)
@@ -32,24 +35,24 @@ class CharacterPagingSource(
                     nextKey = nextPageQuery?.toInt()
                 }
 
-                results = this.results.map { it.toCharacterModel() }
+                results = this.results.map { it.toEpisodeModel() }
 
                 results.let { characterList ->
-                    characterDao.addCharacters(characterList.map { it.toCharacterDbo() })
+                    episodeDao.addEpisodes(characterList.map { it.toEpisodeDbo() })
                 }
 
             }
         } catch (e: Exception) {
-            characterDao.getAllCharacters().apply {
+            episodeDao.getFilteredEpisodes(name, episode).apply {
                 nextKey = if (size < pageSize) null else nextKey?.plus(1)
-                results = this.map { it.toCharacterModel() }
+                results = this.map { it.toEpisodeModel() }
             }
         }
 
         return LoadResult.Page(data = results, prevKey = null, nextKey = nextKey)
     }
 
-    override fun getRefreshKey(state: PagingState<Int, CharacterModel>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, EpisodeModel>): Int? {
         return state.anchorPosition?.let {
             state.closestPageToPosition(it)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(it)?.nextKey?.minus(1)

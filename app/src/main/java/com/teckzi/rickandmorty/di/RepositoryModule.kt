@@ -5,6 +5,12 @@ import com.teckzi.rickandmorty.domain.use_cases.UseCases
 import com.teckzi.rickandmorty.domain.use_cases.character_use_cases.GetAllCharactersUseCase
 import com.teckzi.rickandmorty.domain.use_cases.character_use_cases.GetSearchedCharacterUseCase
 import com.teckzi.rickandmorty.domain.use_cases.character_use_cases.GetSelectedCharacterUseCase
+import com.teckzi.rickandmorty.domain.use_cases.episode_use_cases.GetAllEpisodeUseCase
+import com.teckzi.rickandmorty.domain.use_cases.episode_use_cases.GetSearchedEpisodeUseCase
+import com.teckzi.rickandmorty.domain.use_cases.episode_use_cases.GetSelectedEpisodeUseCase
+import com.teckzi.rickandmorty.domain.use_cases.location_use_cases.GetAllLocationUseCase
+import com.teckzi.rickandmorty.domain.use_cases.location_use_cases.GetSearchedLocationUseCase
+import com.teckzi.rickandmorty.domain.use_cases.location_use_cases.GetSelectedLocationUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +27,13 @@ object RepositoryModule {
         return UseCases(
             getAllCharactersUseCase = GetAllCharactersUseCase(repository),
             getSelectedCharacterUseCase = GetSelectedCharacterUseCase(repository),
-            getSearchedCharacterUseCase = GetSearchedCharacterUseCase(repository)
+            getSearchedCharacterUseCase = GetSearchedCharacterUseCase(repository),
+            getAllEpisodeUseCase = GetAllEpisodeUseCase(repository),
+            getSelectedEpisodeUseCase = GetSelectedEpisodeUseCase(repository),
+            getSearchedEpisodeUseCase = GetSearchedEpisodeUseCase(repository),
+            getAllLocationUseCase = GetAllLocationUseCase(repository),
+            getSelectedLocationUseCase = GetSelectedLocationUseCase(repository),
+            getSearchedLocationUseCase = GetSearchedLocationUseCase(repository)
         )
     }
 }

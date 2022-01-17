@@ -1,31 +1,28 @@
 package com.teckzi.rickandmorty.data.repository
 
-import android.util.Log
 import androidx.paging.PagingData
-import com.teckzi.rickandmorty.data.mappers.toCharacterModel
 import com.teckzi.rickandmorty.domain.model.CharacterModel
+import com.teckzi.rickandmorty.domain.model.EpisodeModel
+import com.teckzi.rickandmorty.domain.model.LocationModel
+import com.teckzi.rickandmorty.domain.repository.IRepository
 import com.teckzi.rickandmorty.domain.repository.LocalDataSource
 import com.teckzi.rickandmorty.domain.repository.RemoteDataSource
-import com.teckzi.rickandmorty.domain.repository.IRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
-
-private const val TAG = "TAG Repository"
 
 class Repository @Inject constructor(
     private val local: LocalDataSource,
     private val remote: RemoteDataSource
-):IRepository {
+) : IRepository {
     override fun getAllCharacters(): Flow<PagingData<CharacterModel>> {
         return remote.getAllCharacters()
     }
 
     override suspend fun getSelectedCharacter(characterId: Int): CharacterModel {
         return try {
-            Log.d(TAG, "get character character remote")
             remote.getCharacterById(id = characterId)
         } catch (e: Exception) {
-            Log.d(TAG, "get character character local,e $e")
+
             local.getSelectedCharacter(id = characterId)
         }
     }
@@ -43,6 +40,53 @@ class Repository @Inject constructor(
             species = species,
             type = type,
             gender = gender
+        )
+    }
+
+    override fun getAllLocation(): Flow<PagingData<LocationModel>> {
+        return remote.getAllLocations()
+    }
+
+    override suspend fun getSelectedLocation(locationId: Int): LocationModel {
+        return try {
+
+            remote.getLocationById(id = locationId)
+        } catch (e: Exception) {
+            local.getSelectedLocation(id = locationId)
+        }
+    }
+
+    override suspend fun searchLocation(
+        name: String?,
+        type: String?,
+        dimension: String?
+    ): Flow<PagingData<LocationModel>> {
+        return remote.searchLocations(
+            name = name,
+            type = type,
+            dimension = dimension
+        )
+    }
+
+    override fun getAllEpisodes(): Flow<PagingData<EpisodeModel>> {
+        return remote.getAllEpisodes()
+    }
+
+    override suspend fun getSelectedEpisode(episodeId: Int): EpisodeModel {
+        return try {
+            remote.getEpisodeById(id = episodeId)
+        } catch (e: Exception) {
+            local.getSelectedEpisode(id = episodeId)
+        }
+    }
+
+    override suspend fun searchEpisode(
+        name: String?,
+        episode: String?
+    ): Flow<PagingData<EpisodeModel>> {
+        return remote.searchEpisodes(
+            name = name,
+            episode = episode
         )
     }
 }

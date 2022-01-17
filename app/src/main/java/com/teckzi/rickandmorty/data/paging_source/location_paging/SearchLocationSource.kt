@@ -1,42 +1,38 @@
-package com.teckzi.rickandmorty.data.paging_source.character_paging
+package com.teckzi.rickandmorty.data.paging_source.location_paging
 
 import android.net.Uri
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.teckzi.rickandmorty.data.local.RickAndMortyDatabase
-import com.teckzi.rickandmorty.data.mappers.toCharacterDbo
-import com.teckzi.rickandmorty.data.mappers.toCharacterModel
+import com.teckzi.rickandmorty.data.mappers.toLocationDbo
+import com.teckzi.rickandmorty.data.mappers.toLocationModel
 import com.teckzi.rickandmorty.data.network.RickAndMortyApi
-import com.teckzi.rickandmorty.domain.model.CharacterModel
+import com.teckzi.rickandmorty.domain.model.LocationModel
 import javax.inject.Inject
 
-class SearchCharacterSource @Inject constructor(
+class SearchLocationSource @Inject constructor(
     private val rickAndMortyApi: RickAndMortyApi,
     private val rickAndMortyDatabase: RickAndMortyDatabase,
     private val name: String?,
-    private val status: String?,
-    private val species: String?,
     private val type: String?,
-    private val gender: String?
-) : PagingSource<Int, CharacterModel>() {
+    private val dimension: String?
+) : PagingSource<Int, LocationModel>() {
 
-    private val characterDao = rickAndMortyDatabase.characterDao()
+    private val locationDao = rickAndMortyDatabase.locationDao()
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharacterModel> {
-        var results: List<CharacterModel>
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LocationModel> {
+        var results: List<LocationModel>
 
         val page: Int = params.key ?: 1
         val pageSize = params.loadSize
         var nextKey: Int? = null
 
         try {
-            rickAndMortyApi.getCharacters(
+            rickAndMortyApi.getLocations(
                 page = page,
                 name = name,
-                status = status,
-                species = species,
                 type = type,
-                gender = gender
+                dimension = dimension
             ).apply {
 
                 if (this.info.next != null) {
@@ -45,24 +41,24 @@ class SearchCharacterSource @Inject constructor(
                     nextKey = nextPageQuery?.toInt()
                 }
 
-                results = this.results.map { it.toCharacterModel() }
+                results = this.results.map { it.toLocationModel() }
 
                 results.let { characterList ->
-                    characterDao.addCharacters(characterList.map { it.toCharacterDbo() })
+                    locationDao.addLocations(characterList.map { it.toLocationDbo() })
                 }
 
             }
         } catch (e: Exception) {
-            characterDao.getFilteredCharacters(name, status, species, type, gender).apply {
+            locationDao.getFilteredLocations(name, type, dimension).apply {
                 nextKey = if (size < pageSize) null else nextKey?.plus(1)
-                results = this.map { it.toCharacterModel() }
+                results = this.map { it.toLocationModel() }
             }
         }
 
         return LoadResult.Page(data = results, prevKey = null, nextKey = nextKey)
     }
 
-    override fun getRefreshKey(state: PagingState<Int, CharacterModel>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, LocationModel>): Int? {
         return state.anchorPosition?.let {
             state.closestPageToPosition(it)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(it)?.nextKey?.minus(1)

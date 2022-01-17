@@ -8,10 +8,6 @@ object Constants {
     const val LOCATION_DATABASE_TABLE = "location_table"
     const val EPISODE_DATABASE_TABLE = "episode_table"
 
-    const val CHARACTER_REMOTE_KEY_TABLE = "character_remote_key_table"
-    const val LOCATION_REMOTE_KEY_TABLE = "location_remote_key_table"
-    const val EPISODE_REMOTE_KEY_TABLE = "episode_remote_key_table"
-
     const val ITEMS_PER_PAGE = 20
 
     const val CHARACTER_ARGUMENT_KEY = "characterId"
