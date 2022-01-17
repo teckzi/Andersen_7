@@ -1,6 +1,7 @@
 package com.teckzi.rickandmorty.data.repository
 
 import com.teckzi.rickandmorty.data.local.RickAndMortyDatabase
+import com.teckzi.rickandmorty.data.local.model.CharacterDbo
 import com.teckzi.rickandmorty.data.mappers.toCharacterModel
 import com.teckzi.rickandmorty.domain.model.CharacterModel
 import com.teckzi.rickandmorty.domain.repository.LocalDataSource

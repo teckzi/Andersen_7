@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import com.teckzi.rickandmorty.data.local.RickAndMortyDatabase
 import com.teckzi.rickandmorty.data.mappers.toCharacterModel
 import com.teckzi.rickandmorty.data.network.RickAndMortyApi
+import com.teckzi.rickandmorty.data.network.model.CharacterDto
 import com.teckzi.rickandmorty.data.paging_source.character_paging.CharacterPagingSource
 import com.teckzi.rickandmorty.data.paging_source.character_paging.SearchCharacterSource
 import com.teckzi.rickandmorty.domain.model.CharacterModel
@@ -29,9 +30,9 @@ class RemoteDataSourceImpl(
         }
     ).flow
 
-    override suspend fun getCharacterById(id: Int): CharacterModel {
+    override suspend fun getCharacterById(id: Int): CharacterDto {
         val response = rickAndMortyApi.getCharacterById(id)
-        return response.results[0].toCharacterModel()
+        return response.results[0]
     }
 
     override suspend fun searchCharacters(

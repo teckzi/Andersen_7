@@ -18,9 +18,9 @@ interface RickAndMortyApi {
         @Query("gender") gender: String? = null
     ): ApiResponse<CharacterDto>
 
-    @GET("character/{characterId}")
+    @GET("character/{id}")
     suspend fun getCharacterById(
-        @Path("characterId") id: Int
+        @Path("id") id: Int
     ): ApiResponse<CharacterDto>
 
 }

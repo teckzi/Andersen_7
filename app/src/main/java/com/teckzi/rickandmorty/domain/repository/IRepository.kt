@@ -1,14 +1,14 @@
 package com.teckzi.rickandmorty.domain.repository
 
 import androidx.paging.PagingData
-import com.teckzi.rickandmorty.data.network.model.CharacterDto
 import com.teckzi.rickandmorty.domain.model.CharacterModel
 import kotlinx.coroutines.flow.Flow
 
-interface RemoteDataSource {
+interface IRepository {
+
     fun getAllCharacters(): Flow<PagingData<CharacterModel>>
 
-    suspend fun getCharacterById(id: Int): CharacterDto
+    suspend fun getSelectedCharacter(characterId: Int): CharacterModel
 
     suspend fun searchCharacters(
         name: String?,
