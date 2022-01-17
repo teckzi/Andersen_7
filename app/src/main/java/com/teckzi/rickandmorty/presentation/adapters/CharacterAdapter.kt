@@ -41,6 +41,7 @@ class CharacterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             itemCharacterImageView.load(item?.image) {
                 placeholder(R.drawable.image_placeholder)
                 transformations(CircleCropTransformation())
+                error(R.drawable.image_placeholder)
             }
             itemCharacterNameTextView.text = item?.name
             itemCharacterInfo.text = "${item?.species}, ${item?.gender}"
@@ -58,6 +59,5 @@ class CharacterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 Navigation.findNavController(it).navigate(action)
             }
         }
-
     }
 }

@@ -2,11 +2,13 @@ package com.teckzi.rickandmorty.presentation.screens.character_detail_screen
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
@@ -18,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
+import androidx.appcompat.app.AppCompatActivity
 
 @AndroidEntryPoint
 class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
@@ -29,14 +31,13 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setHasOptionsMenu(true)
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.getCharacter(args.characterId)
-            val character = viewModel.selectedCharacter.collectLatest {
-                Log.d("TAG CharacterDetailFragment", "2${it?.name}")
-                it?.let { it1 ->
+            viewModel.selectedCharacter.collectLatest {
+                it?.let { it ->
                     loadCharacterData(
-                        name = it1.name,
+                        name = it.name,
                         status = it.status,
                         species = it.species,
                         gender = it.gender,
@@ -46,7 +47,6 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
             }
         }
     }
-
 
     private fun loadCharacterData(
         name: String,
@@ -75,4 +75,11 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.details_menu, menu)
+        val popBack = menu.findItem(R.id.popBack)
+        popBack.setOnMenuItemClickListener {
+            findNavController().popBackStack()
+        }
+    }
 }
