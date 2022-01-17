@@ -81,7 +81,6 @@ class CharacterFragment : Fragment(R.layout.fragment_character), SearchView.OnQu
         arguments?.getString(FILTER_RETURN_BACK_TO_CHARACTER)?.let {
             lifecycleScope.launch(context = Dispatchers.Main) {
                 val list: MutableList<String?> = it.split(",").toMutableList()
-                Log.d(TAG, "${list}")
                 for (i in 0..3) {
                     if (list[i] != "null") list[i] = "%${list[i]}%"
                     else list[i] = null
