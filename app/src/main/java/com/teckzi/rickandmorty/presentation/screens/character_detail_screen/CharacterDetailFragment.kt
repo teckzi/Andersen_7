@@ -2,6 +2,7 @@ package com.teckzi.rickandmorty.presentation.screens.character_detail_screen
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -20,7 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import androidx.appcompat.app.AppCompatActivity
 
 @AndroidEntryPoint
 class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
@@ -43,7 +43,19 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
                         gender = it.gender,
                         image = it.image
                     )
+                    viewModel.getOrigin(it.origin)
+                    viewModel.getLocation(it.location)
                 }
+            }
+        }
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.selectedOrigin.collectLatest {
+                binding.characterDetailOrigin.text = it ?: "unknown"
+            }
+        }
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.selectedLocation.collectLatest {
+                binding.characterDetailLocation.text = it ?: "unknown"
             }
         }
     }

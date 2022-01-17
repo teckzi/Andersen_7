@@ -21,9 +21,9 @@ import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.FragmentEpisodeBinding
 import com.teckzi.rickandmorty.presentation.adapters.EpisodeAdapter
 import com.teckzi.rickandmorty.presentation.adapters.LoaderStateAdapter
-import com.teckzi.rickandmorty.util.Constants
 import com.teckzi.rickandmorty.util.Constants.EPISODE_TYPE
 import com.teckzi.rickandmorty.util.Constants.FILTER_RETURN_BACK_TO_EPISODE
+import com.teckzi.rickandmorty.util.Constants.FILTER_TYPE_ARGUMENT_KEY
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -70,8 +70,8 @@ class EpisodeFragment : Fragment(R.layout.fragment_episode), SearchView.OnQueryT
     private fun filterButton() {
         binding.filterFloatingButton.setOnClickListener {
             findNavController().navigate(
-                R.id.action_characterFragment_to_bottomSheet,
-                bundleOf(Constants.FILTER_TYPE_ARGUMENT_KEY to EPISODE_TYPE)
+                R.id.action_episodeFragment_to_bottomSheet,
+                bundleOf(FILTER_TYPE_ARGUMENT_KEY to EPISODE_TYPE)
             )
         }
     }

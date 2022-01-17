@@ -1,6 +1,7 @@
 package com.teckzi.rickandmorty.data.local
 
 import androidx.room.TypeConverter
+import com.teckzi.rickandmorty.util.getIdFromUrl
 
 class DatabaseConverter {
     private val separator = ","
@@ -27,6 +28,14 @@ class DatabaseConverter {
             listOfString.forEach {
                 list.add(it.toInt())
             }
+        }
+        return list
+    }
+    @TypeConverter
+    fun convertStringListToIntList(strings:List<String>): List<Int>{
+        val list = mutableListOf<Int>()
+        strings.forEach {
+            list.add(it.getIdFromUrl()!!)
         }
         return list
     }

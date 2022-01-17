@@ -21,8 +21,8 @@ import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.FragmentLocationBinding
 import com.teckzi.rickandmorty.presentation.adapters.LoaderStateAdapter
 import com.teckzi.rickandmorty.presentation.adapters.LocationAdapter
-import com.teckzi.rickandmorty.util.Constants
 import com.teckzi.rickandmorty.util.Constants.FILTER_RETURN_BACK_TO_LOCATION
+import com.teckzi.rickandmorty.util.Constants.FILTER_TYPE_ARGUMENT_KEY
 import com.teckzi.rickandmorty.util.Constants.LOCATION_TYPE
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +40,7 @@ class LocationFragment : Fragment(R.layout.fragment_location), SearchView.OnQuer
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         initRecyclerView()
-        getLocations()
+        //getLocations()
         getFilterResult()
         filterButton()
         binding.swipeRefreshLayout.setOnRefreshListener(this)
@@ -70,8 +70,8 @@ class LocationFragment : Fragment(R.layout.fragment_location), SearchView.OnQuer
     private fun filterButton() {
         binding.filterFloatingButton.setOnClickListener {
             findNavController().navigate(
-                R.id.action_characterFragment_to_bottomSheet,
-                bundleOf(Constants.FILTER_TYPE_ARGUMENT_KEY to LOCATION_TYPE)
+                R.id.action_locationFragment_to_bottomSheet,
+                bundleOf(FILTER_TYPE_ARGUMENT_KEY to LOCATION_TYPE)
             )
         }
     }

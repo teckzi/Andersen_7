@@ -20,4 +20,5 @@
     <string name="image_background">image background</string>
     <string name="character_image">character image</string>
     <string name="error_image">error image</string>
+    <string name="release_date">Release Date</string>
 </resources>

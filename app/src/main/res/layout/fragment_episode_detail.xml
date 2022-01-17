@@ -1,46 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/main_color"
     tools:context=".presentation.screens.episode_detail_screen.EpisodeDetailFragment">
 
     <TextView
-        android:id="@+id/locationDetailsName"
+        android:id="@+id/episodeDetailsName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="57dp"
-        android:text="NAME"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Name" />
 
     <TextView
-        android:id="@+id/locationDetailsType"
+        android:id="@+id/episodeDetailsEpisode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="EPISODE"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/episode_number_color"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationDetailsName" />
+        app:layout_constraintTop_toBottomOf="@+id/episodeDetailsName"
+        tools:text="Episode" />
 
     <TextView
-        android:id="@+id/locationDetailsDimension"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="AIR_DATE"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/release_date"
+        app:layout_constraintBottom_toTopOf="@+id/episodeDetailsAirDate"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationDetailsType" />
+        app:layout_constraintTop_toBottomOf="@+id/episodeDetailsEpisode" />
+
+    <TextView
+        android:id="@+id/episodeDetailsAirDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="24dp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/episodeDetailsRecycler"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:text="AIR DATE" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/locationDetailsRecycler"
+        android:id="@+id/episodeDetailsRecycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -48,5 +73,5 @@
         android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationDetailsDimension" />
+        app:layout_constraintTop_toBottomOf="@+id/episodeDetailsAirDate" />
 </androidx.constraintlayout.widget.ConstraintLayout>

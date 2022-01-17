@@ -15,6 +15,8 @@ import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.util.Constants.CHARACTER_TYPE
 import com.teckzi.rickandmorty.util.Constants.EPISODE_TYPE
 import com.teckzi.rickandmorty.util.Constants.FILTER_RETURN_BACK_TO_CHARACTER
+import com.teckzi.rickandmorty.util.Constants.FILTER_RETURN_BACK_TO_EPISODE
+import com.teckzi.rickandmorty.util.Constants.FILTER_RETURN_BACK_TO_LOCATION
 import com.teckzi.rickandmorty.util.Constants.FILTER_TYPE_ARGUMENT_KEY
 import com.teckzi.rickandmorty.util.Constants.LOCATION_TYPE
 import com.teckzi.rickandmorty.util.gone
@@ -63,12 +65,12 @@ class BottomSheet : BottomSheetDialogFragment() {
             CHARACTER_TYPE -> {
                 characterFilter()
             }
-//            LOCATION_TYPE -> {
-//                locationFilter()
-//            }
-//            EPISODE_TYPE -> {
-//                episodeFilter()
-//            }
+            LOCATION_TYPE -> {
+                locationFilter()
+            }
+            EPISODE_TYPE -> {
+                episodeFilter()
+            }
         }
 
         mView.findViewById<Button>(R.id.buttonApplyBottomSheet).setOnClickListener {
@@ -79,18 +81,18 @@ class BottomSheet : BottomSheetDialogFragment() {
                         bundleOf(FILTER_RETURN_BACK_TO_CHARACTER to "$characterStatusChip,$characterSpeciesText,$characterTypeText,$characterGenderChip")
                     )
                 }
-//                LOCATION_TYPE -> {
-//                    findNavController().navigate(
-//                        R.id.action_BottomSheet_to_locationFragment,
-//                        bundleOf(FILTER_RETURN_BACK_TO_LOCATION to "$locationType,$locationDimension")
-//                    )
-//                }
-//                EPISODE_TYPE -> {
-//                    findNavController().navigate(
-//                        R.id.action_BottomSheet_to_episodeFragment,
-//                        bundleOf(FILTER_RETURN_BACK_TO_EPISODE to "$season$episode")
-//                    )
-//                }
+                LOCATION_TYPE -> {
+                    findNavController().navigate(
+                        R.id.action_bottomSheet_to_locationFragment,
+                        bundleOf(FILTER_RETURN_BACK_TO_LOCATION to "$locationType,$locationDimension")
+                    )
+                }
+                EPISODE_TYPE -> {
+                    findNavController().navigate(
+                        R.id.action_bottomSheet_to_episodeFragment,
+                        bundleOf(FILTER_RETURN_BACK_TO_EPISODE to "$season$episode")
+                    )
+                }
             }
         }
         return mView
