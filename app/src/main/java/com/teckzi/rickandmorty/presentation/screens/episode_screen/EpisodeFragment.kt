@@ -1,6 +1,7 @@
 package com.teckzi.rickandmorty.presentation.screens.episode_screen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -41,8 +42,8 @@ class EpisodeFragment : Fragment(R.layout.fragment_episode), SearchView.OnQueryT
         setHasOptionsMenu(true)
         initRecyclerView()
         getEpisodes()
-        getFilterResult()
         filterButton()
+        getFilterResult()
         binding.swipeRefreshLayout.setOnRefreshListener(this)
     }
 
@@ -79,17 +80,16 @@ class EpisodeFragment : Fragment(R.layout.fragment_episode), SearchView.OnQueryT
     private fun getFilterResult() {
         arguments?.getString(FILTER_RETURN_BACK_TO_EPISODE)?.let {
             lifecycleScope.launch(context = Dispatchers.Main) {
-                val item = if (it != "null") "%${it}%" else null
-                searchLocation(episode = item)
+                searchEpisode(episode = it)
             }
         }
     }
 
-    private fun searchLocation(
+    private fun searchEpisode(
         name: String? = null,
         episode: String? = null,
     ) {
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.Main) {
             viewModel.searchEpisode(
                 name = name,
                 episode = episode
@@ -121,12 +121,15 @@ class EpisodeFragment : Fragment(R.layout.fragment_episode), SearchView.OnQueryT
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        if (query != null) searchLocation(name = "%$query%")
+        if (query != null) searchEpisode(name = query)
         return true
     }
 
     override fun onRefresh(direction: SwipyRefreshLayoutDirection?) {
         getEpisodes()
         binding.swipeRefreshLayout.isRefreshing = false
+    }
+    companion object {
+        private const val TAG = "TAG EpisodeFragment"
     }
 }

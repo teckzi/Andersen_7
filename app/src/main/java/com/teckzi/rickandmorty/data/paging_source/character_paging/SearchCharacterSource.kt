@@ -1,6 +1,7 @@
 package com.teckzi.rickandmorty.data.paging_source.character_paging
 
 import android.net.Uri
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.teckzi.rickandmorty.data.local.RickAndMortyDatabase
@@ -8,6 +9,7 @@ import com.teckzi.rickandmorty.data.mappers.toCharacterDbo
 import com.teckzi.rickandmorty.data.mappers.toCharacterModel
 import com.teckzi.rickandmorty.data.network.RickAndMortyApi
 import com.teckzi.rickandmorty.domain.model.CharacterModel
+import com.teckzi.rickandmorty.util.convertStringToRoomSearch
 import javax.inject.Inject
 
 class SearchCharacterSource @Inject constructor(
@@ -30,6 +32,7 @@ class SearchCharacterSource @Inject constructor(
         var nextKey: Int? = null
 
         try {
+            Log.d("TAG char search paging", "name $name, status $status, species $species, type $type, gender $gender")
             rickAndMortyApi.getCharacters(
                 page = page,
                 name = name,
@@ -38,22 +41,26 @@ class SearchCharacterSource @Inject constructor(
                 type = type,
                 gender = gender
             ).apply {
-
                 if (this.info.next != null) {
                     val uri = Uri.parse(this.info.next)
-                    val nextPageQuery = uri.getQueryParameter("page")
-                    nextKey = nextPageQuery?.toInt()
+                    val nextPage = uri.getQueryParameter("page")
+                    nextKey = nextPage?.toInt()
                 }
-
                 results = this.results.map { it.toCharacterModel() }
-
+                Log.d("TAG char search paging", "$results")
                 results.let { characterList ->
                     characterDao.addCharacters(characterList.map { it.toCharacterDbo() })
                 }
-
             }
         } catch (e: Exception) {
-            characterDao.getFilteredCharacters(name, status, species, type, gender).apply {
+            Log.d("TAG char search paging", "$e")
+            characterDao.getFilteredCharacters(
+                name = name?.convertStringToRoomSearch(),
+                status = status?.convertStringToRoomSearch(),
+                species = species?.convertStringToRoomSearch(),
+                type = type?.convertStringToRoomSearch(),
+                gender = gender?.convertStringToRoomSearch()
+            ).apply {
                 nextKey = if (size < pageSize) null else nextKey?.plus(1)
                 results = this.map { it.toCharacterModel() }
             }

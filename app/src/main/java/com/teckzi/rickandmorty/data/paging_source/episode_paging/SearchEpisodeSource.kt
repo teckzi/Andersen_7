@@ -8,6 +8,7 @@ import com.teckzi.rickandmorty.data.mappers.toEpisodeDbo
 import com.teckzi.rickandmorty.data.mappers.toEpisodeModel
 import com.teckzi.rickandmorty.data.network.RickAndMortyApi
 import com.teckzi.rickandmorty.domain.model.EpisodeModel
+import com.teckzi.rickandmorty.util.convertStringToRoomSearch
 import javax.inject.Inject
 
 class SearchEpisodeSource @Inject constructor(
@@ -31,8 +32,8 @@ class SearchEpisodeSource @Inject constructor(
 
                 if (this.info.next != null) {
                     val uri = Uri.parse(this.info.next)
-                    val nextPageQuery = uri.getQueryParameter("page")
-                    nextKey = nextPageQuery?.toInt()
+                    val nextPage = uri.getQueryParameter("page")
+                    nextKey = nextPage?.toInt()
                 }
 
                 results = this.results.map { it.toEpisodeModel() }
@@ -43,7 +44,10 @@ class SearchEpisodeSource @Inject constructor(
 
             }
         } catch (e: Exception) {
-            episodeDao.getFilteredEpisodes(name, episode).apply {
+            episodeDao.getFilteredEpisodes(
+                name = name?.convertStringToRoomSearch(),
+                episode = episode?.convertStringToRoomSearch()
+            ).apply {
                 nextKey = if (size < pageSize) null else nextKey?.plus(1)
                 results = this.map { it.toEpisodeModel() }
             }

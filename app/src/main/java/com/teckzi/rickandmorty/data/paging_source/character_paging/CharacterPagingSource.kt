@@ -1,6 +1,7 @@
 package com.teckzi.rickandmorty.data.paging_source.character_paging
 
 import android.net.Uri
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.teckzi.rickandmorty.data.local.RickAndMortyDatabase
@@ -28,18 +29,19 @@ class CharacterPagingSource(
 
                 if (this.info.next != null) {
                     val uri = Uri.parse(this.info.next)
-                    val nextPageQuery = uri.getQueryParameter("page")
-                    nextKey = nextPageQuery?.toInt()
+                    val nextPage = uri.getQueryParameter("page")
+                    nextKey = nextPage?.toInt()
                 }
 
                 results = this.results.map { it.toCharacterModel() }
-
+                Log.d("TAG char paging", "$results")
                 results.let { characterList ->
                     characterDao.addCharacters(characterList.map { it.toCharacterDbo() })
                 }
 
             }
         } catch (e: Exception) {
+            Log.d("TAG char paging", "$e")
             characterDao.getAllCharacters().apply {
                 nextKey = if (size < pageSize) null else nextKey?.plus(1)
                 results = this.map { it.toCharacterModel() }

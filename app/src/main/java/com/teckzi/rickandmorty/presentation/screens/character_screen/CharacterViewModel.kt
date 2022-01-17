@@ -21,7 +21,6 @@ class CharacterViewModel @Inject constructor(
     private val _getAllCharacters = useCases.getAllCharactersUseCase()
     val getAllCharacters = _getAllCharacters
 
-
     private val _searchCharacter = MutableStateFlow<PagingData<CharacterModel>>(PagingData.empty())
     val searchCharacter = _searchCharacter
 

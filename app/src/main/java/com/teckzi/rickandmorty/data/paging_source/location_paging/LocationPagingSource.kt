@@ -1,6 +1,7 @@
 package com.teckzi.rickandmorty.data.paging_source.location_paging
 
 import android.net.Uri
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.teckzi.rickandmorty.data.local.RickAndMortyDatabase
@@ -28,18 +29,19 @@ class LocationPagingSource(
 
                 if (this.info.next != null) {
                     val uri = Uri.parse(this.info.next)
-                    val nextPageQuery = uri.getQueryParameter("page")
-                    nextKey = nextPageQuery?.toInt()
+                    val nextPage = uri.getQueryParameter("page")
+                    nextKey = nextPage?.toInt()
                 }
 
                 results = this.results.map { it.toLocationModel() }
-
+                Log.d("TAG location paging", "$results")
                 results.let { locationsList ->
                     locationDao.addLocations(locationsList.map { it.toLocationDbo() })
                 }
 
             }
         } catch (e: Exception) {
+            Log.d("TAG location paging", "$e")
             locationDao.getAllLocations().apply {
                 nextKey = if (size < pageSize) null else nextKey?.plus(1)
                 results = this.map { it.toLocationModel() }

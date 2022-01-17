@@ -18,13 +18,24 @@ class Repository @Inject constructor(
         return remote.getAllCharacters()
     }
 
-    override suspend fun getSelectedCharacter(characterId: Int): CharacterModel {
-        return try {
-            remote.getCharacterById(id = characterId)
-        } catch (e: Exception) {
+    override fun getAllLocation(): Flow<PagingData<LocationModel>> {
+        return remote.getAllLocations()
+    }
 
-            local.getSelectedCharacter(id = characterId)
-        }
+    override fun getAllEpisodes(): Flow<PagingData<EpisodeModel>> {
+        return remote.getAllEpisodes()
+    }
+
+    override suspend fun getSelectedCharacter(characterId: Int): CharacterModel {
+        return local.getSelectedCharacter(id = characterId)
+    }
+
+    override suspend fun getSelectedLocation(locationId: Int): LocationModel {
+        return local.getSelectedLocation(id = locationId)
+    }
+
+    override suspend fun getSelectedEpisode(episodeId: Int): EpisodeModel {
+        return local.getSelectedEpisode(id = episodeId)
     }
 
     override suspend fun searchCharacters(
@@ -43,19 +54,6 @@ class Repository @Inject constructor(
         )
     }
 
-    override fun getAllLocation(): Flow<PagingData<LocationModel>> {
-        return remote.getAllLocations()
-    }
-
-    override suspend fun getSelectedLocation(locationId: Int): LocationModel {
-        return try {
-
-            remote.getLocationById(id = locationId)
-        } catch (e: Exception) {
-            local.getSelectedLocation(id = locationId)
-        }
-    }
-
     override suspend fun searchLocation(
         name: String?,
         type: String?,
@@ -66,18 +64,6 @@ class Repository @Inject constructor(
             type = type,
             dimension = dimension
         )
-    }
-
-    override fun getAllEpisodes(): Flow<PagingData<EpisodeModel>> {
-        return remote.getAllEpisodes()
-    }
-
-    override suspend fun getSelectedEpisode(episodeId: Int): EpisodeModel {
-        return try {
-            remote.getEpisodeById(id = episodeId)
-        } catch (e: Exception) {
-            local.getSelectedEpisode(id = episodeId)
-        }
     }
 
     override suspend fun searchEpisode(

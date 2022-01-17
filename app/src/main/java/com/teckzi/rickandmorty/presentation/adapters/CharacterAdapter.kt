@@ -2,7 +2,6 @@ package com.teckzi.rickandmorty.presentation.adapters
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +15,6 @@ import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.ItemCharacterBinding
 import com.teckzi.rickandmorty.domain.model.CharacterModel
 import com.teckzi.rickandmorty.presentation.screens.character_screen.CharacterFragmentDirections
-
-private const val TAG = "TAG CharacterAdapter"
 
 class CharacterAdapter(context: Context) :
     PagingDataAdapter<CharacterModel, CharacterViewHolder>(DiffUtil()) {
@@ -53,7 +50,6 @@ class CharacterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             }
             root.setOnClickListener {
                 val id = item!!.id
-                Log.d(TAG, "id $id")
                 val action =
                     CharacterFragmentDirections.actionCharacterFragmentToCharacterDetailScreen(id)
                 Navigation.findNavController(it).navigate(action)

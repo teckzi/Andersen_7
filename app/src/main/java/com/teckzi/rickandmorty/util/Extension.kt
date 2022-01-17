@@ -15,6 +15,11 @@ fun String.getIdFromUrl() = try {
     0
 }
 
+fun String.convertIdToString() =
+    if (this.getIdFromUrl() == 0) "unknown" else this.getIdFromUrl().toString()
+
+fun String.convertStringToRoomSearch() = if (this != "") "%$this%" else null
+
 fun String.getEpisodeString() = "Season ${
     this.split("S")[1].substringBefore("E").toInt()
 }, Episode ${this.split("E")[1].toInt()}"

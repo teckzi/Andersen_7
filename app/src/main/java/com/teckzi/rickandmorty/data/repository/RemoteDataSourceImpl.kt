@@ -28,7 +28,7 @@ class RemoteDataSourceImpl(
 
 
     override fun getAllCharacters() = Pager(
-        config = PagingConfig(enablePlaceholders = true, pageSize = ITEMS_PER_PAGE),
+        config = PagingConfig(pageSize = ITEMS_PER_PAGE),
         pagingSourceFactory = {
             CharacterPagingSource(
                 rickAndMortyApi = rickAndMortyApi,
@@ -37,10 +37,25 @@ class RemoteDataSourceImpl(
         }
     ).flow
 
-    override suspend fun getCharacterById(id: Int): CharacterModel {
-        val response = rickAndMortyApi.getCharacterById(id)
-        return response.toCharacterModel()
-    }
+    override fun getAllLocations() = Pager(
+        config = PagingConfig(pageSize = ITEMS_PER_PAGE),
+        pagingSourceFactory = {
+            LocationPagingSource(
+                rickAndMortyApi = rickAndMortyApi,
+                rickAndMortyDatabase = rickAndMortyDatabase
+            )
+        }
+    ).flow
+
+    override fun getAllEpisodes() = Pager(
+        config = PagingConfig(pageSize = ITEMS_PER_PAGE),
+        pagingSourceFactory = {
+            EpisodePagingSource(
+                rickAndMortyApi = rickAndMortyApi,
+                rickAndMortyDatabase = rickAndMortyDatabase
+            )
+        }
+    ).flow
 
     override suspend fun searchCharacters(
         name: String?,
@@ -65,21 +80,6 @@ class RemoteDataSourceImpl(
         ).flow
     }
 
-    override fun getAllLocations() = Pager(
-        config = PagingConfig(enablePlaceholders = true, pageSize = ITEMS_PER_PAGE),
-        pagingSourceFactory = {
-            LocationPagingSource(
-                rickAndMortyApi = rickAndMortyApi,
-                rickAndMortyDatabase = rickAndMortyDatabase
-            )
-        }
-    ).flow
-
-    override suspend fun getLocationById(id: Int): LocationModel {
-        val response = rickAndMortyApi.getLocationById(id)
-        return response.toLocationModel()
-    }
-
     override suspend fun searchLocations(
         name: String?,
         type: String?,
@@ -97,21 +97,6 @@ class RemoteDataSourceImpl(
                 )
             }
         ).flow
-    }
-
-    override fun getAllEpisodes() = Pager(
-        config = PagingConfig(enablePlaceholders = true, pageSize = ITEMS_PER_PAGE),
-        pagingSourceFactory = {
-            EpisodePagingSource(
-                rickAndMortyApi = rickAndMortyApi,
-                rickAndMortyDatabase = rickAndMortyDatabase
-            )
-        }
-    ).flow
-
-    override suspend fun getEpisodeById(id: Int): EpisodeModel {
-        val response = rickAndMortyApi.getEpisodeById(id)
-        return response.toEpisodeModel()
     }
 
     override suspend fun searchEpisodes(

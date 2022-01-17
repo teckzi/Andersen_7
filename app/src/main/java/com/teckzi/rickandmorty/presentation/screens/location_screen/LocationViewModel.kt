@@ -21,7 +21,6 @@ class LocationViewModel @Inject constructor(
     private val _getAllLocations = useCases.getAllLocationUseCase()
     val getAllLocations = _getAllLocations
 
-
     private val _searchLocation = MutableStateFlow<PagingData<LocationModel>>(PagingData.empty())
     val searchLocation = _searchLocation
 

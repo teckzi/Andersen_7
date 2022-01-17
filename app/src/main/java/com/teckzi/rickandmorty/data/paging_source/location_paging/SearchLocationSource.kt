@@ -8,6 +8,7 @@ import com.teckzi.rickandmorty.data.mappers.toLocationDbo
 import com.teckzi.rickandmorty.data.mappers.toLocationModel
 import com.teckzi.rickandmorty.data.network.RickAndMortyApi
 import com.teckzi.rickandmorty.domain.model.LocationModel
+import com.teckzi.rickandmorty.util.convertStringToRoomSearch
 import javax.inject.Inject
 
 class SearchLocationSource @Inject constructor(
@@ -37,8 +38,8 @@ class SearchLocationSource @Inject constructor(
 
                 if (this.info.next != null) {
                     val uri = Uri.parse(this.info.next)
-                    val nextPageQuery = uri.getQueryParameter("page")
-                    nextKey = nextPageQuery?.toInt()
+                    val nextPage = uri.getQueryParameter("page")
+                    nextKey = nextPage?.toInt()
                 }
 
                 results = this.results.map { it.toLocationModel() }
@@ -49,7 +50,11 @@ class SearchLocationSource @Inject constructor(
 
             }
         } catch (e: Exception) {
-            locationDao.getFilteredLocations(name, type, dimension).apply {
+            locationDao.getFilteredLocations(
+                name = name?.convertStringToRoomSearch(),
+                type = type?.convertStringToRoomSearch(),
+                dimension = dimension?.convertStringToRoomSearch()
+            ).apply {
                 nextKey = if (size < pageSize) null else nextKey?.plus(1)
                 results = this.map { it.toLocationModel() }
             }

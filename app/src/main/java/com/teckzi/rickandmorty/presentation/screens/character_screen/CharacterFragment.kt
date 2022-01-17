@@ -80,14 +80,7 @@ class CharacterFragment : Fragment(R.layout.fragment_character), SearchView.OnQu
     private fun getFilterResult() {
         arguments?.getString(FILTER_RETURN_BACK_TO_CHARACTER)?.let {
             lifecycleScope.launch(context = Dispatchers.Main) {
-                val list: MutableList<String?> = it.split(",").toMutableList()
-                for (i in 0..3) {
-                    if (list[i] != "null") list[i] = "%${list[i]}%"
-                    else list[i] = null
-                    Log.d(TAG, "${list[i]}")
-                }
-
-                val (status, species, type, gender) = list
+                val (status, species, type, gender) = it.split(",")
                 searchCharacter(status = status, species = species, type = type, gender = gender)
             }
         }
@@ -135,7 +128,7 @@ class CharacterFragment : Fragment(R.layout.fragment_character), SearchView.OnQu
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        if (query != null) searchCharacter(name = "%$query%")
+        if (query != null) searchCharacter(name = query)
         return true
     }
 

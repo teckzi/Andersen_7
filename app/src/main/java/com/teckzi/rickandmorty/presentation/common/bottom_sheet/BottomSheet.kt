@@ -27,14 +27,14 @@ class BottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var mView: View
     private var sheetKey = "character"
-    private var characterStatusChip: String? = null
-    private var characterGenderChip: String? = null
-    private var characterSpeciesText: String? = null
-    private var characterTypeText: String? = null
-    private var locationType: String? = null
-    private var locationDimension: String? = null
-    private var season: String? = null
-    private var episode: String? = null
+    private var characterStatusChip: String? = ""
+    private var characterGenderChip: String? = ""
+    private var characterSpeciesText: String? = ""
+    private var characterTypeText: String? = ""
+    private var locationType: String? = ""
+    private var locationDimension: String? = ""
+    private var season: String? = ""
+    private var episode: String? = ""
 
 
     private val seasonsList = listOf("Season 1", "Season 2", "Season 3", "Season 4", "Season 5")

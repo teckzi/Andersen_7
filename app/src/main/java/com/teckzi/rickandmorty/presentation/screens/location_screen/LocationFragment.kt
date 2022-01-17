@@ -40,7 +40,7 @@ class LocationFragment : Fragment(R.layout.fragment_location), SearchView.OnQuer
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         initRecyclerView()
-        //getLocations()
+        getLocations()
         getFilterResult()
         filterButton()
         binding.swipeRefreshLayout.setOnRefreshListener(this)
@@ -79,12 +79,7 @@ class LocationFragment : Fragment(R.layout.fragment_location), SearchView.OnQuer
     private fun getFilterResult() {
         arguments?.getString(FILTER_RETURN_BACK_TO_LOCATION)?.let {
             lifecycleScope.launch(context = Dispatchers.Main) {
-                val list: MutableList<String?> = it.split(",").toMutableList()
-                for (i in 0..1) {
-                    if (list[i] != "null") list[i] = "%${list[i]}%"
-                    else list[i] = null
-                }
-                val (type, dimension) = list
+                val (type, dimension) = it.split(",")
                 searchLocation(type = type, dimension = dimension)
             }
         }
@@ -128,7 +123,7 @@ class LocationFragment : Fragment(R.layout.fragment_location), SearchView.OnQuer
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        if (query != null) searchLocation(name = "%$query%")
+        if (query != null) searchLocation(name = query)
         return true
     }
 

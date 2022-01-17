@@ -9,8 +9,6 @@ import kotlinx.coroutines.flow.Flow
 interface RemoteDataSource {
     fun getAllCharacters(): Flow<PagingData<CharacterModel>>
 
-    suspend fun getCharacterById(id: Int): CharacterModel
-
     suspend fun searchCharacters(
         name: String?,
         status: String?,
@@ -21,8 +19,6 @@ interface RemoteDataSource {
 
     fun getAllLocations(): Flow<PagingData<LocationModel>>
 
-    suspend fun getLocationById(id: Int): LocationModel
-
     suspend fun searchLocations(
         name: String?,
         type: String?,
@@ -30,8 +26,6 @@ interface RemoteDataSource {
     ): Flow<PagingData<LocationModel>>
 
     fun getAllEpisodes(): Flow<PagingData<EpisodeModel>>
-
-    suspend fun getEpisodeById(id: Int): EpisodeModel
 
     suspend fun searchEpisodes(
         name: String?,

@@ -30,7 +30,6 @@ class EpisodeAdapter(context: Context) :
 }
 
 class EpisodeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
     private val viewBinding by viewBinding(ItemEpisodeBinding::bind)
 
     fun bind(item: EpisodeModel?) {

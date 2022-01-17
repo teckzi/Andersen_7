@@ -15,7 +15,7 @@ interface CharacterDao {
     @Query("SELECT * FROM character_table WHERE id=:characterId")
     suspend fun getSelectedCharacter(characterId: Int): CharacterDbo
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addCharacters(characters: List<CharacterDbo>)
 
     @Query("SELECT * FROM character_table WHERE name LIKE ifnull(:name, '%%') AND status LIKE ifnull(:status, '%%') AND species LIKE ifnull(:species, '%%') AND type LIKE ifnull(:type, '%%') AND gender LIKE ifnull(:gender, '%%') ORDER BY id ASC")

@@ -15,7 +15,7 @@ interface EpisodeDao {
     @Query("SELECT * FROM episode_table WHERE id=:episodeId")
     suspend fun getSelectedEpisode(episodeId: Int): EpisodeDbo
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addEpisodes(episodes: List<EpisodeDbo>)
 
     @Query("SELECT * FROM episode_table WHERE name LIKE ifnull(:name, '%%') AND episode LIKE ifnull(:episode, '%%') ORDER BY id ASC")

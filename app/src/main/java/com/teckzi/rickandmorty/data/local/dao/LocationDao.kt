@@ -15,7 +15,7 @@ interface LocationDao {
     @Query("SELECT * FROM location_table WHERE id=:locationId")
     suspend fun getSelectedLocation(locationId: Int): LocationDbo
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addLocations(locations: List<LocationDbo>)
 
     @Query("SELECT * FROM location_table WHERE name LIKE ifnull(:name, '%%') AND type LIKE ifnull(:type, '%%') AND dimension LIKE ifnull(:dimension, '%%') ORDER BY id ASC")
