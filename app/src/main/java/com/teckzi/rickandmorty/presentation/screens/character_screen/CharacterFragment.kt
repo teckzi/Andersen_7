@@ -1,14 +1,17 @@
 package com.teckzi.rickandmorty.presentation.screens.character_screen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,7 +22,9 @@ import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.FragmentCharacterBinding
 import com.teckzi.rickandmorty.presentation.adapters.CharacterAdapter
 import com.teckzi.rickandmorty.presentation.adapters.LoaderStateAdapter
+import com.teckzi.rickandmorty.util.Constants.CHARACTER_TYPE
 import com.teckzi.rickandmorty.util.Constants.FILTER_RETURN_BACK_TO_CHARACTER
+import com.teckzi.rickandmorty.util.Constants.FILTER_TYPE_ARGUMENT_KEY
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -28,7 +33,6 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class CharacterFragment : Fragment(R.layout.fragment_character), SearchView.OnQueryTextListener,
     SwipyRefreshLayout.OnRefreshListener {
-
     private val viewModel by viewModels<CharacterViewModel>()
     private val binding by viewBinding(FragmentCharacterBinding::bind)
     private lateinit var characterAdapter: CharacterAdapter
@@ -39,6 +43,7 @@ class CharacterFragment : Fragment(R.layout.fragment_character), SearchView.OnQu
         initRecyclerView()
         getCharacters()
         getFilterResult()
+        filterButton()
         binding.swipeRefreshLayout.setOnRefreshListener(this)
     }
 
@@ -63,19 +68,27 @@ class CharacterFragment : Fragment(R.layout.fragment_character), SearchView.OnQu
         }
     }
 
-    //    private fun filterButton() {
-//        binding.filterFloatingButton.setOnClickListener {
-//            findNavController().navigate(
-//                R.id.action_characterFragment_to_BottomSheet,
-//                bundleOf(FILTER_TYPE_ARGUMENT_KEY to CHARACTER_TYPE)
-//            )
-//        }
-//    }
+    private fun filterButton() {
+        binding.filterFloatingButton.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_characterFragment_to_bottomSheet,
+                bundleOf(FILTER_TYPE_ARGUMENT_KEY to CHARACTER_TYPE)
+            )
+        }
+    }
 
     private fun getFilterResult() {
         arguments?.getString(FILTER_RETURN_BACK_TO_CHARACTER)?.let {
             lifecycleScope.launch(context = Dispatchers.Main) {
-                val (status, gender, species, type) = it.split(',')
+                val list: MutableList<String?> = it.split(",").toMutableList()
+                Log.d(TAG, "${list}")
+                for (i in 0..3) {
+                    if (list[i] != "null") list[i] = "%${list[i]}%"
+                    else list[i] = null
+                    Log.d(TAG, "${list[i]}")
+                }
+
+                val (status, species, type, gender) = list
                 searchCharacter(status = status, species = species, type = type, gender = gender)
             }
         }
@@ -123,7 +136,7 @@ class CharacterFragment : Fragment(R.layout.fragment_character), SearchView.OnQu
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        if (query != null) searchCharacter(name = query)
+        if (query != null) searchCharacter(name = "%$query%")
         return true
     }
 
@@ -132,4 +145,7 @@ class CharacterFragment : Fragment(R.layout.fragment_character), SearchView.OnQu
         binding.swipeRefreshLayout.isRefreshing = false
     }
 
+    companion object {
+        private const val TAG = "TAG CharacterFragment"
+    }
 }
