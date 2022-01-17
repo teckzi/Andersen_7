@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface RemoteDataSource {
     fun getAllCharacters(): Flow<PagingData<CharacterModel>>
 
-    suspend fun getCharacterById(id: Int): CharacterDto
+    suspend fun getCharacterById(id: Int): CharacterModel
 
     suspend fun searchCharacters(
         name: String?,

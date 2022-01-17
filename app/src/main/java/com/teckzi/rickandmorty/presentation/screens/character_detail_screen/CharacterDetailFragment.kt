@@ -29,25 +29,24 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         lifecycleScope.launch(Dispatchers.Main) {
-            getCharacters()
-
-
-            lifecycleScope.launch(Dispatchers.Main) {
-                Log.d("TAG ROROROR", "${viewModel.selectedCharacter.value?.name}")
-                with(binding){
-
-                    characterDetailName.text = viewModel.selectedCharacter.value?.name ?: "RIRIRIR"
+            viewModel.getCharacter(args.characterId)
+            val character = viewModel.selectedCharacter.collectLatest {
+                Log.d("TAG CharacterDetailFragment", "2${it?.name}")
+                it?.let { it1 ->
+                    loadCharacterData(
+                        name = it1.name,
+                        status = it.status,
+                        species = it.species,
+                        gender = it.gender,
+                        image = it.image
+                    )
                 }
             }
         }
     }
 
-    private fun getCharacters() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.getCharacter(args.characterId)
-        }
-    }
 
     private fun loadCharacterData(
         name: String,

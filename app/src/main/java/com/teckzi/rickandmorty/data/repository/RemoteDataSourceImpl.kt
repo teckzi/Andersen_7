@@ -30,9 +30,9 @@ class RemoteDataSourceImpl(
         }
     ).flow
 
-    override suspend fun getCharacterById(id: Int): CharacterDto {
+    override suspend fun getCharacterById(id: Int): CharacterModel {
         val response = rickAndMortyApi.getCharacterById(id)
-        return response.results[0]
+        return response.toCharacterModel()
     }
 
     override suspend fun searchCharacters(

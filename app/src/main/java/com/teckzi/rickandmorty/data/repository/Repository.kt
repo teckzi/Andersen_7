@@ -23,7 +23,7 @@ class Repository @Inject constructor(
     override suspend fun getSelectedCharacter(characterId: Int): CharacterModel {
         return try {
             Log.d(TAG, "get character character remote")
-            remote.getCharacterById(id = characterId).toCharacterModel()
+            remote.getCharacterById(id = characterId)
         } catch (e: Exception) {
             Log.d(TAG, "get character character local,e $e")
             local.getSelectedCharacter(id = characterId)

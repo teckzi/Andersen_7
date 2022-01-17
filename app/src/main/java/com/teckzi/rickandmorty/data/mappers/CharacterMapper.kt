@@ -7,7 +7,7 @@ import com.teckzi.rickandmorty.util.addToIntList
 import com.teckzi.rickandmorty.util.getIdFromUrl
 
 fun CharacterDto.toCharacterModel() = CharacterModel(
-    id = id,
+    id = characterId,
     name = name,
     status = status,
     species = species,
@@ -20,7 +20,7 @@ fun CharacterDto.toCharacterModel() = CharacterModel(
 )
 
 fun CharacterDto.toCharacterDbo() = CharacterDbo(
-    id = id,
+    id = characterId,
     name = name,
     status = status,
     species = species,
