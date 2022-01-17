@@ -19,16 +19,6 @@ class CharacterPagingSource(
 
     private val characterDao = rickAndMortyDatabase.characterDao()
 
-    override fun getRefreshKey(state: PagingState<Int, CharacterModel>): Int? {
-//        return state.anchorPosition?.let {
-//            state.closestPageToPosition(it)?.prevKey?.plus(1)
-//                ?: state.closestPageToPosition(it)?.nextKey?.minus(1)
-//        }
-        val anchorPosition = state.anchorPosition ?: return null
-        val anchorPage = state.closestPageToPosition(anchorPosition) ?: return null
-        return anchorPage.prevKey?.plus(1) ?: anchorPage.nextKey?.minus(1)
-    }
-
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharacterModel> {
         var results: List<CharacterModel>
 
@@ -61,5 +51,12 @@ class CharacterPagingSource(
         }
 
         return LoadResult.Page(data = results, prevKey = null, nextKey = nextKey)
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, CharacterModel>): Int? {
+        return state.anchorPosition?.let {
+            state.closestPageToPosition(it)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(it)?.nextKey?.minus(1)
+        }
     }
 }

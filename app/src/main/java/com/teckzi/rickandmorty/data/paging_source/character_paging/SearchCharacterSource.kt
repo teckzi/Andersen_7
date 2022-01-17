@@ -9,6 +9,7 @@ import com.teckzi.rickandmorty.data.mappers.toCharacterDbo
 import com.teckzi.rickandmorty.data.mappers.toCharacterModel
 import com.teckzi.rickandmorty.data.network.RickAndMortyApi
 import com.teckzi.rickandmorty.domain.model.CharacterModel
+import java.util.*
 import javax.inject.Inject
 
 private const val TAG = "TAG SearchCharacterSource"
@@ -49,7 +50,7 @@ class SearchCharacterSource @Inject constructor(
 
             }
         } catch (e: Exception) {
-            Log.d(TAG, "exception $e   cache ${characterDao.getAllCharacters()}")
+            Log.d(TAG, "name $name, status $status, species $species, type $type, gender $gender")
             characterDao.getFilteredCharacters(name, status, species, type, gender).apply {
                 nextKey = if (size < pageSize) null else nextKey?.plus(1)
                 results = this.map { it.toCharacterModel() }
@@ -60,8 +61,9 @@ class SearchCharacterSource @Inject constructor(
     }
 
     override fun getRefreshKey(state: PagingState<Int, CharacterModel>): Int? {
-        val anchorPosition = state.anchorPosition ?: return null
-        val anchorPage = state.closestPageToPosition(anchorPosition) ?: return null
-        return anchorPage.prevKey?.plus(1) ?: anchorPage.nextKey?.minus(1)
+        return state.anchorPosition?.let {
+            state.closestPageToPosition(it)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(it)?.nextKey?.minus(1)
+        }
     }
 }
