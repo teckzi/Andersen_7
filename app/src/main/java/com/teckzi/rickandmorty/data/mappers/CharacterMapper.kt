@@ -19,19 +19,6 @@ fun CharacterDto.toCharacterModel() = CharacterModel(
     episode = episode.addToIntList()
 )
 
-fun CharacterDto.toCharacterDbo() = CharacterDbo(
-    id = characterId,
-    name = name,
-    status = status,
-    species = species,
-    type = type,
-    gender = gender,
-    origin = origin.url.getIdFromUrl(),
-    location = location.url.getIdFromUrl(),
-    image = image,
-    episode = episode.addToIntList()
-)
-
 fun CharacterDbo.toCharacterModel() = CharacterModel(
     id = id,
     name = name,

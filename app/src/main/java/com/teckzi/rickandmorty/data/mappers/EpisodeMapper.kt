@@ -13,14 +13,6 @@ fun EpisodeDto.toEpisodeModel() = EpisodeModel(
     characters = characters.addToIntList()
 )
 
-fun EpisodeDto.toEpisodeDbo() = EpisodeDbo(
-    id = id,
-    name = name,
-    airDate = airDate,
-    episode = episode,
-    characters = characters.addToIntList()
-)
-
 fun EpisodeDbo.toEpisodeModel() = EpisodeModel(
     id = id,
     name = name,

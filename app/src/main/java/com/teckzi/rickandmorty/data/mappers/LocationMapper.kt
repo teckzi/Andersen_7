@@ -13,14 +13,6 @@ fun LocationDto.toLocationModel() = LocationModel(
     characters = characters.addToIntList()
 )
 
-fun LocationDto.toLocationDbo() = LocationDbo(
-    id = id,
-    name = name,
-    dimension = dimension,
-    type = type,
-    characters = characters.addToIntList()
-)
-
 fun LocationDbo.toLocationModel() = LocationModel(
     id = id,
     name = name,
