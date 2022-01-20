@@ -1,7 +1,7 @@
 package com.teckzi.rickandmorty.data.mappers
 
 import com.teckzi.rickandmorty.domain.model.EpisodeModel
-import com.teckzi.rickandmorty.util.addToIntList
+import com.teckzi.rickandmorty.util.addToIdList
 import com.teckzi.ricks.data.local.model.EpisodeDbo
 import com.teckzi.ricks.data.network.model.EpisodeDto
 
@@ -10,7 +10,7 @@ fun EpisodeDto.toEpisodeModel() = EpisodeModel(
     name = name,
     airDate = airDate,
     episode = episode,
-    characters = characters.addToIntList()
+    characters = characters.addToIdList().map { it.toInt() }
 )
 
 fun EpisodeDbo.toEpisodeModel() = EpisodeModel(

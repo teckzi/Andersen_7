@@ -1,7 +1,6 @@
 package com.teckzi.rickandmorty.presentation.screens.character_screen
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -57,6 +56,9 @@ class CharacterFragment : Fragment(R.layout.fragment_character), SearchView.OnQu
         characterAdapter.addLoadStateListener { state: CombinedLoadStates ->
             binding.characterMainRecyclerView.isVisible = state.refresh != LoadState.Loading
             binding.characterProgressBar.isVisible = state.refresh == LoadState.Loading
+            binding.characterMainRecyclerView.isVisible = state.refresh != LoadState.Loading
+            binding.errorMessage.isVisible = state.e
+            binding.errorImage.isVisible
         }
     }
 

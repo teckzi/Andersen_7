@@ -1,11 +1,12 @@
 package com.teckzi.rickandmorty.presentation.screens.character_detail_screen
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teckzi.rickandmorty.domain.model.CharacterModel
-import com.teckzi.rickandmorty.domain.model.LocationModel
 import com.teckzi.rickandmorty.domain.use_cases.UseCases
+import com.teckzi.rickandmorty.util.Constants.CHARACTER_ARGUMENT_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,41 +16,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
-    private val useCases: UseCases
+    private val useCases: UseCases,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _selectedCharacter: MutableStateFlow<CharacterModel?> = MutableStateFlow(null)
     val selectedCharacter: StateFlow<CharacterModel?> = _selectedCharacter
 
-    private val _selectedOrigin: MutableStateFlow<String?> = MutableStateFlow(null)
-    val selectedOrigin: StateFlow<String?> = _selectedOrigin
-
-    private val _selectedLocation: MutableStateFlow<String?> = MutableStateFlow(null)
-    val selectedLocation: StateFlow<String?> = _selectedLocation
-
-    fun getCharacter(id: Int) {
+    init {
+        val characterId = savedStateHandle.get<Int>(CHARACTER_ARGUMENT_KEY)
         viewModelScope.launch(Dispatchers.IO) {
-            useCases.getSelectedCharacterUseCase(characterId = id).let {
-                _selectedCharacter.value = it
-            }
+            _selectedCharacter.value =
+                characterId?.let { useCases.getSelectedCharacterUseCase(characterId = characterId) }
         }
-    }
-
-    fun getOrigin(id: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            useCases.getSelectedLocationUseCase(locationId = id).let {
-                _selectedOrigin.value = if (it == null) "unknown" else it.name
-                Log.d("TAG char detail viewmodel","${_selectedOrigin.value}")
-            }
-        }
-    }
-
-    fun getLocation(id: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            useCases.getSelectedLocationUseCase(locationId = id).let {
-                _selectedLocation.value = if (it == null) "unknown" else it.name
-                Log.d("TAG char detail viewmodel","${_selectedOrigin.value}")
-            }
-        }
+        Log.d("TAG char viewModel savedStateHandle", "$characterId")
     }
 }

@@ -7,8 +7,8 @@ data class CharacterModel(
     var species: String,
     var type: String,
     var gender: String,
-    var origin: Int,
-    var location: Int,
+    var origin: String,
+    var location: String,
     var image: String,
     var episode: List<Int>
 )

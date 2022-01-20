@@ -26,36 +26,23 @@ import kotlinx.coroutines.launch
 class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
     private val viewModel by viewModels<CharacterDetailViewModel>()
     private val binding by viewBinding(FragmentCharacterDetailBinding::bind)
-    private val args by navArgs<CharacterDetailFragmentArgs>()
-
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.getCharacter(args.characterId)
-            viewModel.selectedCharacter.collectLatest {
-                it?.let { it ->
+            viewModel.selectedCharacter.collectLatest { character ->
+                character?.let { it ->
                     loadCharacterData(
                         name = it.name,
                         status = it.status,
                         species = it.species,
                         gender = it.gender,
-                        image = it.image
+                        image = it.image,
+                        origin = it.origin,
+                        location = it.location
                     )
-                    viewModel.getOrigin(it.origin)
-                    viewModel.getLocation(it.location)
                 }
-            }
-        }
-        lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.selectedOrigin.collectLatest {
-                binding.characterDetailOrigin.text = it ?: "unknown"
-            }
-        }
-        lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.selectedLocation.collectLatest {
-                binding.characterDetailLocation.text = it ?: "unknown"
             }
         }
     }
@@ -65,7 +52,9 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
         status: String,
         species: String,
         gender: String,
-        image: String
+        image: String,
+        origin:String,
+        location:String
     ) {
 
         binding.characterDetailImage.load(image) {
@@ -85,6 +74,8 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
         binding.characterDetailSpecies.text = species
         //adapter = DetailsEpisodeAdapter(requireContext(),episodeList)
 
+        binding.characterDetailOrigin.text = origin
+        binding.characterDetailLocation.text = location
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

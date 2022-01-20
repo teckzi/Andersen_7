@@ -3,8 +3,7 @@ package com.teckzi.rickandmorty.data.mappers
 import com.teckzi.rickandmorty.data.local.model.CharacterDbo
 import com.teckzi.rickandmorty.data.network.model.CharacterDto
 import com.teckzi.rickandmorty.domain.model.CharacterModel
-import com.teckzi.rickandmorty.util.addToIntList
-import com.teckzi.rickandmorty.util.getIdFromUrl
+import com.teckzi.rickandmorty.util.addToIdList
 
 fun CharacterDto.toCharacterModel() = CharacterModel(
     id = characterId,
@@ -13,10 +12,10 @@ fun CharacterDto.toCharacterModel() = CharacterModel(
     species = species,
     type = type,
     gender = gender,
-    origin = origin.url.getIdFromUrl(),
-    location = location.url.getIdFromUrl(),
+    origin = origin.name,
+    location = location.name,
     image = image,
-    episode = episode.addToIntList()
+    episode = episode.addToIdList()
 )
 
 fun CharacterDbo.toCharacterModel() = CharacterModel(

@@ -37,8 +37,10 @@ class BottomSheet : BottomSheetDialogFragment() {
     private var episode: String? = ""
 
 
-    private val seasonsList = listOf("Season 1", "Season 2", "Season 3", "Season 4", "Season 5")
+    private val seasonsList =
+        listOf("All seasons", "Season 1", "Season 2", "Season 3", "Season 4", "Season 5")
     private val episodesList = listOf(
+        "All episodes",
         "Episode 1",
         "Episode 2",
         "Episode 3",
@@ -161,7 +163,10 @@ class BottomSheet : BottomSheetDialogFragment() {
                 position: Int,
                 id: Long
             ) {
-                season = "${parent?.getItemAtPosition(position)}".setStringToSeason()
+                season = when(parent?.getItemAtPosition(position)){
+                    "All seasons" -> ""
+                    else -> "${parent?.getItemAtPosition(position)}".setStringToSeason()
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -184,7 +189,10 @@ class BottomSheet : BottomSheetDialogFragment() {
                 position: Int,
                 id: Long
             ) {
-                episode = "${parent?.getItemAtPosition(position)}".setStringToSeason()
+                episode = when(parent?.getItemAtPosition(position)){
+                    "All episodes" -> ""
+                    else -> "${parent?.getItemAtPosition(position)}".setStringToSeason()
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}

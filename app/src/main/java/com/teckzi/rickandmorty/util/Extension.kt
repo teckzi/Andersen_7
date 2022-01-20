@@ -37,7 +37,7 @@ fun String.setStringToSeason(): String {
     return result
 }
 
-fun List<String>.addToIntList(): List<Int> {
+fun List<String>.addToIdList(): List<Int> {
     val listOfInts = mutableListOf<Int>()
     this.forEach {
         listOfInts.add(it.getIdFromUrl())

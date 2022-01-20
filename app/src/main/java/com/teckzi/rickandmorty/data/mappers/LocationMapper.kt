@@ -1,7 +1,7 @@
 package com.teckzi.rickandmorty.data.mappers
 
 import com.teckzi.rickandmorty.domain.model.LocationModel
-import com.teckzi.rickandmorty.util.addToIntList
+import com.teckzi.rickandmorty.util.addToIdList
 import com.teckzi.ricks.data.local.model.LocationDbo
 import com.teckzi.ricks.data.network.model.LocationDto
 
@@ -10,7 +10,7 @@ fun LocationDto.toLocationModel() = LocationModel(
     name = name,
     dimension = dimension,
     type = type,
-    characters = characters.addToIntList()
+    characters = characters.addToIdList()
 )
 
 fun LocationDbo.toLocationModel() = LocationModel(

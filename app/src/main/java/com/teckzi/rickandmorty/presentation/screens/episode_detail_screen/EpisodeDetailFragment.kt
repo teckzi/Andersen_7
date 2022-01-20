@@ -1,6 +1,5 @@
 package com.teckzi.rickandmorty.presentation.screens.episode_detail_screen
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,16 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
-import coil.load
-import coil.transform.BlurTransformation
-import coil.transform.CircleCropTransformation
 import com.teckzi.rickandmorty.R
-import com.teckzi.rickandmorty.databinding.FragmentCharacterDetailBinding
 import com.teckzi.rickandmorty.databinding.FragmentEpisodeDetailBinding
-import com.teckzi.rickandmorty.presentation.screens.character_detail_screen.CharacterDetailFragmentArgs
-import com.teckzi.rickandmorty.presentation.screens.character_detail_screen.CharacterDetailViewModel
 import com.teckzi.rickandmorty.util.getEpisodeString
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -30,15 +22,13 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_detail) {
 
     private val viewModel by viewModels<EpisodeDetailViewModel>()
     private val binding by viewBinding(FragmentEpisodeDetailBinding::bind)
-    private val args by navArgs<EpisodeDetailFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.getEpisode(args.episodeId)
-            viewModel.selectedEpisode.collectLatest {
-                it?.let { it ->
+            viewModel.selectedEpisode.collectLatest { episode ->
+                episode?.let { it ->
                     loadEpisodeData(
                         name = it.name,
                         episode = it.episode,
@@ -54,7 +44,7 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_detail) {
         episode: String,
         airDate: String,
     ) {
-        with(binding){
+        with(binding) {
             episodeDetailsName.text = name
             episodeDetailsEpisode.text = episode.getEpisodeString()
             episodeDetailsAirDate.text = airDate
