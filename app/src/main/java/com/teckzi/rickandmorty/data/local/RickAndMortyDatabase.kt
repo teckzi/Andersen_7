@@ -10,7 +10,7 @@ import com.teckzi.rickandmorty.data.local.model.CharacterDbo
 import com.teckzi.ricks.data.local.model.EpisodeDbo
 import com.teckzi.ricks.data.local.model.LocationDbo
 
-@Database(entities = [CharacterDbo::class,LocationDbo::class,EpisodeDbo::class], version = 1)
+@Database(entities = [CharacterDbo::class, LocationDbo::class, EpisodeDbo::class], version = 1)
 @TypeConverters(DatabaseConverter::class)
 abstract class RickAndMortyDatabase : RoomDatabase() {
     abstract fun characterDao(): CharacterDao

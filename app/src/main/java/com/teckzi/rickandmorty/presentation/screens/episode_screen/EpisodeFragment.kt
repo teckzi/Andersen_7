@@ -1,7 +1,6 @@
 package com.teckzi.rickandmorty.presentation.screens.episode_screen
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -61,10 +60,10 @@ class EpisodeFragment : Fragment(R.layout.fragment_episode), SearchView.OnQueryT
             binding.episodeProgressBar.isVisible = state.refresh == LoadState.Loading
             if (episodeAdapter.itemCount < 1) {
                 binding.episodeMainRecyclerView.invisible()
-                if (!binding.episodeProgressBar.isVisible){
+                if (!binding.episodeProgressBar.isVisible) {
                     binding.errorMessage.visible()
                     binding.errorImage.visible()
-                }else{
+                } else {
                     binding.errorMessage.invisible()
                     binding.errorImage.invisible()
                 }
@@ -141,6 +140,7 @@ class EpisodeFragment : Fragment(R.layout.fragment_episode), SearchView.OnQueryT
         getEpisodes()
         binding.swipeRefreshLayout.isRefreshing = false
     }
+
     companion object {
         private const val TAG = "TAG EpisodeFragment"
     }

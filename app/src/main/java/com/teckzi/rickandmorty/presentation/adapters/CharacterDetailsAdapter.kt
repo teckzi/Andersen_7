@@ -13,13 +13,19 @@ import com.teckzi.rickandmorty.domain.model.EpisodeModel
 import com.teckzi.rickandmorty.presentation.screens.character_detail_screen.CharacterDetailFragmentDirections
 import com.teckzi.rickandmorty.util.getEpisodeString
 
-class CharacterDetailsAdapter(context: Context, private val episodeList:List<EpisodeModel>) :
+class CharacterDetailsAdapter(context: Context, private val episodeList: List<EpisodeModel>) :
     RecyclerView.Adapter<CharacterDetailViewHolder>() {
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterDetailViewHolder {
-        return CharacterDetailViewHolder(layoutInflater.inflate(R.layout.item_episode, parent, false))
+        return CharacterDetailViewHolder(
+            layoutInflater.inflate(
+                R.layout.item_episode,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: CharacterDetailViewHolder, position: Int) {

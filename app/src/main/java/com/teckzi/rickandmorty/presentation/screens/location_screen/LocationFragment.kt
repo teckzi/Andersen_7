@@ -60,10 +60,10 @@ class LocationFragment : Fragment(R.layout.fragment_location), SearchView.OnQuer
             binding.locationProgressBar.isVisible = state.refresh == LoadState.Loading
             if (locationAdapter.itemCount < 1) {
                 binding.locationMainRecyclerView.invisible()
-                if (!binding.locationProgressBar.isVisible){
+                if (!binding.locationProgressBar.isVisible) {
                     binding.errorMessage.visible()
                     binding.errorImage.visible()
-                }else{
+                } else {
                     binding.errorMessage.invisible()
                     binding.errorImage.invisible()
                 }

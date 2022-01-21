@@ -1,7 +1,6 @@
 package com.teckzi.rickandmorty.data.paging_source.character_paging
 
 import android.net.Uri
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.teckzi.rickandmorty.data.local.RickAndMortyDatabase

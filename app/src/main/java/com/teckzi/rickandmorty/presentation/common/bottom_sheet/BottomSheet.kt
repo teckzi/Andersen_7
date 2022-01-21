@@ -163,7 +163,7 @@ class BottomSheet : BottomSheetDialogFragment() {
                 position: Int,
                 id: Long
             ) {
-                season = when(parent?.getItemAtPosition(position)){
+                season = when (parent?.getItemAtPosition(position)) {
                     "All seasons" -> ""
                     else -> "${parent?.getItemAtPosition(position)}".setStringToSeason()
                 }
@@ -189,7 +189,7 @@ class BottomSheet : BottomSheetDialogFragment() {
                 position: Int,
                 id: Long
             ) {
-                episode = when(parent?.getItemAtPosition(position)){
+                episode = when (parent?.getItemAtPosition(position)) {
                     "All episodes" -> ""
                     else -> "${parent?.getItemAtPosition(position)}".setStringToSeason()
                 }

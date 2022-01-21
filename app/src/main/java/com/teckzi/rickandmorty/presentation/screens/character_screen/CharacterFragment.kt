@@ -1,13 +1,11 @@
 package com.teckzi.rickandmorty.presentation.screens.character_screen
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -64,10 +62,10 @@ class CharacterFragment : Fragment(R.layout.fragment_character), SearchView.OnQu
 
             if (characterAdapter.itemCount < 1) {
                 binding.characterMainRecyclerView.invisible()
-                if (!binding.characterProgressBar.isVisible){
+                if (!binding.characterProgressBar.isVisible) {
                     binding.errorMessage.visible()
                     binding.errorImage.visible()
-                }else{
+                } else {
                     binding.errorMessage.invisible()
                     binding.errorImage.invisible()
                 }

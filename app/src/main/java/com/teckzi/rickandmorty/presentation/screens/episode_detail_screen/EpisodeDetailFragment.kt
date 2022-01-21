@@ -59,7 +59,7 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_detail) {
     }
 
     private fun initRecyclerView(characterList: List<CharacterModel>) {
-        detailsAdapter = DetailsAdapter(requireContext(), characterList,EPISODE_TYPE )
+        detailsAdapter = DetailsAdapter(requireContext(), characterList, EPISODE_TYPE)
         binding.episodeDetailsRecycler.layoutManager = GridLayoutManager(context, 2)
         binding.episodeDetailsRecycler.adapter = detailsAdapter
     }
@@ -77,6 +77,7 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_detail) {
             findNavController().navigate(R.id.action_episodeDetailFragment_to_characterFragment)
         }
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.details_menu, menu)
         val popBack = menu.findItem(R.id.popBack)

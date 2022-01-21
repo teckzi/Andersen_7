@@ -9,8 +9,8 @@ interface LocalDataSource {
     suspend fun getLocationByIdLocal(id: Int): LocationModel
     suspend fun getEpisodeByIdLocal(id: Int): EpisodeModel
 
-    suspend fun getCharactersListById(idList:List<Int>):List<CharacterModel>
-    suspend fun getEpisodesListById(idList:List<Int>):List<EpisodeModel>
+    suspend fun getCharactersListById(idList: List<Int>): List<CharacterModel>
+    suspend fun getEpisodesListById(idList: List<Int>): List<EpisodeModel>
 
-    suspend fun getSelectedLocationByName(locationName: String):LocationModel
+    suspend fun getSelectedLocationByName(locationName: String): LocationModel
 }

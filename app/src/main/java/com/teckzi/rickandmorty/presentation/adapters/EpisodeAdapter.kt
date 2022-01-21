@@ -12,7 +12,6 @@ import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.ItemEpisodeBinding
 import com.teckzi.rickandmorty.domain.model.EpisodeModel
 import com.teckzi.rickandmorty.presentation.screens.episode_screen.EpisodeFragmentDirections
-import com.teckzi.rickandmorty.presentation.screens.location_screen.LocationFragmentDirections
 import com.teckzi.rickandmorty.util.getEpisodeString
 
 class EpisodeAdapter(context: Context) :

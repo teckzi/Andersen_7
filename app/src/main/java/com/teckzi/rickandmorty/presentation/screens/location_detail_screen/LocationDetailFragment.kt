@@ -59,12 +59,12 @@ class LocationDetailFragment : Fragment(R.layout.fragment_location_detail) {
     }
 
     private fun initRecyclerView(characterList: List<CharacterModel>) {
-        charactersAdapter = DetailsAdapter(requireContext(),characterList,LOCATION_TYPE)
+        charactersAdapter = DetailsAdapter(requireContext(), characterList, LOCATION_TYPE)
         binding.locationDetailsRecycler.layoutManager = GridLayoutManager(context, 2)
         binding.locationDetailsRecycler.adapter = charactersAdapter
     }
 
-    private fun getCharacters(){
+    private fun getCharacters() {
         lifecycleScope.launch {
             viewModel.characterList.collectLatest {
                 initRecyclerView(it as List<CharacterModel>)

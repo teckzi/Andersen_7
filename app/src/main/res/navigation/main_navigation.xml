@@ -21,7 +21,7 @@
         android:id="@+id/episodeFragment"
         android:name="com.teckzi.rickandmorty.presentation.screens.episode_screen.EpisodeFragment"
         android:label="Episodes"
-        tools:layout="@layout/fragment_episode" >
+        tools:layout="@layout/fragment_episode">
         <action
             android:id="@+id/action_episodeFragment_to_bottomSheet"
             app:destination="@id/bottomSheet" />
@@ -33,7 +33,7 @@
         android:id="@+id/locationFragment"
         android:name="com.teckzi.rickandmorty.presentation.screens.location_screen.LocationFragment"
         android:label="Locations"
-        tools:layout="@layout/fragment_location" >
+        tools:layout="@layout/fragment_location">
         <action
             android:id="@+id/action_locationFragment_to_bottomSheet"
             app:destination="@id/bottomSheet" />
@@ -80,7 +80,7 @@
         android:id="@+id/episodeDetailFragment"
         android:name="com.teckzi.rickandmorty.presentation.screens.episode_detail_screen.EpisodeDetailFragment"
         android:label="fragment_episode_detail"
-        tools:layout="@layout/fragment_episode_detail" >
+        tools:layout="@layout/fragment_episode_detail">
         <action
             android:id="@+id/action_episodeDetailFragment_to_episodeFragment"
             app:destination="@id/episodeFragment" />
@@ -98,7 +98,7 @@
         android:id="@+id/locationDetailFragment"
         android:name="com.teckzi.rickandmorty.presentation.screens.location_detail_screen.LocationDetailFragment"
         android:label="fragment_location_detail"
-        tools:layout="@layout/fragment_location_detail" >
+        tools:layout="@layout/fragment_location_detail">
         <action
             android:id="@+id/action_locationDetailFragment_to_characterDetailScreen"
             app:destination="@id/characterDetailScreen" />

@@ -23,7 +23,8 @@ class LocationDetailViewModel @Inject constructor(
 
     private val _selectedLocation: MutableStateFlow<LocationModel?> = MutableStateFlow(null)
     val selectedLocation: StateFlow<LocationModel?> = _selectedLocation
-    private val _characterList: MutableStateFlow<List<CharacterModel?>> = MutableStateFlow(emptyList())
+    private val _characterList: MutableStateFlow<List<CharacterModel?>> =
+        MutableStateFlow(emptyList())
     val characterList: StateFlow<List<CharacterModel?>> = _characterList
 
     init {
