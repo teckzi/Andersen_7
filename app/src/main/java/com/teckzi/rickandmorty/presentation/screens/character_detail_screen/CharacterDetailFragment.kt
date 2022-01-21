@@ -2,6 +2,7 @@ package com.teckzi.rickandmorty.presentation.screens.character_detail_screen
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -103,10 +104,10 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
     }
 
     private fun clickOrigin() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.characterOrigin.collectLatest { it ->
-                val id = it?.id
-                if (id != null) if (binding.characterDetailOrigin.text != "unknown") binding.originButton.setOnClickListener {
+        lifecycleScope.launch {
+            viewModel.characterOrigin.collectLatest { locationModel ->
+                val id = locationModel?.id
+                if (id != null) if (binding.characterDetailOrigin.text.toString() != "unknown") binding.originButton.setOnClickListener {
                     val action =
                         CharacterDetailFragmentDirections.actionCharacterDetailScreenToLocationDetailFragment(
                             id
@@ -114,16 +115,17 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
                     Navigation.findNavController(it).navigate(action)
                 }
             }
-            lifecycleScope.launch(Dispatchers.Main) {
-                viewModel.characterLocation.collectLatest {
-                    val id = it?.id
-                    if (id != null) if (binding.characterDetailLocation.text != "unknown") binding.locationButton.setOnClickListener {
-                        val action =
-                            CharacterDetailFragmentDirections.actionCharacterDetailScreenToLocationDetailFragment(
-                                id
-                            )
-                        Navigation.findNavController(it).navigate(action)
-                    }
+        }
+
+        lifecycleScope.launch {
+            viewModel.characterLocation.collectLatest { locationModel ->
+                val id = locationModel?.id
+                if (id != null) if (binding.characterDetailLocation.text.toString() != "unknown") binding.locationButton.setOnClickListener {
+                    val action =
+                        CharacterDetailFragmentDirections.actionCharacterDetailScreenToLocationDetailFragment(
+                            id
+                        )
+                    Navigation.findNavController(it).navigate(action)
                 }
             }
         }

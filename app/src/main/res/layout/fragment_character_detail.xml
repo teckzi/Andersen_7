@@ -132,7 +132,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="32dp"
             android:text="@string/origin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -144,6 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="6dp"
+            android:layout_marginEnd="8dp"
             android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/textView10"
             app:layout_constraintEnd_toStartOf="@+id/originButton"
@@ -156,16 +157,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginBottom="16dp"
             android:background="@color/main_color"
+            android:contentDescription="@string/navigate_to_current_origin"
             android:foregroundGravity="center"
             android:src="@drawable/ic_navigate_arrow"
             app:layout_constraintBottom_toTopOf="@+id/textView10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/characterDetailOrigin"
-            app:layout_constraintTop_toBottomOf="@+id/textView9"
-            android:contentDescription="@string/navigate_to_current_origin" />
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
         <TextView
             android:id="@+id/textView10"
@@ -173,7 +174,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="32dp"
             android:text="@string/location"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -185,6 +186,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="6dp"
+            android:layout_marginEnd="8dp"
             android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@+id/locationButton"
             app:layout_constraintStart_toStartOf="parent"
@@ -196,16 +198,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginBottom="16dp"
             android:background="@color/main_color"
+            android:contentDescription="@string/navigate_to_current_location"
             android:foregroundGravity="center"
             android:src="@drawable/ic_navigate_arrow"
             app:layout_constraintBottom_toTopOf="@+id/view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/characterDetailLocation"
-            app:layout_constraintTop_toBottomOf="@+id/textView10"
-            android:contentDescription="@string/navigate_to_current_location" />
+            app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
         <View
             android:id="@+id/view"

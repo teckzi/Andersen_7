@@ -21,7 +21,7 @@ interface IRepository {
 
     fun getAllLocation(): Flow<PagingData<LocationModel>>
     suspend fun getLocationById(locationId: Int): LocationModel
-    suspend fun getSelectedLocationByName(locationName: String): LocationModel
+    suspend fun getSelectedLocationByName(locationName: String): LocationModel?
     suspend fun searchLocation(
         name: String?,
         type: String?,

@@ -35,7 +35,8 @@ class LocalDataSourceImpl(rickAndMortyDatabase: RickAndMortyDatabase) : LocalDat
         return episodeDao.getEpisodeList(idList).map { it.toEpisodeModel() }
     }
 
-    override suspend fun getSelectedLocationByName(locationName: String): LocationModel {
-        return locationDao.getSelectedLocationByName(locationName = locationName).toLocationModel()
+    override suspend fun getSelectedLocationByName(locationName: String): LocationModel? {
+
+        return locationDao.getSelectedLocationByName(locationName = locationName)?.toLocationModel()
     }
 }

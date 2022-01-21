@@ -69,7 +69,7 @@ class Repository @Inject constructor(
     }
 
 
-    override suspend fun getSelectedLocationByName(locationName: String): LocationModel {
+    override suspend fun getSelectedLocationByName(locationName: String): LocationModel? {
         return local.getSelectedLocationByName(locationName = locationName)
     }
 

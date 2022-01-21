@@ -16,7 +16,7 @@ interface LocationDao {
     suspend fun getSelectedLocation(locationId: Int): LocationDbo
 
     @Query("SELECT * FROM location_table WHERE name=:locationName")
-    suspend fun getSelectedLocationByName(locationName: String): LocationDbo
+    suspend fun getSelectedLocationByName(locationName: String): LocationDbo?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addLocations(locations: List<LocationDbo>)

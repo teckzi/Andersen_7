@@ -29,14 +29,15 @@ class LocationDetailViewModel @Inject constructor(
 
     init {
         val locationId = savedStateHandle.get<Int>(LOCATION_ARGUMENT_KEY)
-        Log.d("TAG loc viewModel", "locationId $locationId")
-        viewModelScope.launch(Dispatchers.IO) {
-            _selectedLocation.value =
-                locationId?.let { useCases.getSelectedLocationUseCase(locationId = locationId) }
+        if (locationId != null) {
+            viewModelScope.launch(Dispatchers.IO) {
+                _selectedLocation.value =
+                    locationId.let { useCases.getSelectedLocationUseCase(locationId = locationId) }
 
-            val listOfCharacterIds = _selectedLocation.value!!.characters
-            _characterList.value = listOfCharacterIds.let {
-                useCases.getCharacterListById(characterIdList = it)
+                val listOfCharacterIds = _selectedLocation.value!!.characters
+                _characterList.value = listOfCharacterIds.let {
+                    useCases.getCharacterListById(characterIdList = it)
+                }
             }
         }
     }

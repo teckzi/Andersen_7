@@ -29,15 +29,17 @@ class EpisodeDetailViewModel @Inject constructor(
 
     init {
         val episodeId = savedStateHandle.get<Int>(EPISODE_ARGUMENT_KEY)
-        viewModelScope.launch(Dispatchers.IO) {
-            _selectedEpisode.value =
-                episodeId?.let { useCases.getSelectedEpisodeUseCase(episodeId = episodeId) }
+        if (episodeId != null) {
+            viewModelScope.launch(Dispatchers.IO) {
+                _selectedEpisode.value =
+                    episodeId.let { useCases.getSelectedEpisodeUseCase(episodeId = episodeId) }
 
-            val listOfCharacterIds = _selectedEpisode.value!!.characters
-            _characterList.value = listOfCharacterIds.let {
-                useCases.getCharacterListById(characterIdList = it)
+                val listOfCharacterIds = _selectedEpisode.value!!.characters
+                _characterList.value = listOfCharacterIds.let {
+                    useCases.getCharacterListById(characterIdList = it)
+                }
+                Log.d("TAG episode viewModel", "${_characterList.value}")
             }
-            Log.d("TAG episode viewModel", "${_characterList.value}")
         }
     }
 }
