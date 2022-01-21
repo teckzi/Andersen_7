@@ -2,21 +2,23 @@ package com.teckzi.rickandmorty.presentation.screens.character_detail_screen
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import coil.transform.BlurTransformation
 import coil.transform.CircleCropTransformation
 import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.FragmentCharacterDetailBinding
+import com.teckzi.rickandmorty.domain.model.EpisodeModel
+import com.teckzi.rickandmorty.presentation.adapters.CharacterDetailsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -26,7 +28,8 @@ import kotlinx.coroutines.launch
 class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
     private val viewModel by viewModels<CharacterDetailViewModel>()
     private val binding by viewBinding(FragmentCharacterDetailBinding::bind)
-    
+    private lateinit var episodeAdapter: CharacterDetailsAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
@@ -45,6 +48,9 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
                 }
             }
         }
+        getEpisodes()
+        clickOrigin()
+        navigateToAllEpisodes()
     }
 
     private fun loadCharacterData(
@@ -53,8 +59,8 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
         species: String,
         gender: String,
         image: String,
-        origin:String,
-        location:String
+        origin: String,
+        location: String
     ) {
 
         binding.characterDetailImage.load(image) {
@@ -72,10 +78,55 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
         }
         binding.characterDetailGender.text = gender
         binding.characterDetailSpecies.text = species
-        //adapter = DetailsEpisodeAdapter(requireContext(),episodeList)
-
         binding.characterDetailOrigin.text = origin
         binding.characterDetailLocation.text = location
+    }
+
+    private fun initRecyclerView(episodeList: List<EpisodeModel>) {
+        episodeAdapter = CharacterDetailsAdapter(requireContext(), episodeList)
+        binding.characterDetailEpisodes.layoutManager = LinearLayoutManager(requireContext())
+        binding.characterDetailEpisodes.adapter = episodeAdapter
+    }
+
+    private fun getEpisodes() {
+        lifecycleScope.launch {
+            viewModel.episodeList.collectLatest {
+                initRecyclerView(it as List<EpisodeModel>)
+            }
+        }
+    }
+
+    private fun navigateToAllEpisodes() {
+        binding.allEpisodes.setOnClickListener {
+            findNavController().navigate(R.id.action_characterDetailScreen_to_episodeFragment)
+        }
+    }
+
+    private fun clickOrigin() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.characterOrigin.collectLatest { it ->
+                val id = it?.id
+                if (id != null) if (binding.characterDetailOrigin.text != "unknown") binding.originButton.setOnClickListener {
+                    val action =
+                        CharacterDetailFragmentDirections.actionCharacterDetailScreenToLocationDetailFragment(
+                            id
+                        )
+                    Navigation.findNavController(it).navigate(action)
+                }
+            }
+            lifecycleScope.launch(Dispatchers.Main) {
+                viewModel.characterLocation.collectLatest {
+                    val id = it?.id
+                    if (id != null) if (binding.characterDetailLocation.text != "unknown") binding.locationButton.setOnClickListener {
+                        val action =
+                            CharacterDetailFragmentDirections.actionCharacterDetailScreenToLocationDetailFragment(
+                                id
+                            )
+                        Navigation.findNavController(it).navigate(action)
+                    }
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

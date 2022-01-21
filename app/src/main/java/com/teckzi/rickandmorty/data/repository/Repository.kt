@@ -26,17 +26,53 @@ class Repository @Inject constructor(
         return remote.getAllEpisodes()
     }
 
-    override suspend fun getSelectedCharacter(characterId: Int): CharacterModel {
-        return local.getSelectedCharacter(id = characterId)
+
+    override suspend fun getCharacterById(characterId: Int): CharacterModel {
+        return try {
+            remote.getCharacterByIdRemote(id = characterId)
+        } catch (e: Exception) {
+            local.getCharacterByIdLocal(id = characterId)
+        }
     }
 
-    override suspend fun getSelectedLocation(locationId: Int): LocationModel {
-        return local.getSelectedLocation(id = locationId)
+    override suspend fun getLocationById(locationId: Int): LocationModel {
+        return try {
+            remote.getLocationByIdRemote(id = locationId)
+        } catch (e: Exception) {
+            local.getLocationByIdLocal(id = locationId)
+        }
     }
 
-    override suspend fun getSelectedEpisode(episodeId: Int): EpisodeModel {
-        return local.getSelectedEpisode(id = episodeId)
+    override suspend fun getEpisodeById(episodeId: Int): EpisodeModel {
+        return try {
+            remote.getEpisodeByIdRemote(id = episodeId)
+        } catch (e: Exception) {
+            local.getEpisodeByIdLocal(id = episodeId)
+        }
     }
+
+
+    override suspend fun getCharacterListById(characterIdList: List<Int>): List<CharacterModel> {
+        return try {
+            remote.getCharacterListById(characterIdList)
+        } catch (e: Exception) {
+            local.getCharactersListById(characterIdList)
+        }
+    }
+
+    override suspend fun getEpisodeListById(episodeIdList: List<Int>): List<EpisodeModel> {
+        return try {
+            remote.getEpisodeListById(episodeIdList)
+        } catch (e: Exception) {
+            local.getEpisodesListById(episodeIdList)
+        }
+    }
+
+
+    override suspend fun getSelectedLocationByName(locationName: String): LocationModel {
+        return local.getSelectedLocationByName(locationName = locationName)
+    }
+
 
     override suspend fun searchCharacters(
         name: String?,

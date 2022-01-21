@@ -1,7 +1,6 @@
 package com.teckzi.rickandmorty.data.paging_source.episode_paging
 
 import android.net.Uri
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.teckzi.rickandmorty.data.local.RickAndMortyDatabase
@@ -34,14 +33,12 @@ class EpisodePagingSource(
                 }
 
                 results = this.results.map { it.toEpisodeModel() }
-                Log.d("TAG episode paging", "$results")
                 results.let { episodeList ->
                     episodeDao.addEpisodes(episodeList.map { it.toEpisodeDbo() })
                 }
 
             }
         } catch (e: Exception) {
-            Log.d("TAG episode paging", "$e")
             episodeDao.getAllEpisodes().apply {
                 nextKey = if (size < pageSize) null else nextKey?.plus(1)
                 results = this.map { it.toEpisodeModel() }

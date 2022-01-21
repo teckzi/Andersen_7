@@ -21,4 +21,12 @@
     <string name="character_image">character image</string>
     <string name="error_image">error image</string>
     <string name="release_date">Release Date</string>
+    <string name="nothing_to_show">Nothing to show</string>
+    <string name="episodes">Episodes</string>
+    <string name="all_episodes">All episodes</string>
+    <string name="characters">Characters</string>
+    <string name="all_characters">All characters</string>
+    <string name="navigate_to_current_origin">navigate to current origin</string>
+    <string name="navigate_to_current_location">navigate to current location</string>
+    <string name="press_to_navigate_to_all_episodes">press to navigate to all episodes</string>
 </resources>

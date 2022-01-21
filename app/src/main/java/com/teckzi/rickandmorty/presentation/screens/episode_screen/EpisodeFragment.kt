@@ -25,6 +25,8 @@ import com.teckzi.rickandmorty.presentation.adapters.LoaderStateAdapter
 import com.teckzi.rickandmorty.util.Constants.EPISODE_TYPE
 import com.teckzi.rickandmorty.util.Constants.FILTER_RETURN_BACK_TO_EPISODE
 import com.teckzi.rickandmorty.util.Constants.FILTER_TYPE_ARGUMENT_KEY
+import com.teckzi.rickandmorty.util.invisible
+import com.teckzi.rickandmorty.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -57,6 +59,16 @@ class EpisodeFragment : Fragment(R.layout.fragment_episode), SearchView.OnQueryT
         episodeAdapter.addLoadStateListener { state: CombinedLoadStates ->
             binding.episodeMainRecyclerView.isVisible = state.refresh != LoadState.Loading
             binding.episodeProgressBar.isVisible = state.refresh == LoadState.Loading
+            if (episodeAdapter.itemCount < 1) {
+                binding.episodeMainRecyclerView.invisible()
+                if (!binding.episodeProgressBar.isVisible){
+                    binding.errorMessage.visible()
+                    binding.errorImage.visible()
+                }else{
+                    binding.errorMessage.invisible()
+                    binding.errorImage.invisible()
+                }
+            }
         }
     }
 

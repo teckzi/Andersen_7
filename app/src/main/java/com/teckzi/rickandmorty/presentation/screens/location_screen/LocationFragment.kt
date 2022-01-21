@@ -24,6 +24,8 @@ import com.teckzi.rickandmorty.presentation.adapters.LocationAdapter
 import com.teckzi.rickandmorty.util.Constants.FILTER_RETURN_BACK_TO_LOCATION
 import com.teckzi.rickandmorty.util.Constants.FILTER_TYPE_ARGUMENT_KEY
 import com.teckzi.rickandmorty.util.Constants.LOCATION_TYPE
+import com.teckzi.rickandmorty.util.invisible
+import com.teckzi.rickandmorty.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -56,6 +58,16 @@ class LocationFragment : Fragment(R.layout.fragment_location), SearchView.OnQuer
         locationAdapter.addLoadStateListener { state: CombinedLoadStates ->
             binding.locationMainRecyclerView.isVisible = state.refresh != LoadState.Loading
             binding.locationProgressBar.isVisible = state.refresh == LoadState.Loading
+            if (locationAdapter.itemCount < 1) {
+                binding.locationMainRecyclerView.invisible()
+                if (!binding.locationProgressBar.isVisible){
+                    binding.errorMessage.visible()
+                    binding.errorImage.visible()
+                }else{
+                    binding.errorMessage.invisible()
+                    binding.errorImage.invisible()
+                }
+            }
         }
     }
 

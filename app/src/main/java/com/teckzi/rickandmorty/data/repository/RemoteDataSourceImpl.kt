@@ -26,7 +26,6 @@ class RemoteDataSourceImpl(
     private val rickAndMortyDatabase: RickAndMortyDatabase
 ) : RemoteDataSource {
 
-
     override fun getAllCharacters() = Pager(
         config = PagingConfig(pageSize = ITEMS_PER_PAGE),
         pagingSourceFactory = {
@@ -36,7 +35,6 @@ class RemoteDataSourceImpl(
             )
         }
     ).flow
-
     override fun getAllLocations() = Pager(
         config = PagingConfig(pageSize = ITEMS_PER_PAGE),
         pagingSourceFactory = {
@@ -46,7 +44,6 @@ class RemoteDataSourceImpl(
             )
         }
     ).flow
-
     override fun getAllEpisodes() = Pager(
         config = PagingConfig(pageSize = ITEMS_PER_PAGE),
         pagingSourceFactory = {
@@ -56,6 +53,27 @@ class RemoteDataSourceImpl(
             )
         }
     ).flow
+
+    override suspend fun getCharacterByIdRemote(id: Int): CharacterModel {
+        return rickAndMortyApi.getCharacterById(id).toCharacterModel()
+    }
+    override suspend fun getLocationByIdRemote(id: Int): LocationModel {
+        return rickAndMortyApi.getLocationById(id).toLocationModel()
+    }
+    override suspend fun getEpisodeByIdRemote(id: Int): EpisodeModel {
+        return rickAndMortyApi.getEpisodeById(id).toEpisodeModel()
+    }
+
+    override suspend fun getCharacterListById(charactersIds: List<Int>): List<CharacterModel> {
+        val ids = charactersIds.toString().split("[")[1].substringBefore("]")
+        val response = rickAndMortyApi.getCharacterListById(ids)
+        return response.map { it.toCharacterModel() }
+    }
+    override suspend fun getEpisodeListById(episodesIds: List<Int>): List<EpisodeModel> {
+        val ids = episodesIds.toString().split("[")[1].substringBefore("]")
+        val response = rickAndMortyApi.getEpisodeListById(ids)
+        return response.map { it.toEpisodeModel() }
+    }
 
     override suspend fun searchCharacters(
         name: String?,
@@ -115,4 +133,5 @@ class RemoteDataSourceImpl(
             }
         ).flow
     }
+
 }

@@ -15,6 +15,9 @@ interface CharacterDao {
     @Query("SELECT * FROM character_table WHERE id=:characterId")
     suspend fun getSelectedCharacter(characterId: Int): CharacterDbo
 
+    @Query("SELECT * FROM character_table WHERE id IN (:characterIds)")
+    suspend fun getCharacterList(characterIds: List<Int>): List<CharacterDbo>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addCharacters(characters: List<CharacterDbo>)
 

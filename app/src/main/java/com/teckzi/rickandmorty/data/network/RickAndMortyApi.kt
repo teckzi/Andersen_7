@@ -20,8 +20,16 @@ interface RickAndMortyApi {
         @Query("gender") gender: String? = null
     ): ApiResponse<CharacterDto>
 
-    @GET("character/{id}")
-    suspend fun getCharacterById(@Path("id") id: Int): CharacterDto
+    @GET("character/{characterId}")
+    suspend fun getCharacterById(
+        @Path("characterId") id: Int
+    ): CharacterDto
+
+    @GET("character/{characterId}")
+    suspend fun getCharacterListById(
+        @Path("characterId") ids: String
+    ): List<CharacterDto>
+
 
     @GET("location")
     suspend fun getLocations(
@@ -42,6 +50,11 @@ interface RickAndMortyApi {
         @Query("name") name: String? = null,
         @Query("episode") episode: String? = null
     ): ApiResponse<EpisodeDto>
+
+    @GET("episode/{episodeId}")
+    suspend fun getEpisodeListById(
+        @Path("episodeId") id: String
+    ): List<EpisodeDto>
 
     @GET("episode/{episodeId}")
     suspend fun getEpisodeById(

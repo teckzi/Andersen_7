@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.Flow
 interface IRepository {
 
     fun getAllCharacters(): Flow<PagingData<CharacterModel>>
-    suspend fun getSelectedCharacter(characterId: Int): CharacterModel
+    suspend fun getCharacterById(characterId: Int): CharacterModel
+    suspend fun getCharacterListById(characterIdList: List<Int>): List<CharacterModel>
     suspend fun searchCharacters(
         name: String?,
         status: String?,
@@ -19,7 +20,8 @@ interface IRepository {
     ): Flow<PagingData<CharacterModel>>
 
     fun getAllLocation(): Flow<PagingData<LocationModel>>
-    suspend fun getSelectedLocation(locationId: Int): LocationModel
+    suspend fun getLocationById(locationId: Int): LocationModel
+    suspend fun getSelectedLocationByName(locationName: String): LocationModel
     suspend fun searchLocation(
         name: String?,
         type: String?,
@@ -27,7 +29,8 @@ interface IRepository {
     ): Flow<PagingData<LocationModel>>
 
     fun getAllEpisodes(): Flow<PagingData<EpisodeModel>>
-    suspend fun getSelectedEpisode(episodeId: Int): EpisodeModel
+    suspend fun getEpisodeById(episodeId: Int): EpisodeModel
+    suspend fun getEpisodeListById(episodeIdList: List<Int>): List<EpisodeModel>
     suspend fun searchEpisode(
         name: String?,
         episode: String?

@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.teckzi.rickandmorty.domain.model.CharacterModel
 import com.teckzi.rickandmorty.domain.model.EpisodeModel
 import com.teckzi.rickandmorty.domain.use_cases.UseCases
-import com.teckzi.rickandmorty.util.Constants
 import com.teckzi.rickandmorty.util.Constants.EPISODE_ARGUMENT_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -24,13 +23,21 @@ class EpisodeDetailViewModel @Inject constructor(
 
     private val _selectedEpisode: MutableStateFlow<EpisodeModel?> = MutableStateFlow(null)
     val selectedEpisode: StateFlow<EpisodeModel?> = _selectedEpisode
+    private val _characterList: MutableStateFlow<List<CharacterModel?>> =
+        MutableStateFlow(emptyList())
+    val characterList: StateFlow<List<CharacterModel?>> = _characterList
 
     init {
         val episodeId = savedStateHandle.get<Int>(EPISODE_ARGUMENT_KEY)
         viewModelScope.launch(Dispatchers.IO) {
             _selectedEpisode.value =
                 episodeId?.let { useCases.getSelectedEpisodeUseCase(episodeId = episodeId) }
+
+            val listOfCharacterIds = _selectedEpisode.value!!.characters
+            _characterList.value = listOfCharacterIds.let {
+                useCases.getCharacterListById(characterIdList = it)
+            }
+            Log.d("TAG episode viewModel", "${_characterList.value}")
         }
-        Log.d("TAG episode viewModel savedStateHandle", "$episodeId")
     }
 }

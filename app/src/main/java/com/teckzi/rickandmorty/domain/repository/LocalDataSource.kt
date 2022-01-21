@@ -5,9 +5,12 @@ import com.teckzi.rickandmorty.domain.model.EpisodeModel
 import com.teckzi.rickandmorty.domain.model.LocationModel
 
 interface LocalDataSource {
-    suspend fun getSelectedCharacter(id: Int): CharacterModel
+    suspend fun getCharacterByIdLocal(id: Int): CharacterModel
+    suspend fun getLocationByIdLocal(id: Int): LocationModel
+    suspend fun getEpisodeByIdLocal(id: Int): EpisodeModel
 
-    suspend fun getSelectedLocation(id: Int): LocationModel
+    suspend fun getCharactersListById(idList:List<Int>):List<CharacterModel>
+    suspend fun getEpisodesListById(idList:List<Int>):List<EpisodeModel>
 
-    suspend fun getSelectedEpisode(id: Int): EpisodeModel
+    suspend fun getSelectedLocationByName(locationName: String):LocationModel
 }

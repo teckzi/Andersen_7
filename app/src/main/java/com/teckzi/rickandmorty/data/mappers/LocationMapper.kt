@@ -18,7 +18,7 @@ fun LocationDbo.toLocationModel() = LocationModel(
     name = name,
     dimension = dimension,
     type = type,
-    characters = characters
+    characters = characters ?: emptyList()
 )
 
 fun LocationModel.toLocationDbo() = LocationDbo(

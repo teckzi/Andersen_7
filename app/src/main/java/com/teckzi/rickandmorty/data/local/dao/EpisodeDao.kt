@@ -15,6 +15,9 @@ interface EpisodeDao {
     @Query("SELECT * FROM episode_table WHERE id=:episodeId")
     suspend fun getSelectedEpisode(episodeId: Int): EpisodeDbo
 
+    @Query("SELECT * FROM episode_table WHERE id IN (:episodeIds)")
+    suspend fun getEpisodeList(episodeIds: List<Int>): List<EpisodeDbo>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addEpisodes(episodes: List<EpisodeDbo>)
 

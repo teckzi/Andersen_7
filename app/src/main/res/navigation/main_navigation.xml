@@ -51,12 +51,18 @@
         <action
             android:id="@+id/action_characterDetailScreen_to_episodeDetailFragment"
             app:destination="@id/episodeDetailFragment" />
+        <action
+            android:id="@+id/action_characterDetailScreen_to_episodeFragment"
+            app:destination="@id/episodeFragment" />
+        <action
+            android:id="@+id/action_characterDetailScreen_to_locationDetailFragment"
+            app:destination="@id/locationDetailFragment" />
     </fragment>
     <dialog
         android:id="@+id/bottomSheet"
         android:name="com.teckzi.rickandmorty.presentation.common.bottom_sheet.BottomSheet"
         android:label="fragment_bottom_sheet"
-        tools:layout="@layout/fragment_bottom_sheet" >
+        tools:layout="@layout/fragment_bottom_sheet">
         <action
             android:id="@+id/action_bottomSheet_to_characterFragment"
             app:destination="@id/characterFragment" />
@@ -84,6 +90,9 @@
         <argument
             android:name="episodeId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_episodeDetailFragment_to_characterFragment"
+            app:destination="@id/characterFragment" />
     </fragment>
     <fragment
         android:id="@+id/locationDetailFragment"
@@ -96,5 +105,8 @@
         <argument
             android:name="locationId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_locationDetailFragment_to_characterFragment"
+            app:destination="@id/characterFragment" />
     </fragment>
 </navigation>

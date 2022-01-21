@@ -12,5 +12,5 @@ data class LocationDbo(
     @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "type") var type: String,
     @ColumnInfo(name = "dimension") var dimension: String,
-    @ColumnInfo(name = "characters") var characters: List<Int>
+    @ColumnInfo(name = "characters") var characters: List<Int>?
 )

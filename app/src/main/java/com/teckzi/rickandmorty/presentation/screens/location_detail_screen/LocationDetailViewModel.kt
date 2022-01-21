@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.teckzi.rickandmorty.domain.model.CharacterModel
 import com.teckzi.rickandmorty.domain.model.LocationModel
 import com.teckzi.rickandmorty.domain.use_cases.UseCases
 import com.teckzi.rickandmorty.util.Constants.LOCATION_ARGUMENT_KEY
@@ -22,13 +23,20 @@ class LocationDetailViewModel @Inject constructor(
 
     private val _selectedLocation: MutableStateFlow<LocationModel?> = MutableStateFlow(null)
     val selectedLocation: StateFlow<LocationModel?> = _selectedLocation
+    private val _characterList: MutableStateFlow<List<CharacterModel?>> = MutableStateFlow(emptyList())
+    val characterList: StateFlow<List<CharacterModel?>> = _characterList
 
     init {
         val locationId = savedStateHandle.get<Int>(LOCATION_ARGUMENT_KEY)
+        Log.d("TAG loc viewModel", "locationId $locationId")
         viewModelScope.launch(Dispatchers.IO) {
             _selectedLocation.value =
                 locationId?.let { useCases.getSelectedLocationUseCase(locationId = locationId) }
+
+            val listOfCharacterIds = _selectedLocation.value!!.characters
+            _characterList.value = listOfCharacterIds.let {
+                useCases.getCharacterListById(characterIdList = it)
+            }
         }
-        Log.d("TAG location viewModel savedStateHandle", "$locationId")
     }
 }

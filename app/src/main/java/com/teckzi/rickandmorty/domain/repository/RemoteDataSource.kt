@@ -7,7 +7,17 @@ import com.teckzi.rickandmorty.domain.model.LocationModel
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteDataSource {
+
     fun getAllCharacters(): Flow<PagingData<CharacterModel>>
+    fun getAllLocations(): Flow<PagingData<LocationModel>>
+    fun getAllEpisodes(): Flow<PagingData<EpisodeModel>>
+
+    suspend fun getCharacterByIdRemote(id: Int): CharacterModel
+    suspend fun getLocationByIdRemote(id: Int): LocationModel
+    suspend fun getEpisodeByIdRemote(id: Int): EpisodeModel
+
+    suspend fun getCharacterListById(charactersIds: List<Int>): List<CharacterModel>
+    suspend fun getEpisodeListById(episodesIds: List<Int>): List<EpisodeModel>
 
     suspend fun searchCharacters(
         name: String?,
@@ -17,18 +27,15 @@ interface RemoteDataSource {
         gender: String?
     ): Flow<PagingData<CharacterModel>>
 
-    fun getAllLocations(): Flow<PagingData<LocationModel>>
-
     suspend fun searchLocations(
         name: String?,
         type: String?,
         dimension: String?
     ): Flow<PagingData<LocationModel>>
 
-    fun getAllEpisodes(): Flow<PagingData<EpisodeModel>>
-
     suspend fun searchEpisodes(
         name: String?,
         episode: String?
     ): Flow<PagingData<EpisodeModel>>
+
 }

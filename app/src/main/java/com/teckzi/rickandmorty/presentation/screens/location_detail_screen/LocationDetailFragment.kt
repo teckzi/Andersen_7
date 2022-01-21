@@ -8,9 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.FragmentLocationDetailBinding
+import com.teckzi.rickandmorty.domain.model.CharacterModel
+import com.teckzi.rickandmorty.presentation.adapters.DetailsAdapter
+import com.teckzi.rickandmorty.util.Constants.LOCATION_TYPE
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -21,6 +25,7 @@ class LocationDetailFragment : Fragment(R.layout.fragment_location_detail) {
 
     private val viewModel by viewModels<LocationDetailViewModel>()
     private val binding by viewBinding(FragmentLocationDetailBinding::bind)
+    private lateinit var charactersAdapter: DetailsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,6 +41,8 @@ class LocationDetailFragment : Fragment(R.layout.fragment_location_detail) {
                 }
             }
         }
+        getCharacters()
+        navigateToAllCharacters()
     }
 
     private fun loadLocationData(
@@ -49,6 +56,26 @@ class LocationDetailFragment : Fragment(R.layout.fragment_location_detail) {
             locationDetailsDimension.text = dimension
         }
 
+    }
+
+    private fun initRecyclerView(characterList: List<CharacterModel>) {
+        charactersAdapter = DetailsAdapter(requireContext(),characterList,LOCATION_TYPE)
+        binding.locationDetailsRecycler.layoutManager = GridLayoutManager(context, 2)
+        binding.locationDetailsRecycler.adapter = charactersAdapter
+    }
+
+    private fun getCharacters(){
+        lifecycleScope.launch {
+            viewModel.characterList.collectLatest {
+                initRecyclerView(it as List<CharacterModel>)
+            }
+        }
+    }
+
+    private fun navigateToAllCharacters() {
+        binding.allCharacters.setOnClickListener {
+            findNavController().navigate(R.id.action_locationDetailFragment_to_characterFragment)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

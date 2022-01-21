@@ -1,11 +1,13 @@
 package com.teckzi.rickandmorty.presentation.screens.character_screen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,6 +26,8 @@ import com.teckzi.rickandmorty.presentation.adapters.LoaderStateAdapter
 import com.teckzi.rickandmorty.util.Constants.CHARACTER_TYPE
 import com.teckzi.rickandmorty.util.Constants.FILTER_RETURN_BACK_TO_CHARACTER
 import com.teckzi.rickandmorty.util.Constants.FILTER_TYPE_ARGUMENT_KEY
+import com.teckzi.rickandmorty.util.invisible
+import com.teckzi.rickandmorty.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -53,12 +57,21 @@ class CharacterFragment : Fragment(R.layout.fragment_character), SearchView.OnQu
             header = LoaderStateAdapter(),
             footer = LoaderStateAdapter()
         )
+
         characterAdapter.addLoadStateListener { state: CombinedLoadStates ->
             binding.characterMainRecyclerView.isVisible = state.refresh != LoadState.Loading
             binding.characterProgressBar.isVisible = state.refresh == LoadState.Loading
-            binding.characterMainRecyclerView.isVisible = state.refresh != LoadState.Loading
-            binding.errorMessage.isVisible = state.e
-            binding.errorImage.isVisible
+
+            if (characterAdapter.itemCount < 1) {
+                binding.characterMainRecyclerView.invisible()
+                if (!binding.characterProgressBar.isVisible){
+                    binding.errorMessage.visible()
+                    binding.errorImage.visible()
+                }else{
+                    binding.errorMessage.invisible()
+                    binding.errorImage.invisible()
+                }
+            }
         }
     }
 

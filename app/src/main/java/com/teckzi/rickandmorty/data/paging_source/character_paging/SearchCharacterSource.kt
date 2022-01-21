@@ -32,7 +32,6 @@ class SearchCharacterSource @Inject constructor(
         var nextKey: Int? = null
 
         try {
-            Log.d("TAG char search paging", "name $name, status $status, species $species, type $type, gender $gender")
             rickAndMortyApi.getCharacters(
                 page = page,
                 name = name,
@@ -47,13 +46,11 @@ class SearchCharacterSource @Inject constructor(
                     nextKey = nextPage?.toInt()
                 }
                 results = this.results.map { it.toCharacterModel() }
-                Log.d("TAG char search paging", "$results")
                 results.let { characterList ->
                     characterDao.addCharacters(characterList.map { it.toCharacterDbo() })
                 }
             }
         } catch (e: Exception) {
-            Log.d("TAG char search paging", "$e")
             characterDao.getFilteredCharacters(
                 name = name?.convertStringToRoomSearch(),
                 status = status?.convertStringToRoomSearch(),
