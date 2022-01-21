@@ -10,12 +10,13 @@ import com.teckzi.rickandmorty.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment: Fragment(R.layout.fragment_main) {
+class MainFragment : Fragment(R.layout.fragment_main) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottomNavigation)
-        val navController = (childFragmentManager.findFragmentById(R.id.mainFragmentContainerView) as NavHostFragment).navController
+        val navController =
+            (childFragmentManager.findFragmentById(R.id.mainFragmentContainerView) as NavHostFragment).navController
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
 
@@ -23,8 +24,8 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             when (destination.id) {
                 R.id.characterFragment -> bottomNavigationView.visibility = View.VISIBLE
                 R.id.locationFragment -> bottomNavigationView.visibility = View.VISIBLE
-                R.id.episodeFragment-> bottomNavigationView.visibility = View.VISIBLE
-                else ->  bottomNavigationView.visibility = View.GONE
+                R.id.episodeFragment -> bottomNavigationView.visibility = View.VISIBLE
+                else -> bottomNavigationView.visibility = View.GONE
             }
         }
     }

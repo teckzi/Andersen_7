@@ -43,7 +43,10 @@ class CharacterDetailViewModel @Inject constructor(
                 _episodeList.value = listOfEpisodeIds.let {
                     useCases.getEpisodeListById(episodeIdList = listOfEpisodeIds)
                 }
-                Log.d("TAG viewModel", "episode $listOfEpisodeIds,_episodeList.value ${_episodeList.value } ")
+                Log.d(
+                    "TAG viewModel",
+                    "episode $listOfEpisodeIds,_episodeList.value ${_episodeList.value} "
+                )
                 val origin = _selectedCharacter.value!!.origin
                 val location = _selectedCharacter.value!!.location
                 Log.d("TAG viewModel", "origin $origin,location $location")

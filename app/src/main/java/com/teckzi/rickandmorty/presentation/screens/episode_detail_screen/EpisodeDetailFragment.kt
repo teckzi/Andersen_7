@@ -1,8 +1,6 @@
 package com.teckzi.rickandmorty.presentation.screens.episode_detail_screen
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -61,7 +59,8 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_detail) {
     }
 
     private fun initRecyclerView(characterList: List<CharacterModel>) {
-        binding.characterTitle.text = resources.getString(R.string.character_number,characterList.size)
+        binding.characterTitle.text =
+            resources.getString(R.string.character_number, characterList.size)
         detailsAdapter = DetailsAdapter(requireContext(), characterList, EPISODE_TYPE)
         binding.episodeDetailsRecycler.layoutManager = GridLayoutManager(context, 2)
         binding.episodeDetailsRecycler.adapter = detailsAdapter

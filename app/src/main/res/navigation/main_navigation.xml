@@ -13,7 +13,7 @@
         <action
             android:id="@+id/action_characterFragment_to_characterDetailScreen"
             app:destination="@id/characterDetailFragment"
-            app:popUpTo="@id/characterFragment"/>
+            app:popUpTo="@id/characterFragment" />
         <action
             android:id="@+id/action_characterFragment_to_bottomSheet"
             app:destination="@id/bottomSheet" />
@@ -50,16 +50,16 @@
         android:label="Character Details">
         <argument
             android:name="characterId"
-            app:argType="integer"/>
+            app:argType="integer" />
         <action
             android:id="@+id/action_characterDetailFragment_to_episodeDetailFragment"
-            app:destination="@id/episodeDetailFragment"/>
+            app:destination="@id/episodeDetailFragment" />
         <action
             android:id="@+id/action_characterDetailFragment_to_episodeFragment"
             app:destination="@id/episodeFragment" />
         <action
             android:id="@+id/action_characterDetailFragment_to_locationDetailFragment"
-            app:destination="@id/locationDetailFragment"/>
+            app:destination="@id/locationDetailFragment" />
     </fragment>
     <dialog
         android:id="@+id/bottomSheet"
@@ -86,7 +86,7 @@
         tools:layout="@layout/fragment_episode_detail">
         <action
             android:id="@+id/action_episodeDetailFragment_to_characterDetailScreen"
-            app:destination="@id/characterDetailFragment"/>
+            app:destination="@id/characterDetailFragment" />
         <argument
             android:name="episodeId"
             app:argType="integer" />
