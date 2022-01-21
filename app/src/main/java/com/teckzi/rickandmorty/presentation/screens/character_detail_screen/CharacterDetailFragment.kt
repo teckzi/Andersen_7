@@ -2,14 +2,11 @@ package com.teckzi.rickandmorty.presentation.screens.character_detail_screen
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -33,7 +30,6 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.selectedCharacter.collectLatest { character ->
                 character?.let { it ->
@@ -50,8 +46,11 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
             }
         }
         getEpisodes()
-        clickOrigin()
         navigateToAllEpisodes()
+        binding.backButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
+        loadOriginId()
     }
 
     private fun loadCharacterData(
@@ -84,6 +83,7 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
     }
 
     private fun initRecyclerView(episodeList: List<EpisodeModel>) {
+        binding.episodesTitle.text = resources.getString(R.string.episode_number, episodeList.size)
         episodeAdapter = CharacterDetailsAdapter(requireContext(), episodeList)
         binding.characterDetailEpisodes.layoutManager = LinearLayoutManager(requireContext())
         binding.characterDetailEpisodes.adapter = episodeAdapter
@@ -99,43 +99,36 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
 
     private fun navigateToAllEpisodes() {
         binding.allEpisodes.setOnClickListener {
-            findNavController().navigate(R.id.action_characterDetailScreen_to_episodeFragment)
+            findNavController().navigate(R.id.action_characterDetailFragment_to_episodeFragment)
         }
     }
 
-    private fun clickOrigin() {
+    private fun loadOriginId() {
         lifecycleScope.launch {
             viewModel.characterOrigin.collectLatest { locationModel ->
-                val id = locationModel?.id
-                if (id != null) if (binding.characterDetailOrigin.text.toString() != "unknown") binding.originButton.setOnClickListener {
-                    val action =
-                        CharacterDetailFragmentDirections.actionCharacterDetailScreenToLocationDetailFragment(
-                            id
-                        )
-                    Navigation.findNavController(it).navigate(action)
+                if (locationModel?.id != null) {
+                    binding.originButton.setOnClickListener {
+                        val action =
+                            CharacterDetailFragmentDirections.actionCharacterDetailFragmentToLocationDetailFragment(
+                                locationId = locationModel.id
+                            )
+                        requireView().findNavController().navigate(action)
+                    }
                 }
             }
         }
-
         lifecycleScope.launch {
             viewModel.characterLocation.collectLatest { locationModel ->
-                val id = locationModel?.id
-                if (id != null) if (binding.characterDetailLocation.text.toString() != "unknown") binding.locationButton.setOnClickListener {
-                    val action =
-                        CharacterDetailFragmentDirections.actionCharacterDetailScreenToLocationDetailFragment(
-                            id
-                        )
-                    Navigation.findNavController(it).navigate(action)
+                if (locationModel?.id != null) {
+                    binding.locationButton.setOnClickListener {
+                        val action =
+                            CharacterDetailFragmentDirections.actionCharacterDetailFragmentToLocationDetailFragment(
+                                locationId = locationModel.id
+                            )
+                        requireView().findNavController().navigate(action)
+                    }
                 }
             }
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.details_menu, menu)
-        val popBack = menu.findItem(R.id.popBack)
-        popBack.setOnMenuItemClickListener {
-            findNavController().popBackStack()
         }
     }
 }

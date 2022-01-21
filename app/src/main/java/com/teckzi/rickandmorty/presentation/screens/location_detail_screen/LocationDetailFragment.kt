@@ -29,7 +29,6 @@ class LocationDetailFragment : Fragment(R.layout.fragment_location_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.selectedLocation.collectLatest { location ->
                 location?.let { it ->
@@ -43,6 +42,9 @@ class LocationDetailFragment : Fragment(R.layout.fragment_location_detail) {
         }
         getCharacters()
         navigateToAllCharacters()
+        binding.backButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun loadLocationData(
@@ -55,10 +57,10 @@ class LocationDetailFragment : Fragment(R.layout.fragment_location_detail) {
             locationDetailsType.text = type
             locationDetailsDimension.text = dimension
         }
-
     }
 
     private fun initRecyclerView(characterList: List<CharacterModel>) {
+        binding.characterTitle.text = resources.getString(R.string.character_number,characterList.size)
         charactersAdapter = DetailsAdapter(requireContext(), characterList, LOCATION_TYPE)
         binding.locationDetailsRecycler.layoutManager = GridLayoutManager(context, 2)
         binding.locationDetailsRecycler.adapter = charactersAdapter
@@ -75,14 +77,6 @@ class LocationDetailFragment : Fragment(R.layout.fragment_location_detail) {
     private fun navigateToAllCharacters() {
         binding.allCharacters.setOnClickListener {
             findNavController().navigate(R.id.action_locationDetailFragment_to_characterFragment)
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.details_menu, menu)
-        val popBack = menu.findItem(R.id.popBack)
-        popBack.setOnMenuItemClickListener {
-            findNavController().popBackStack()
         }
     }
 }

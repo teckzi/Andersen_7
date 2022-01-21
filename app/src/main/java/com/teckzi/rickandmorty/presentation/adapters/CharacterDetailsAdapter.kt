@@ -49,7 +49,7 @@ class CharacterDetailViewHolder(val view: View) : RecyclerView.ViewHolder(view) 
             root.setOnClickListener {
                 val id = item!!.id
                 val action =
-                    CharacterDetailFragmentDirections.actionCharacterDetailScreenToEpisodeDetailFragment(
+                    CharacterDetailFragmentDirections.actionCharacterDetailFragmentToEpisodeDetailFragment(
                         episodeId = id
                     )
                 Navigation.findNavController(it).navigate(action)

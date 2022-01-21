@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -40,6 +41,10 @@ class LocationFragment : Fragment(R.layout.fragment_location), SearchView.OnQuer
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as AppCompatActivity).apply {
+            setSupportActionBar(binding.toolbar)
+            supportActionBar?.title = "Locations"
+        }
         setHasOptionsMenu(true)
         initRecyclerView()
         getLocations()

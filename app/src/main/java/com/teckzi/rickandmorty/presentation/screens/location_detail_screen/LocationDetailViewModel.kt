@@ -1,6 +1,5 @@
 package com.teckzi.rickandmorty.presentation.screens.location_detail_screen
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

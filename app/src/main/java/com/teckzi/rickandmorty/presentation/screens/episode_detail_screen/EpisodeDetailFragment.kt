@@ -30,7 +30,6 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.selectedEpisode.collectLatest { episode ->
                 episode?.let { it ->
@@ -44,6 +43,9 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_detail) {
         }
         getCharacters()
         navigateToAllCharacters()
+        binding.backButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun loadEpisodeData(
@@ -59,6 +61,7 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_detail) {
     }
 
     private fun initRecyclerView(characterList: List<CharacterModel>) {
+        binding.characterTitle.text = resources.getString(R.string.character_number,characterList.size)
         detailsAdapter = DetailsAdapter(requireContext(), characterList, EPISODE_TYPE)
         binding.episodeDetailsRecycler.layoutManager = GridLayoutManager(context, 2)
         binding.episodeDetailsRecycler.adapter = detailsAdapter
@@ -75,14 +78,6 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_detail) {
     private fun navigateToAllCharacters() {
         binding.allCharacters.setOnClickListener {
             findNavController().navigate(R.id.action_episodeDetailFragment_to_characterFragment)
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.details_menu, menu)
-        val popBack = menu.findItem(R.id.popBack)
-        popBack.setOnMenuItemClickListener {
-            findNavController().popBackStack()
         }
     }
 }

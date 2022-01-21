@@ -11,10 +11,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/round_button"
+            android:contentDescription="@string/return_back"
+            android:elevation="2dp"
+            android:scaleType="center"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/backgroundImage"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="220dp"
             android:contentDescription="@string/image_background"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +42,7 @@
             android:id="@+id/shapeableImageView"
             android:layout_width="210dp"
             android:layout_height="210dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="80dp"
             android:background="@color/main_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -236,8 +252,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
-            android:text="@string/all_episodes"
             android:contentDescription="@string/press_to_navigate_to_all_episodes"
+            android:text="@string/all_episodes"
             app:layout_constraintBaseline_toBaselineOf="@+id/episodesTitle"
             app:layout_constraintEnd_toEndOf="parent" />
 

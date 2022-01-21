@@ -33,6 +33,7 @@ class CharacterDetailViewModel @Inject constructor(
 
     init {
         val characterId = savedStateHandle.get<Int>(CHARACTER_ARGUMENT_KEY)
+        Log.d("TAG viewModel", "id = $characterId")
         if (characterId != null) {
             viewModelScope.launch(Dispatchers.IO) {
                 _selectedCharacter.value =
@@ -42,13 +43,18 @@ class CharacterDetailViewModel @Inject constructor(
                 _episodeList.value = listOfEpisodeIds.let {
                     useCases.getEpisodeListById(episodeIdList = listOfEpisodeIds)
                 }
+                Log.d("TAG viewModel", "episode $listOfEpisodeIds,_episodeList.value ${_episodeList.value } ")
                 val origin = _selectedCharacter.value!!.origin
                 val location = _selectedCharacter.value!!.location
+                Log.d("TAG viewModel", "origin $origin,location $location")
                 if (origin != "unknown") _characterOrigin.value =
                     useCases.getLocationByName(locationName = origin)
-
                 if (location != "unknown") _characterLocation.value =
                     useCases.getLocationByName(locationName = location)
+                Log.d(
+                    "TAG viewModel",
+                    "_characterOrigin ${_characterOrigin.value},_characterLocation ${_characterLocation.value}"
+                )
             }
         }
     }

@@ -29,4 +29,7 @@
     <string name="navigate_to_current_origin">navigate to current origin</string>
     <string name="navigate_to_current_location">navigate to current location</string>
     <string name="press_to_navigate_to_all_episodes">press to navigate to all episodes</string>
+    <string name="return_back">return back</string>
+    <string name="episode_number">Episodes(%d)</string>
+    <string name="character_number">Characters(%d)</string>
 </resources>
