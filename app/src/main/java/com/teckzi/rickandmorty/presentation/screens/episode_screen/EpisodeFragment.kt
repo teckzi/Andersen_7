@@ -140,8 +140,4 @@ class EpisodeFragment : Fragment(R.layout.fragment_episode), SearchView.OnQueryT
         getEpisodes()
         binding.swipeRefreshLayout.isRefreshing = false
     }
-
-    companion object {
-        private const val TAG = "TAG EpisodeFragment"
-    }
 }

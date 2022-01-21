@@ -1,6 +1,5 @@
 package com.teckzi.rickandmorty.presentation.screens.episode_detail_screen
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -38,7 +37,6 @@ class EpisodeDetailViewModel @Inject constructor(
                 _characterList.value = listOfCharacterIds.let {
                     useCases.getCharacterListById(characterIdList = it)
                 }
-                Log.d("TAG episode viewModel", "${_characterList.value}")
             }
         }
     }

@@ -149,8 +149,4 @@ class CharacterFragment : Fragment(R.layout.fragment_character), SearchView.OnQu
         getCharacters()
         binding.swipeRefreshLayout.isRefreshing = false
     }
-
-    companion object {
-        private const val TAG = "TAG CharacterFragment"
-    }
 }
