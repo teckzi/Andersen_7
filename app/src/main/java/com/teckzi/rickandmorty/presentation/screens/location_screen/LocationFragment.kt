@@ -10,6 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
@@ -20,6 +21,7 @@ import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.FragmentLocationBinding
+import com.teckzi.rickandmorty.di.Injector
 import com.teckzi.rickandmorty.presentation.adapters.LoaderStateAdapter
 import com.teckzi.rickandmorty.presentation.adapters.LocationAdapter
 import com.teckzi.rickandmorty.util.Constants.FILTER_RETURN_BACK_TO_LOCATION
@@ -27,17 +29,25 @@ import com.teckzi.rickandmorty.util.Constants.FILTER_TYPE_ARGUMENT_KEY
 import com.teckzi.rickandmorty.util.Constants.LOCATION_TYPE
 import com.teckzi.rickandmorty.util.invisible
 import com.teckzi.rickandmorty.util.visible
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-@AndroidEntryPoint
+
 class LocationFragment : Fragment(R.layout.fragment_location), SearchView.OnQueryTextListener,
     SwipyRefreshLayout.OnRefreshListener {
-    private val viewModel by viewModels<LocationViewModel>()
-    private val binding by viewBinding(FragmentLocationBinding::bind)
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel by viewModels<LocationViewModel> { viewModelFactory }
     private lateinit var locationAdapter: LocationAdapter
+    private val binding by viewBinding(FragmentLocationBinding::bind)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Injector.getLocationFragmentComponent().inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

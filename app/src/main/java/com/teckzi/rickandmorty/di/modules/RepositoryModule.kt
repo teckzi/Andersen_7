@@ -1,4 +1,4 @@
-package com.teckzi.rickandmorty.di
+package com.teckzi.rickandmorty.di.modules
 
 import com.teckzi.rickandmorty.data.repository.Repository
 import com.teckzi.rickandmorty.domain.use_cases.UseCases
@@ -16,13 +16,10 @@ import com.teckzi.rickandmorty.domain.use_cases.location_use_cases.GetSearchedLo
 import com.teckzi.rickandmorty.domain.use_cases.location_use_cases.GetSelectedLocationUseCase
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object RepositoryModule {
+class RepositoryModule {
 
     @Provides
     @Singleton

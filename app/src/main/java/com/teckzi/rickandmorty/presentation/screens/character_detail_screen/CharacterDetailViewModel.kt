@@ -4,22 +4,21 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.teckzi.rickandmorty.di.Injector
 import com.teckzi.rickandmorty.domain.model.CharacterModel
 import com.teckzi.rickandmorty.domain.model.EpisodeModel
 import com.teckzi.rickandmorty.domain.model.LocationModel
 import com.teckzi.rickandmorty.domain.use_cases.UseCases
 import com.teckzi.rickandmorty.util.Constants.CHARACTER_ARGUMENT_KEY
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
     private val useCases: UseCases,
-    savedStateHandle: SavedStateHandle
+    //savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _selectedCharacter: MutableStateFlow<CharacterModel?> = MutableStateFlow(null)
@@ -32,7 +31,8 @@ class CharacterDetailViewModel @Inject constructor(
     val characterLocation: StateFlow<LocationModel?> = _characterLocation
 
     init {
-        val characterId = savedStateHandle.get<Int>(CHARACTER_ARGUMENT_KEY)
+//        val characterId = savedStateHandle.get<Int>(CHARACTER_ARGUMENT_KEY)
+        val characterId = 5
         Log.d("TAG viewModel", "id = $characterId")
         if (characterId != null) {
             viewModelScope.launch(Dispatchers.IO) {
@@ -43,22 +43,18 @@ class CharacterDetailViewModel @Inject constructor(
                 _episodeList.value = listOfEpisodeIds.let {
                     useCases.getEpisodeListById(episodeIdList = listOfEpisodeIds)
                 }
-                Log.d(
-                    "TAG viewModel",
-                    "episode $listOfEpisodeIds,_episodeList.value ${_episodeList.value} "
-                )
                 val origin = _selectedCharacter.value!!.origin
                 val location = _selectedCharacter.value!!.location
-                Log.d("TAG viewModel", "origin $origin,location $location")
                 if (origin != "unknown") _characterOrigin.value =
                     useCases.getLocationByName(locationName = origin)
                 if (location != "unknown") _characterLocation.value =
                     useCases.getLocationByName(locationName = location)
-                Log.d(
-                    "TAG viewModel",
-                    "_characterOrigin ${_characterOrigin.value},_characterLocation ${_characterLocation.value}"
-                )
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Injector.clearCharacterDetailComponent()
     }
 }

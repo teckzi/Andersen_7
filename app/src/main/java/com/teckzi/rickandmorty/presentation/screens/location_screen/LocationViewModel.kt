@@ -4,16 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.teckzi.rickandmorty.di.Injector
 import com.teckzi.rickandmorty.domain.model.LocationModel
 import com.teckzi.rickandmorty.domain.use_cases.UseCases
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
+
 class LocationViewModel @Inject constructor(
     private val useCases: UseCases
 ) : ViewModel() {
@@ -38,5 +38,9 @@ class LocationViewModel @Inject constructor(
                 _searchLocation.value = it
             }
         }
+    }
+    override fun onCleared() {
+        super.onCleared()
+        Injector.clearLocationFragmentComponent()
     }
 }

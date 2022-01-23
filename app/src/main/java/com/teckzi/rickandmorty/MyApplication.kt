@@ -1,8 +1,13 @@
 package com.teckzi.rickandmorty
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.teckzi.rickandmorty.di.Injector
 
-@HiltAndroidApp
 class MyApplication : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+
+        Injector.crateAppComponent(this)
+    }
 }

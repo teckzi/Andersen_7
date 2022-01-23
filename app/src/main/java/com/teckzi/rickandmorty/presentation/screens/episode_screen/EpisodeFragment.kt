@@ -10,6 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
@@ -20,24 +21,33 @@ import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.FragmentEpisodeBinding
+import com.teckzi.rickandmorty.di.Injector
 import com.teckzi.rickandmorty.presentation.adapters.EpisodeAdapter
 import com.teckzi.rickandmorty.presentation.adapters.LoaderStateAdapter
+import com.teckzi.rickandmorty.presentation.screens.character_detail_screen.CharacterDetailViewModel
 import com.teckzi.rickandmorty.util.Constants.EPISODE_TYPE
 import com.teckzi.rickandmorty.util.Constants.FILTER_RETURN_BACK_TO_EPISODE
 import com.teckzi.rickandmorty.util.Constants.FILTER_TYPE_ARGUMENT_KEY
 import com.teckzi.rickandmorty.util.invisible
 import com.teckzi.rickandmorty.util.visible
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class EpisodeFragment : Fragment(R.layout.fragment_episode), SearchView.OnQueryTextListener,
     SwipyRefreshLayout.OnRefreshListener {
-    private val viewModel by viewModels<EpisodeViewModel>()
-    private val binding by viewBinding(FragmentEpisodeBinding::bind)
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var episodeAdapter: EpisodeAdapter
+    private val viewModel by viewModels<EpisodeViewModel> { viewModelFactory }
+    private val binding by viewBinding(FragmentEpisodeBinding::bind)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Injector.getEpisodeFragmentComponent().inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
