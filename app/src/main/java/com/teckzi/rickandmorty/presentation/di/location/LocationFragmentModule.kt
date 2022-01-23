@@ -11,7 +11,6 @@ import dagger.multibindings.IntoMap
 interface LocationFragmentModule {
 
     @Binds
-    @IntoMap
-    @ViewModelKey(LocationViewModel::class)
+    @[IntoMap ViewModelKey(LocationViewModel::class)]
     fun bindLocationFragmentViewModel(locationViewModel: LocationViewModel): ViewModel
 }

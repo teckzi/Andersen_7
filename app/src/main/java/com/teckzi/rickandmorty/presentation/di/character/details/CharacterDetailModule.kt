@@ -11,7 +11,6 @@ import dagger.multibindings.IntoMap
 interface CharacterDetailModule {
 
     @Binds
-    @IntoMap
-    @ViewModelKey(CharacterDetailViewModel::class)
+    @[IntoMap ViewModelKey(CharacterDetailViewModel::class)]
     fun bindCharacterDetailViewModel(characterDetailViewModel: CharacterDetailViewModel): ViewModel
 }

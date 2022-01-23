@@ -1,7 +1,6 @@
 package com.teckzi.rickandmorty.di
 
 import android.content.Context
-import android.util.Log
 import com.teckzi.rickandmorty.di.component.AppComponent
 import com.teckzi.rickandmorty.di.component.DaggerAppComponent
 import com.teckzi.rickandmorty.di.modules.AppModule

@@ -11,7 +11,6 @@ import dagger.multibindings.IntoMap
 interface LocationDetailModule {
 
     @Binds
-    @IntoMap
-    @ViewModelKey(LocationDetailViewModel::class)
+    @[IntoMap ViewModelKey(LocationDetailViewModel::class)]
     fun bindLocationDetailViewModel(locationDetailViewModel: LocationDetailViewModel): ViewModel
 }

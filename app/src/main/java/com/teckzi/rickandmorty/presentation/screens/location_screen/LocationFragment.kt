@@ -1,5 +1,6 @@
 package com.teckzi.rickandmorty.presentation.screens.location_screen
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -44,9 +45,10 @@ class LocationFragment : Fragment(R.layout.fragment_location), SearchView.OnQuer
     private val viewModel by viewModels<LocationViewModel> { viewModelFactory }
     private val binding by viewBinding(FragmentLocationBinding::bind)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+
+    override fun onAttach(context: Context) {
         Injector.getLocationFragmentComponent().inject(this)
-        super.onCreate(savedInstanceState)
+        super.onAttach(context)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

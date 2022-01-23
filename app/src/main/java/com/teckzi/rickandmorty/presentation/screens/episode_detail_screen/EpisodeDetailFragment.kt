@@ -1,5 +1,6 @@
 package com.teckzi.rickandmorty.presentation.screens.episode_detail_screen
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.teckzi.rickandmorty.R
@@ -14,6 +16,7 @@ import com.teckzi.rickandmorty.databinding.FragmentEpisodeDetailBinding
 import com.teckzi.rickandmorty.di.Injector
 import com.teckzi.rickandmorty.domain.model.CharacterModel
 import com.teckzi.rickandmorty.presentation.adapters.DetailsAdapter
+import com.teckzi.rickandmorty.presentation.screens.character_detail_screen.CharacterDetailFragmentArgs
 import com.teckzi.rickandmorty.util.Constants.EPISODE_TYPE
 import com.teckzi.rickandmorty.util.getEpisodeString
 import kotlinx.coroutines.Dispatchers
@@ -29,14 +32,16 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_detail) {
     private lateinit var detailsAdapter: DetailsAdapter
     private val viewModel by viewModels<EpisodeDetailViewModel> { viewModelFactory }
     private val binding by viewBinding(FragmentEpisodeDetailBinding::bind)
+    private val args by navArgs<EpisodeDetailFragmentArgs>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onAttach(context: Context) {
         Injector.getEpisodeDetailComponent().inject(this)
-        super.onCreate(savedInstanceState)
+        super.onAttach(context)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getEpisode(args.episodeId)
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.selectedEpisode.collectLatest { episode ->
                 episode?.let { it ->

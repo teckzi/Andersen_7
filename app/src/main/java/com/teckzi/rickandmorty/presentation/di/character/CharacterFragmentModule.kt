@@ -11,7 +11,6 @@ import dagger.multibindings.IntoMap
 interface CharacterFragmentModule {
 
     @Binds
-    @IntoMap
-    @ViewModelKey(CharacterViewModel::class)
+    @[IntoMap ViewModelKey(CharacterViewModel::class)]
     fun bindCharacterFragmentViewModel(characterViewModel: CharacterViewModel): ViewModel
 }

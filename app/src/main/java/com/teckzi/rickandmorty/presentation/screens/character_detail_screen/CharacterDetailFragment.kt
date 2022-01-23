@@ -1,5 +1,6 @@
 package com.teckzi.rickandmorty.presentation.screens.character_detail_screen
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
@@ -31,14 +33,16 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
     private lateinit var episodeAdapter: CharacterDetailsAdapter
     private val viewModel by viewModels<CharacterDetailViewModel> { viewModelFactory }
     private val binding by viewBinding(FragmentCharacterDetailBinding::bind)
+    private val args by navArgs<CharacterDetailFragmentArgs>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onAttach(context: Context) {
         Injector.getCharacterDetailComponent().inject(this)
-        super.onCreate(savedInstanceState)
+        super.onAttach(context)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getCharacter(args.characterId)
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.selectedCharacter.collectLatest { character ->
                 character?.let { it ->

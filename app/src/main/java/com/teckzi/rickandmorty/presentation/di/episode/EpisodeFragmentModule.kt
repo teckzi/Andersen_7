@@ -11,7 +11,6 @@ import dagger.multibindings.IntoMap
 interface EpisodeFragmentModule {
 
     @Binds
-    @IntoMap
-    @ViewModelKey(EpisodeViewModel::class)
+    @[IntoMap ViewModelKey(EpisodeViewModel::class)]
     fun bindEpisodeFragmentViewModel(episodeViewModel: EpisodeViewModel): ViewModel
 }

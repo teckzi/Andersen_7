@@ -1,7 +1,6 @@
 package com.teckzi.rickandmorty.presentation.screens.character_detail_screen
 
 import android.util.Log
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teckzi.rickandmorty.di.Injector
@@ -9,7 +8,6 @@ import com.teckzi.rickandmorty.domain.model.CharacterModel
 import com.teckzi.rickandmorty.domain.model.EpisodeModel
 import com.teckzi.rickandmorty.domain.model.LocationModel
 import com.teckzi.rickandmorty.domain.use_cases.UseCases
-import com.teckzi.rickandmorty.util.Constants.CHARACTER_ARGUMENT_KEY
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,8 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CharacterDetailViewModel @Inject constructor(
-    private val useCases: UseCases,
-    //savedStateHandle: SavedStateHandle
+    private val useCases: UseCases
 ) : ViewModel() {
 
     private val _selectedCharacter: MutableStateFlow<CharacterModel?> = MutableStateFlow(null)
@@ -30,26 +27,23 @@ class CharacterDetailViewModel @Inject constructor(
     private var _characterLocation: MutableStateFlow<LocationModel?> = MutableStateFlow(null)
     val characterLocation: StateFlow<LocationModel?> = _characterLocation
 
-    init {
-//        val characterId = savedStateHandle.get<Int>(CHARACTER_ARGUMENT_KEY)
-        val characterId = 5
+    fun getCharacter(characterId: Int) {
         Log.d("TAG viewModel", "id = $characterId")
-        if (characterId != null) {
-            viewModelScope.launch(Dispatchers.IO) {
-                _selectedCharacter.value =
-                    characterId.let { useCases.getSelectedCharacterUseCase(characterId = characterId) }
 
-                val listOfEpisodeIds = _selectedCharacter.value!!.episode
-                _episodeList.value = listOfEpisodeIds.let {
-                    useCases.getEpisodeListById(episodeIdList = listOfEpisodeIds)
-                }
-                val origin = _selectedCharacter.value!!.origin
-                val location = _selectedCharacter.value!!.location
-                if (origin != "unknown") _characterOrigin.value =
-                    useCases.getLocationByName(locationName = origin)
-                if (location != "unknown") _characterLocation.value =
-                    useCases.getLocationByName(locationName = location)
+        viewModelScope.launch(Dispatchers.IO) {
+            _selectedCharacter.value =
+                characterId.let { useCases.getSelectedCharacterUseCase(characterId = characterId) }
+
+            val listOfEpisodeIds = _selectedCharacter.value!!.episode
+            _episodeList.value = listOfEpisodeIds.let {
+                useCases.getEpisodeListById(episodeIdList = listOfEpisodeIds)
             }
+            val origin = _selectedCharacter.value!!.origin
+            val location = _selectedCharacter.value!!.location
+            if (origin != "unknown") _characterOrigin.value =
+                useCases.getLocationByName(locationName = origin)
+            if (location != "unknown") _characterLocation.value =
+                useCases.getLocationByName(locationName = location)
         }
     }
 

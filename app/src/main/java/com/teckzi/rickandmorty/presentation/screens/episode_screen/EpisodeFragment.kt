@@ -1,5 +1,6 @@
 package com.teckzi.rickandmorty.presentation.screens.episode_screen
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -24,7 +25,6 @@ import com.teckzi.rickandmorty.databinding.FragmentEpisodeBinding
 import com.teckzi.rickandmorty.di.Injector
 import com.teckzi.rickandmorty.presentation.adapters.EpisodeAdapter
 import com.teckzi.rickandmorty.presentation.adapters.LoaderStateAdapter
-import com.teckzi.rickandmorty.presentation.screens.character_detail_screen.CharacterDetailViewModel
 import com.teckzi.rickandmorty.util.Constants.EPISODE_TYPE
 import com.teckzi.rickandmorty.util.Constants.FILTER_RETURN_BACK_TO_EPISODE
 import com.teckzi.rickandmorty.util.Constants.FILTER_TYPE_ARGUMENT_KEY
@@ -44,9 +44,9 @@ class EpisodeFragment : Fragment(R.layout.fragment_episode), SearchView.OnQueryT
     private val viewModel by viewModels<EpisodeViewModel> { viewModelFactory }
     private val binding by viewBinding(FragmentEpisodeBinding::bind)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onAttach(context: Context) {
         Injector.getEpisodeFragmentComponent().inject(this)
-        super.onCreate(savedInstanceState)
+        super.onAttach(context)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,7 +65,7 @@ class EpisodeFragment : Fragment(R.layout.fragment_episode), SearchView.OnQueryT
 
     private fun initRecyclerView() {
         episodeAdapter = EpisodeAdapter(requireContext())
-        with(binding){
+        with(binding) {
             episodeMainRecyclerView.layoutManager = GridLayoutManager(context, 2)
             episodeMainRecyclerView.adapter = episodeAdapter.withLoadStateHeaderAndFooter(
                 header = LoaderStateAdapter(),

@@ -13,8 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LocationDetailViewModel @Inject constructor(
-    private val useCases: UseCases,
-    //savedStateHandle: SavedStateHandle
+    private val useCases: UseCases
 ) : ViewModel() {
 
     private val _selectedLocation: MutableStateFlow<LocationModel?> = MutableStateFlow(null)
@@ -23,18 +22,14 @@ class LocationDetailViewModel @Inject constructor(
         MutableStateFlow(emptyList())
     val characterList: StateFlow<List<CharacterModel?>> = _characterList
 
-    init {
-        //val locationId = savedStateHandle.get<Int>(LOCATION_ARGUMENT_KEY)
-        val locationId = 5
-        if (locationId != null) {
-            viewModelScope.launch(Dispatchers.IO) {
-                _selectedLocation.value =
-                    locationId.let { useCases.getSelectedLocationUseCase(locationId = locationId) }
+    fun getLocation(locationId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _selectedLocation.value =
+                locationId.let { useCases.getSelectedLocationUseCase(locationId = locationId) }
 
-                val listOfCharacterIds = _selectedLocation.value!!.characters
-                _characterList.value = listOfCharacterIds.let {
-                    useCases.getCharacterListById(characterIdList = it)
-                }
+            val listOfCharacterIds = _selectedLocation.value!!.characters
+            _characterList.value = listOfCharacterIds.let {
+                useCases.getCharacterListById(characterIdList = it)
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.teckzi.rickandmorty.presentation.screens.character_screen
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -43,9 +44,9 @@ class CharacterFragment : Fragment(R.layout.fragment_character), SearchView.OnQu
     private val viewModel by viewModels<CharacterViewModel> { viewModelFactory }
     private val binding by viewBinding(FragmentCharacterBinding::bind)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onAttach(context: Context) {
         Injector.getCharacterFragmentComponent().inject(this)
-        super.onCreate(savedInstanceState)
+        super.onAttach(context)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

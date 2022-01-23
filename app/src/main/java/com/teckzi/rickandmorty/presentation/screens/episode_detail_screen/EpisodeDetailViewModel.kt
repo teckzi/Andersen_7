@@ -12,10 +12,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 class EpisodeDetailViewModel @Inject constructor(
-    private val useCases: UseCases,
-    //savedStateHandle: SavedStateHandle
+    private val useCases: UseCases
 ) : ViewModel() {
 
     private val _selectedEpisode: MutableStateFlow<EpisodeModel?> = MutableStateFlow(null)
@@ -24,18 +22,14 @@ class EpisodeDetailViewModel @Inject constructor(
         MutableStateFlow(emptyList())
     val characterList: StateFlow<List<CharacterModel?>> = _characterList
 
-    init {
-        //val episodeId = savedStateHandle.get<Int>(EPISODE_ARGUMENT_KEY)
-        val episodeId = 5
-        if (episodeId != null) {
-            viewModelScope.launch(Dispatchers.IO) {
-                _selectedEpisode.value =
-                    episodeId.let { useCases.getSelectedEpisodeUseCase(episodeId = episodeId) }
+    fun getEpisode(episodeId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _selectedEpisode.value =
+                episodeId.let { useCases.getSelectedEpisodeUseCase(episodeId = episodeId) }
 
-                val listOfCharacterIds = _selectedEpisode.value!!.characters
-                _characterList.value = listOfCharacterIds.let {
-                    useCases.getCharacterListById(characterIdList = it)
-                }
+            val listOfCharacterIds = _selectedEpisode.value!!.characters
+            _characterList.value = listOfCharacterIds.let {
+                useCases.getCharacterListById(characterIdList = it)
             }
         }
     }

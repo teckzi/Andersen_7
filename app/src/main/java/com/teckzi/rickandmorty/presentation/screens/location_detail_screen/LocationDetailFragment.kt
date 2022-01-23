@@ -1,5 +1,6 @@
 package com.teckzi.rickandmorty.presentation.screens.location_detail_screen
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.teckzi.rickandmorty.R
@@ -14,6 +16,7 @@ import com.teckzi.rickandmorty.databinding.FragmentLocationDetailBinding
 import com.teckzi.rickandmorty.di.Injector
 import com.teckzi.rickandmorty.domain.model.CharacterModel
 import com.teckzi.rickandmorty.presentation.adapters.DetailsAdapter
+import com.teckzi.rickandmorty.presentation.screens.character_detail_screen.CharacterDetailFragmentArgs
 import com.teckzi.rickandmorty.util.Constants.LOCATION_TYPE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -28,14 +31,16 @@ class LocationDetailFragment : Fragment(R.layout.fragment_location_detail) {
     private lateinit var charactersAdapter: DetailsAdapter
     private val viewModel by viewModels<LocationDetailViewModel> { viewModelFactory }
     private val binding by viewBinding(FragmentLocationDetailBinding::bind)
+    private val args by navArgs<LocationDetailFragmentArgs>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onAttach(context: Context) {
         Injector.getLocationDetailComponent().inject(this)
-        super.onCreate(savedInstanceState)
+        super.onAttach(context)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getLocation(args.locationId)
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.selectedLocation.collectLatest { location ->
                 location?.let { it ->
@@ -68,7 +73,7 @@ class LocationDetailFragment : Fragment(R.layout.fragment_location_detail) {
 
     private fun initRecyclerView(characterList: List<CharacterModel>) {
         charactersAdapter = DetailsAdapter(requireContext(), characterList, LOCATION_TYPE)
-        with(binding){
+        with(binding) {
             characterTitle.text =
                 resources.getString(R.string.character_number, characterList.size)
             locationDetailsRecycler.layoutManager = GridLayoutManager(context, 2)
