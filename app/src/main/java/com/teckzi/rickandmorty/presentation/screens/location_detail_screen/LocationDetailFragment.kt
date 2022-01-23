@@ -67,11 +67,13 @@ class LocationDetailFragment : Fragment(R.layout.fragment_location_detail) {
     }
 
     private fun initRecyclerView(characterList: List<CharacterModel>) {
-        binding.characterTitle.text =
-            resources.getString(R.string.character_number, characterList.size)
         charactersAdapter = DetailsAdapter(requireContext(), characterList, LOCATION_TYPE)
-        binding.locationDetailsRecycler.layoutManager = GridLayoutManager(context, 2)
-        binding.locationDetailsRecycler.adapter = charactersAdapter
+        with(binding){
+            characterTitle.text =
+                resources.getString(R.string.character_number, characterList.size)
+            locationDetailsRecycler.layoutManager = GridLayoutManager(context, 2)
+            locationDetailsRecycler.adapter = charactersAdapter
+        }
     }
 
     private fun getCharacters() {

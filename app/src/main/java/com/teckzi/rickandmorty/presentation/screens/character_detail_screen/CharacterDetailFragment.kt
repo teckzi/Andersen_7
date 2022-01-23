@@ -71,31 +71,34 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
         origin: String,
         location: String
     ) {
-
-        binding.characterDetailImage.load(image) {
-            transformations(CircleCropTransformation())
+        with(binding){
+            characterDetailImage.load(image) {
+                transformations(CircleCropTransformation())
+            }
+            backgroundImage.load(image) {
+                transformations(BlurTransformation(requireContext(), 6f))
+            }
+            characterDetailName.text = name
+            characterDetailStatus.text = status
+            when (status) {
+                "Alive" -> characterDetailStatus.setTextColor(Color.parseColor("#2EED0C"))
+                "Dead" -> characterDetailStatus.setTextColor(Color.parseColor("#FF0000"))
+                "unknown" -> characterDetailStatus.setTextColor(Color.parseColor("#C4FFFFFF"))
+            }
+            characterDetailGender.text = gender
+            characterDetailSpecies.text = species
+            characterDetailOrigin.text = origin
+            characterDetailLocation.text = location
         }
-        binding.backgroundImage.load(image) {
-            transformations(BlurTransformation(requireContext(), 6f))
-        }
-        binding.characterDetailName.text = name
-        binding.characterDetailStatus.text = status
-        when (status) {
-            "Alive" -> binding.characterDetailStatus.setTextColor(Color.parseColor("#2EED0C"))
-            "Dead" -> binding.characterDetailStatus.setTextColor(Color.parseColor("#FF0000"))
-            "unknown" -> binding.characterDetailStatus.setTextColor(Color.parseColor("#C4FFFFFF"))
-        }
-        binding.characterDetailGender.text = gender
-        binding.characterDetailSpecies.text = species
-        binding.characterDetailOrigin.text = origin
-        binding.characterDetailLocation.text = location
     }
 
     private fun initRecyclerView(episodeList: List<EpisodeModel>) {
-        binding.episodesTitle.text = resources.getString(R.string.episode_number, episodeList.size)
         episodeAdapter = CharacterDetailsAdapter(requireContext(), episodeList)
-        binding.characterDetailEpisodes.layoutManager = LinearLayoutManager(requireContext())
-        binding.characterDetailEpisodes.adapter = episodeAdapter
+        with(binding){
+            episodesTitle.text = resources.getString(R.string.episode_number, episodeList.size)
+            characterDetailEpisodes.layoutManager = LinearLayoutManager(requireContext())
+            characterDetailEpisodes.adapter = episodeAdapter
+        }
     }
 
     private fun getEpisodes() {

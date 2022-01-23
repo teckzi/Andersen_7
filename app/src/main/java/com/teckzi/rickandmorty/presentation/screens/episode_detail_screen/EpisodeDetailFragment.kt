@@ -14,7 +14,6 @@ import com.teckzi.rickandmorty.databinding.FragmentEpisodeDetailBinding
 import com.teckzi.rickandmorty.di.Injector
 import com.teckzi.rickandmorty.domain.model.CharacterModel
 import com.teckzi.rickandmorty.presentation.adapters.DetailsAdapter
-import com.teckzi.rickandmorty.presentation.screens.character_detail_screen.CharacterDetailViewModel
 import com.teckzi.rickandmorty.util.Constants.EPISODE_TYPE
 import com.teckzi.rickandmorty.util.getEpisodeString
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +34,7 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_detail) {
         Injector.getEpisodeDetailComponent().inject(this)
         super.onCreate(savedInstanceState)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch(Dispatchers.Main) {
@@ -68,11 +68,13 @@ class EpisodeDetailFragment : Fragment(R.layout.fragment_episode_detail) {
     }
 
     private fun initRecyclerView(characterList: List<CharacterModel>) {
-        binding.characterTitle.text =
-            resources.getString(R.string.character_number, characterList.size)
         detailsAdapter = DetailsAdapter(requireContext(), characterList, EPISODE_TYPE)
-        binding.episodeDetailsRecycler.layoutManager = GridLayoutManager(context, 2)
-        binding.episodeDetailsRecycler.adapter = detailsAdapter
+        with(binding) {
+            characterTitle.text =
+                resources.getString(R.string.character_number, characterList.size)
+            episodeDetailsRecycler.layoutManager = GridLayoutManager(context, 2)
+            episodeDetailsRecycler.adapter = detailsAdapter
+        }
     }
 
     private fun getCharacters() {

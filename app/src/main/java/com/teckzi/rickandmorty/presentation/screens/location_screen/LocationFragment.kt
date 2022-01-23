@@ -40,8 +40,8 @@ class LocationFragment : Fragment(R.layout.fragment_location), SearchView.OnQuer
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val viewModel by viewModels<LocationViewModel> { viewModelFactory }
     private lateinit var locationAdapter: LocationAdapter
+    private val viewModel by viewModels<LocationViewModel> { viewModelFactory }
     private val binding by viewBinding(FragmentLocationBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,22 +65,24 @@ class LocationFragment : Fragment(R.layout.fragment_location), SearchView.OnQuer
 
     private fun initRecyclerView() {
         locationAdapter = LocationAdapter(requireContext())
-        binding.locationMainRecyclerView.layoutManager = GridLayoutManager(context, 2)
-        binding.locationMainRecyclerView.adapter = locationAdapter.withLoadStateHeaderAndFooter(
-            header = LoaderStateAdapter(),
-            footer = LoaderStateAdapter()
-        )
-        locationAdapter.addLoadStateListener { state: CombinedLoadStates ->
-            binding.locationMainRecyclerView.isVisible = state.refresh != LoadState.Loading
-            binding.locationProgressBar.isVisible = state.refresh == LoadState.Loading
-            if (locationAdapter.itemCount < 1) {
-                binding.locationMainRecyclerView.invisible()
-                if (!binding.locationProgressBar.isVisible) {
-                    binding.errorMessage.visible()
-                    binding.errorImage.visible()
-                } else {
-                    binding.errorMessage.invisible()
-                    binding.errorImage.invisible()
+        with(binding){
+            locationMainRecyclerView.layoutManager = GridLayoutManager(context, 2)
+            locationMainRecyclerView.adapter = locationAdapter.withLoadStateHeaderAndFooter(
+                header = LoaderStateAdapter(),
+                footer = LoaderStateAdapter()
+            )
+            locationAdapter.addLoadStateListener { state: CombinedLoadStates ->
+                locationMainRecyclerView.isVisible = state.refresh != LoadState.Loading
+                locationProgressBar.isVisible = state.refresh == LoadState.Loading
+                if (locationAdapter.itemCount < 1) {
+                    locationMainRecyclerView.invisible()
+                    if (!locationProgressBar.isVisible) {
+                        errorMessage.visible()
+                        errorImage.visible()
+                    } else {
+                        errorMessage.invisible()
+                        errorImage.invisible()
+                    }
                 }
             }
         }

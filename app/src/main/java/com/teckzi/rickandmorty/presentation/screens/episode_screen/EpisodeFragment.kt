@@ -65,22 +65,24 @@ class EpisodeFragment : Fragment(R.layout.fragment_episode), SearchView.OnQueryT
 
     private fun initRecyclerView() {
         episodeAdapter = EpisodeAdapter(requireContext())
-        binding.episodeMainRecyclerView.layoutManager = GridLayoutManager(context, 2)
-        binding.episodeMainRecyclerView.adapter = episodeAdapter.withLoadStateHeaderAndFooter(
-            header = LoaderStateAdapter(),
-            footer = LoaderStateAdapter()
-        )
-        episodeAdapter.addLoadStateListener { state: CombinedLoadStates ->
-            binding.episodeMainRecyclerView.isVisible = state.refresh != LoadState.Loading
-            binding.episodeProgressBar.isVisible = state.refresh == LoadState.Loading
-            if (episodeAdapter.itemCount < 1) {
-                binding.episodeMainRecyclerView.invisible()
-                if (!binding.episodeProgressBar.isVisible) {
-                    binding.errorMessage.visible()
-                    binding.errorImage.visible()
-                } else {
-                    binding.errorMessage.invisible()
-                    binding.errorImage.invisible()
+        with(binding){
+            episodeMainRecyclerView.layoutManager = GridLayoutManager(context, 2)
+            episodeMainRecyclerView.adapter = episodeAdapter.withLoadStateHeaderAndFooter(
+                header = LoaderStateAdapter(),
+                footer = LoaderStateAdapter()
+            )
+            episodeAdapter.addLoadStateListener { state: CombinedLoadStates ->
+                episodeMainRecyclerView.isVisible = state.refresh != LoadState.Loading
+                episodeProgressBar.isVisible = state.refresh == LoadState.Loading
+                if (episodeAdapter.itemCount < 1) {
+                    episodeMainRecyclerView.invisible()
+                    if (!episodeProgressBar.isVisible) {
+                        errorMessage.visible()
+                        errorImage.visible()
+                    } else {
+                        errorMessage.invisible()
+                        errorImage.invisible()
+                    }
                 }
             }
         }
