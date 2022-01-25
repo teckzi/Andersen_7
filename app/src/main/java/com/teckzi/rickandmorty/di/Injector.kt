@@ -18,7 +18,6 @@ object Injector {
         get() = checkNotNull(_appComponent) {
             "AppComponent isn't initialized"
         }
-    //private lateinit var appComponent: AppComponent
 
     private var characterFragmentComponent: CharacterFragmentComponent? = null
     private var characterDetailComponent: CharacterDetailComponent? = null
