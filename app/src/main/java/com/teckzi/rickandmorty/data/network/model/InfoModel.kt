@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class InfoModel(
-    @SerialName("count") val count: Int,
-    @SerialName("pages") val pages: Int,
-    @SerialName("next") val next: String?,
-    @SerialName("prev") val prev: String?
+    @SerialName("count") val count: Int? = null,
+    @SerialName("pages") val pages: Int? = null,
+    @SerialName("next") val next: String? = null,
+    @SerialName("prev") val prev: String? = null
 )
