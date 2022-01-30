@@ -8,12 +8,10 @@ import android.widget.*
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.teckzi.rickandmorty.R
-import com.teckzi.rickandmorty.databinding.FragmentBottomSheetBinding
 import com.teckzi.rickandmorty.util.Constants.CHARACTER_TYPE
 import com.teckzi.rickandmorty.util.Constants.EPISODE_TYPE
 import com.teckzi.rickandmorty.util.Constants.FILTER_RETURN_BACK_TO_CHARACTER
@@ -27,7 +25,7 @@ import com.teckzi.rickandmorty.util.visible
 
 class BottomSheet : BottomSheetDialogFragment() {
 
-    private val binding by viewBinding(FragmentBottomSheetBinding::bind)
+    private lateinit var mView: View
     private var sheetKey = "character"
     private var characterStatusChip: String? = ""
     private var characterGenderChip: String? = ""
@@ -37,6 +35,7 @@ class BottomSheet : BottomSheetDialogFragment() {
     private var locationDimension: String? = ""
     private var season: String? = ""
     private var episode: String? = ""
+
 
     private val seasonsList =
         listOf("All seasons", "Season 1", "Season 2", "Season 3", "Season 4", "Season 5")
@@ -54,12 +53,14 @@ class BottomSheet : BottomSheetDialogFragment() {
         "Episode 10",
         "Episode 11"
     )
-    
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        mView = inflater.inflate(R.layout.fragment_bottom_sheet, container, false)
         val args = arguments?.getString(FILTER_TYPE_ARGUMENT_KEY)
         sheetKey = args.toString()
         when (sheetKey) {
@@ -74,7 +75,7 @@ class BottomSheet : BottomSheetDialogFragment() {
             }
         }
 
-        binding.buttonApplyBottomSheet.setOnClickListener {
+        mView.findViewById<Button>(R.id.buttonApplyBottomSheet).setOnClickListener {
             when (sheetKey) {
                 CHARACTER_TYPE -> {
                     findNavController().navigate(
@@ -96,28 +97,30 @@ class BottomSheet : BottomSheetDialogFragment() {
                 }
             }
         }
-        return binding.root
+        return mView
     }
 
     private fun characterFilter() {
-        binding.chipGroupStatus.setOnCheckedChangeListener { group, selectedChipId ->
+        mView.findViewById<ChipGroup>(R.id.chipGroupStatus)
+            .setOnCheckedChangeListener { group, selectedChipId ->
                 val chip = group.findViewById<Chip>(selectedChipId)
                 val text = chip.text.toString().lowercase()
                 characterStatusChip = if (text != "") text else null
             }
 
-        binding.chipGroupGender.setOnCheckedChangeListener { group, selectedChipId ->
+        mView.findViewById<ChipGroup>(R.id.chipGroupGender)
+            .setOnCheckedChangeListener { group, selectedChipId ->
                 val chip = group.findViewById<Chip>(selectedChipId)
                 val text = chip.text.toString().lowercase()
                 characterGenderChip = if (text != "") text else null
             }
 
-        binding.editTextSpecies.doAfterTextChanged {
+        mView.findViewById<EditText>(R.id.editTextSpecies).doAfterTextChanged {
             val text = it.toString()
             characterSpeciesText = if (text != "") text else null
         }
 
-        binding.editTextType.doAfterTextChanged {
+        mView.findViewById<EditText>(R.id.editTextType).doAfterTextChanged {
             val text = it.toString()
             characterTypeText = if (text != "") text else null
         }
@@ -125,16 +128,16 @@ class BottomSheet : BottomSheetDialogFragment() {
 
     private fun locationFilter() {
         locationFilterViews()
-        binding.textViewSpecies.text = resources.getString(R.string.type)
-        binding.editTextSpecies.apply {
+        mView.findViewById<TextView>(R.id.textViewSpecies).text = resources.getString(R.string.type)
+        mView.findViewById<EditText>(R.id.editTextSpecies).apply {
             hint = "Type"
             doAfterTextChanged {
                 locationType = it.toString()
             }
         }
-       binding.textViewType.text =
+        mView.findViewById<TextView>(R.id.textViewType).text =
             resources.getString(R.string.dimension)
-        binding.editTextType.apply {
+        mView.findViewById<EditText>(R.id.editTextType).apply {
             hint = "Dimension"
             doAfterTextChanged {
                 locationDimension = it.toString()
@@ -144,15 +147,16 @@ class BottomSheet : BottomSheetDialogFragment() {
 
     private fun episodeFilter() {
         episodeFilterViews()
+        val seasonSpinner = mView.findViewById<Spinner>(R.id.spinnerSeason)
         val adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_list_item_1,
             seasonsList
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerSeason.adapter = adapter
+        seasonSpinner.adapter = adapter
 
-        binding.spinnerSeason.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        seasonSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -169,6 +173,7 @@ class BottomSheet : BottomSheetDialogFragment() {
 
         }
 
+        val episodeSpinner = mView.findViewById<Spinner>(R.id.spinnerEpisode)
         val adapter2 = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_list_item_1,
@@ -176,8 +181,8 @@ class BottomSheet : BottomSheetDialogFragment() {
         )
 
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerEpisode.adapter = adapter2
-        binding.spinnerEpisode.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        episodeSpinner.adapter = adapter2
+        episodeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -197,20 +202,20 @@ class BottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun locationFilterViews() {
-        binding.textViewStatus.gone()
-        binding.scrollViewStatus.gone()
-        binding.textViewGender.gone()
-        binding.scrollViewGender.gone()
+        mView.findViewById<TextView>(R.id.textViewStatus).gone()
+        mView.findViewById<HorizontalScrollView>(R.id.scrollViewStatus).gone()
+        mView.findViewById<TextView>(R.id.textViewGender).gone()
+        mView.findViewById<HorizontalScrollView>(R.id.scrollViewGender).gone()
     }
 
     private fun episodeFilterViews() {
         locationFilterViews()
-        binding.editTextSpecies.gone()
-        binding.textViewSpecies.gone()
-        binding.textViewType.gone()
-        binding.editTextType.gone()
-        binding.textViewEpisode.visible()
-        binding.spinnerSeason.visible()
-        binding.spinnerEpisode.visible()
+        mView.findViewById<EditText>(R.id.editTextSpecies).gone()
+        mView.findViewById<TextView>(R.id.textViewSpecies).gone()
+        mView.findViewById<TextView>(R.id.textViewType).gone()
+        mView.findViewById<EditText>(R.id.editTextType).gone()
+        mView.findViewById<TextView>(R.id.textViewEpisode).visible()
+        mView.findViewById<Spinner>(R.id.spinnerSeason).visible()
+        mView.findViewById<Spinner>(R.id.spinnerEpisode).visible()
     }
 }
