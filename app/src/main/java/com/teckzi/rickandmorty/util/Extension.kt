@@ -2,9 +2,6 @@ package com.teckzi.rickandmorty.util
 
 import android.view.View
 
-// String
-fun String.getPageIdFromUrl() = this.split("?page=")[1].substringBefore("&").toInt()
-
 fun String.getIdFromUrl() = try {
     when {
         this.contains("/episode/") -> this.split("/episode/")[1].toInt()
@@ -14,9 +11,6 @@ fun String.getIdFromUrl() = try {
 } catch (e: IndexOutOfBoundsException) {
     0
 }
-
-fun String.convertIdToString() =
-    if (this.getIdFromUrl() == 0) "unknown" else this.getIdFromUrl().toString()
 
 fun String.convertStringToRoomSearch() = if (this != "") "%$this%" else null
 
@@ -43,14 +37,6 @@ fun List<String>.addToIdList(): List<Int> {
         listOfInts.add(it.getIdFromUrl())
     }
     return listOfInts
-}
-
-fun List<Int>.addToStringList(type: String): List<String> {
-    val listOfString = mutableListOf<String>()
-    this.forEach {
-        listOfString.add("https://rickandmortyapi.com/api/$type/$it")
-    }
-    return listOfString
 }
 
 // View

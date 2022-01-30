@@ -1,6 +1,7 @@
 package com.teckzi.rickandmorty.presentation.common.bottom_sheet
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -127,14 +128,13 @@ class BottomSheet : BottomSheetDialogFragment() {
 
     private fun episodeFilter() {
         episodeFilterViews()
-        val episodeList = resources.getStringArray(R.array.episode_list)
-        val adapter = ArrayAdapter(
+        val seasonAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_list_item_1,
-            episodeList
+            resources.getStringArray(R.array.season_list)
         )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerSeason.adapter = adapter
+        seasonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerSeason.adapter = seasonAdapter
 
         binding.spinnerSeason.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -150,15 +150,14 @@ class BottomSheet : BottomSheetDialogFragment() {
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
-        val seasonList = resources.getStringArray(R.array.season_list)
-        val adapter2 = ArrayAdapter(
+        val episodeAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_list_item_1,
-            seasonList
+            resources.getStringArray(R.array.episode_list)
         )
 
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerEpisode.adapter = adapter2
+        episodeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerEpisode.adapter = episodeAdapter
         binding.spinnerEpisode.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
