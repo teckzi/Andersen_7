@@ -13,11 +13,7 @@ import com.teckzi.rickandmorty.presentation.di.location.details.LocationDetailCo
 
 object Injector {
 
-    private var _appComponent: AppComponent? = null
-    private val appComponent: AppComponent
-        get() = checkNotNull(_appComponent) {
-            "AppComponent isn't initialized"
-        }
+    private var appComponent: AppComponent? = null
 
     private var characterFragmentComponent: CharacterFragmentComponent? = null
     private var characterDetailComponent: CharacterDetailComponent? = null
@@ -27,7 +23,7 @@ object Injector {
     private var episodeDetailComponent: EpisodeDetailComponent? = null
 
     fun crateAppComponent(context: Context) {
-        _appComponent = DaggerAppComponent
+        appComponent = DaggerAppComponent
             .builder()
             .appModule(AppModule(context))
             .build()
@@ -35,7 +31,7 @@ object Injector {
 
     fun getCharacterFragmentComponent(): CharacterFragmentComponent {
         if (characterFragmentComponent == null) {
-            characterFragmentComponent = appComponent.characterFragmentComponent
+            characterFragmentComponent = appComponent!!.characterFragmentComponent
         }
         return characterFragmentComponent!!
     }
@@ -46,7 +42,7 @@ object Injector {
 
     fun getCharacterDetailComponent(): CharacterDetailComponent {
         if (characterDetailComponent == null) {
-            characterDetailComponent = appComponent.characterDetailComponent
+            characterDetailComponent = appComponent!!.characterDetailComponent
         }
         return characterDetailComponent!!
     }
@@ -57,7 +53,7 @@ object Injector {
 
     fun getLocationFragmentComponent(): LocationFragmentComponent {
         if (locationFragmentComponent == null) {
-            locationFragmentComponent = appComponent.locationFragmentComponent
+            locationFragmentComponent = appComponent!!.locationFragmentComponent
         }
         return locationFragmentComponent!!
     }
@@ -68,7 +64,7 @@ object Injector {
 
     fun getLocationDetailComponent(): LocationDetailComponent {
         if (locationDetailComponent == null) {
-            locationDetailComponent = appComponent.locationDetailComponent
+            locationDetailComponent = appComponent!!.locationDetailComponent
         }
         return locationDetailComponent!!
     }
@@ -79,7 +75,7 @@ object Injector {
 
     fun getEpisodeFragmentComponent(): EpisodeFragmentComponent {
         if (episodeFragmentComponent == null) {
-            episodeFragmentComponent = appComponent.episodeFragmentComponent
+            episodeFragmentComponent = appComponent!!.episodeFragmentComponent
         }
         return episodeFragmentComponent!!
     }
@@ -90,7 +86,7 @@ object Injector {
 
     fun getEpisodeDetailComponent(): EpisodeDetailComponent {
         if (episodeDetailComponent == null) {
-            episodeDetailComponent = appComponent.episodeDetailComponent
+            episodeDetailComponent = appComponent!!.episodeDetailComponent
         }
         return episodeDetailComponent!!
     }

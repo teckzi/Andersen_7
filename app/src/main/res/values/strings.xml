@@ -32,4 +32,26 @@
     <string name="return_back">return back</string>
     <string name="episode_number">Episodes(%d)</string>
     <string name="character_number">Characters(%d)</string>
+    <string-array name="season_list">
+        <item>All seasons</item>
+        <item>Season 1</item>
+        <item>Season 2</item>
+        <item>Season 3</item>
+        <item>Season 4</item>
+        <item>Season 5</item>
+    </string-array>
+    <string-array name="episode_list">
+        <item>All episodes</item>
+        <item>Episode 1</item>
+        <item>Episode 2</item>
+        <item>Episode 3</item>
+        <item>Episode 4</item>
+        <item>Episode 5</item>
+        <item>Episode 6</item>
+        <item>Episode 7</item>
+        <item>Episode 8</item>
+        <item>Episode 9</item>
+        <item>Episode 10</item>
+        <item>Episode 11</item>
+    </string-array>
 </resources>
