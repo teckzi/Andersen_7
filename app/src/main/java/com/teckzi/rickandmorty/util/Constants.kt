@@ -4,15 +4,6 @@ object Constants {
     const val BASE_URL = "https://rickandmortyapi.com/api/"
 
     const val RICK_DATABASE = "rick_and_morty_database"
-    const val CHARACTER_DATABASE_TABLE = "character_table"
-    const val LOCATION_DATABASE_TABLE = "location_table"
-    const val EPISODE_DATABASE_TABLE = "episode_table"
-
-    const val ITEMS_PER_PAGE = 20
-
-    const val CHARACTER_ARGUMENT_KEY = "characterId"
-    const val LOCATION_ARGUMENT_KEY = "locationId"
-    const val EPISODE_ARGUMENT_KEY = "episodeId"
 
     const val LOCATION_TYPE = "location"
     const val EPISODE_TYPE = "episode"

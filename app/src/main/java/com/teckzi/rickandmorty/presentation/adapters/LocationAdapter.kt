@@ -8,9 +8,9 @@ import androidx.navigation.Navigation
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.teckzi.domain.model.LocationModel
 import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.ItemLocationBinding
-import com.teckzi.rickandmorty.domain.model.LocationModel
 import com.teckzi.rickandmorty.presentation.screens.location_screen.LocationFragmentDirections
 
 class LocationAdapter(context: Context) :

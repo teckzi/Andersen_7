@@ -28,8 +28,8 @@
             app:destination="@id/bottomSheet" />
         <action
             android:id="@+id/action_episodeFragment_to_episodeDetailFragment"
-            app:popUpTo="@id/episodeFragment"
-            app:destination="@id/episodeDetailFragment" />
+            app:destination="@id/episodeDetailFragment"
+            app:popUpTo="@id/episodeFragment" />
     </fragment>
     <fragment
         android:id="@+id/locationFragment"

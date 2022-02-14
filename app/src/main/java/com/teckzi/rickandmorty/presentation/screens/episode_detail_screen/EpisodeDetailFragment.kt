@@ -14,9 +14,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.FragmentEpisodeDetailBinding
 import com.teckzi.rickandmorty.di.Injector
-import com.teckzi.rickandmorty.domain.model.CharacterModel
+import com.teckzi.rickandmorty.model.CharacterModel
 import com.teckzi.rickandmorty.presentation.adapters.DetailsAdapter
-import com.teckzi.rickandmorty.presentation.screens.character_detail_screen.CharacterDetailFragmentArgs
 import com.teckzi.rickandmorty.util.Constants.EPISODE_TYPE
 import com.teckzi.rickandmorty.util.getEpisodeString
 import kotlinx.coroutines.Dispatchers

@@ -1,11 +1,11 @@
 package com.teckzi.rickandmorty.presentation.common.bottom_sheet
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
@@ -26,7 +26,7 @@ import com.teckzi.rickandmorty.util.visible
 
 class BottomSheet : BottomSheetDialogFragment() {
 
-    private var _binding:FragmentBottomSheetBinding? = null
+    private var _binding: FragmentBottomSheetBinding? = null
     private val binding get() = _binding!!
 
     private var sheetKey = "character"
@@ -44,7 +44,7 @@ class BottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentBottomSheetBinding.inflate(inflater,container,false)
+        _binding = FragmentBottomSheetBinding.inflate(inflater, container, false)
         val args = arguments?.getString(FILTER_TYPE_ARGUMENT_KEY)
         sheetKey = args.toString()
         when (sheetKey) {
@@ -85,16 +85,16 @@ class BottomSheet : BottomSheetDialogFragment() {
 
     private fun characterFilter() {
         binding.chipGroupStatus.setOnCheckedChangeListener { group, selectedChipId ->
-                val chip = group.findViewById<Chip>(selectedChipId)
-                val text = chip.text.toString().lowercase()
-                characterStatusChip = if (text != "") text else null
-            }
+            val chip = group.findViewById<Chip>(selectedChipId)
+            val text = chip.text.toString().lowercase()
+            characterStatusChip = if (text != "") text else null
+        }
 
         binding.chipGroupGender.setOnCheckedChangeListener { group, selectedChipId ->
-                val chip = group.findViewById<Chip>(selectedChipId)
-                val text = chip.text.toString().lowercase()
-                characterGenderChip = if (text != "") text else null
-            }
+            val chip = group.findViewById<Chip>(selectedChipId)
+            val text = chip.text.toString().lowercase()
+            characterGenderChip = if (text != "") text else null
+        }
 
         binding.editTextSpecies.doAfterTextChanged {
             val text = it.toString()
@@ -116,7 +116,7 @@ class BottomSheet : BottomSheetDialogFragment() {
                 locationType = it.toString()
             }
         }
-       binding.textViewType.text =
+        binding.textViewType.text =
             resources.getString(R.string.dimension)
         binding.editTextType.apply {
             hint = "Dimension"
@@ -148,6 +148,7 @@ class BottomSheet : BottomSheetDialogFragment() {
                     else -> "${parent?.getItemAtPosition(position)}".setStringToSeason()
                 }
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
         val episodeAdapter = ArrayAdapter(
@@ -158,20 +159,22 @@ class BottomSheet : BottomSheetDialogFragment() {
 
         episodeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerEpisode.adapter = episodeAdapter
-        binding.spinnerEpisode.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                episode = when (parent?.getItemAtPosition(position)) {
-                    "All episodes" -> ""
-                    else -> "${parent?.getItemAtPosition(position)}".setStringToSeason()
+        binding.spinnerEpisode.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    episode = when (parent?.getItemAtPosition(position)) {
+                        "All episodes" -> ""
+                        else -> "${parent?.getItemAtPosition(position)}".setStringToSeason()
+                    }
                 }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
     }
 
     private fun locationFilterViews() {

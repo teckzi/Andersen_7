@@ -9,22 +9,22 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp">
 
         <ImageView
             android:id="@+id/itemCharacterImageView"
             android:layout_width="wrap_content"
             android:layout_height="180dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/character_image"
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/CircularImage"
-            tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="@string/character_image" />
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/itemCharacterStatus"

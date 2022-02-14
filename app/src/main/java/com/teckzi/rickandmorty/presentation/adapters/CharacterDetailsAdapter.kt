@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.teckzi.domain.model.EpisodeModel
 import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.ItemEpisodeBinding
-import com.teckzi.rickandmorty.domain.model.EpisodeModel
 import com.teckzi.rickandmorty.presentation.screens.character_detail_screen.CharacterDetailFragmentDirections
 import com.teckzi.rickandmorty.util.getEpisodeString
 
@@ -54,6 +54,7 @@ class CharacterDetailViewHolder(val view: View) : RecyclerView.ViewHolder(view) 
                     )
                 Navigation.findNavController(it).navigate(action)
             }
+
         }
     }
 }

@@ -4,15 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.teckzi.domain.model.LocationModel
+import com.teckzi.domain.use_cases.UseCases
 import com.teckzi.rickandmorty.di.Injector
-import com.teckzi.rickandmorty.domain.model.LocationModel
-import com.teckzi.rickandmorty.domain.use_cases.UseCases
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 
 class LocationViewModel @Inject constructor(
     private val useCases: UseCases
@@ -39,6 +37,7 @@ class LocationViewModel @Inject constructor(
             }
         }
     }
+
     override fun onCleared() {
         super.onCleared()
         Injector.clearLocationFragmentComponent()

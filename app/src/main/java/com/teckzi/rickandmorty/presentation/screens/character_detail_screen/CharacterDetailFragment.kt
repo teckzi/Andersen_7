@@ -16,10 +16,10 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import coil.transform.BlurTransformation
 import coil.transform.CircleCropTransformation
+import com.teckzi.domain.model.EpisodeModel
 import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.FragmentCharacterDetailBinding
 import com.teckzi.rickandmorty.di.Injector
-import com.teckzi.rickandmorty.domain.model.EpisodeModel
 import com.teckzi.rickandmorty.presentation.adapters.CharacterDetailsAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -75,7 +75,7 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
         origin: String,
         location: String
     ) {
-        with(binding){
+        with(binding) {
             characterDetailImage.load(image) {
                 transformations(CircleCropTransformation())
             }
@@ -98,7 +98,7 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
 
     private fun initRecyclerView(episodeList: List<EpisodeModel>) {
         episodeAdapter = CharacterDetailsAdapter(requireContext(), episodeList)
-        with(binding){
+        with(binding) {
             episodesTitle.text = resources.getString(R.string.episode_number, episodeList.size)
             characterDetailEpisodes.layoutManager = LinearLayoutManager(requireContext())
             characterDetailEpisodes.adapter = episodeAdapter

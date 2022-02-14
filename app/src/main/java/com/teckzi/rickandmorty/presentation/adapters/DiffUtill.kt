@@ -1,7 +1,7 @@
 package com.teckzi.rickandmorty.presentation.adapters
 
 import androidx.recyclerview.widget.DiffUtil
-import com.teckzi.rickandmorty.domain.model.CharacterModel
+import com.teckzi.domain.model.CharacterModel
 
 class DiffUtil<T> : DiffUtil.ItemCallback<T>() {
     override fun areItemsTheSame(

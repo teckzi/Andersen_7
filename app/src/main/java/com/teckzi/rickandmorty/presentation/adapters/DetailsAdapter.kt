@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import coil.transform.CircleCropTransformation
+import com.teckzi.domain.model.CharacterModel
 import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.ItemCharacterBinding
-import com.teckzi.rickandmorty.domain.model.CharacterModel
 import com.teckzi.rickandmorty.presentation.screens.episode_detail_screen.EpisodeDetailFragmentDirections
 import com.teckzi.rickandmorty.presentation.screens.location_detail_screen.LocationDetailFragmentDirections
 import com.teckzi.rickandmorty.util.Constants.EPISODE_TYPE

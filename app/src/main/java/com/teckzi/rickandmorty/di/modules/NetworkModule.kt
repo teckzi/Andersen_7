@@ -1,11 +1,10 @@
 package com.teckzi.rickandmorty.di.modules
 
-import androidx.paging.ExperimentalPagingApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.teckzi.domain.repository.RemoteDataSource
 import com.teckzi.rickandmorty.data.local.RickAndMortyDatabase
 import com.teckzi.rickandmorty.data.network.RickAndMortyApi
 import com.teckzi.rickandmorty.data.repository.RemoteDataSourceImpl
-import com.teckzi.rickandmorty.domain.repository.RemoteDataSource
 import com.teckzi.rickandmorty.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -15,7 +14,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-
 
 @Module
 class NetworkModule {

@@ -67,7 +67,7 @@ class LocationFragment : Fragment(R.layout.fragment_location), SearchView.OnQuer
 
     private fun initRecyclerView() {
         locationAdapter = LocationAdapter(requireContext())
-        with(binding){
+        with(binding) {
             locationMainRecyclerView.layoutManager = GridLayoutManager(context, 2)
             locationMainRecyclerView.adapter = locationAdapter.withLoadStateHeaderAndFooter(
                 header = LoaderStateAdapter(),
