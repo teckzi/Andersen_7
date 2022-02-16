@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import kotlinx.coroutines.flow.collect
 import com.teckzi.domain.model.CharacterModel
 import com.teckzi.domain.use_cases.UseCases
 import com.teckzi.rickandmorty.di.Injector

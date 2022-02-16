@@ -9,6 +9,7 @@ import com.teckzi.domain.use_cases.UseCases
 import com.teckzi.rickandmorty.di.Injector
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,7 +32,7 @@ class EpisodeViewModel @Inject constructor(
             useCases.getSearchedEpisodeUseCase(
                 name = name,
                 episode = episode
-            ).cachedIn(viewModelScope).collect {
+            ).cachedIn(viewModelScope).collectLatest {
                 _searchEpisode.value = it
             }
         }

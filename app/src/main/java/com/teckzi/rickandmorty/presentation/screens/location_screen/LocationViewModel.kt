@@ -9,6 +9,7 @@ import com.teckzi.domain.use_cases.UseCases
 import com.teckzi.rickandmorty.di.Injector
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,7 +33,7 @@ class LocationViewModel @Inject constructor(
                 name = name,
                 type = type,
                 dimension = dimension
-            ).cachedIn(viewModelScope).collect {
+            ).cachedIn(viewModelScope).collectLatest {
                 _searchLocation.value = it
             }
         }

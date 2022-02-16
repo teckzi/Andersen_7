@@ -6,7 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/RickAndMorty.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/RickAndMorty.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/RickAndMorty.data.iml" filepath="$PROJECT_DIR$/.idea/modules/data/RickAndMorty.data.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/RickAndMorty.domain.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/RickAndMorty.domain.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/RickAndMorty.domainx.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/RickAndMorty.domainx.iml" />
     </modules>
   </component>
 </project>
