@@ -10,7 +10,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.teckzi.domain.model.EpisodeModel
 import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.ItemEpisodeBinding
-import com.teckzi.rickandmorty.presentation.screens.character_detail_screen.CharacterDetailFragmentDirections
+import com.teckzi.rickandmorty.presentation.screens.characterdetailscreen.CharacterDetailFragmentDirections
 import com.teckzi.rickandmorty.util.getEpisodeString
 
 class CharacterDetailsAdapter(context: Context, private val episodeList: List<EpisodeModel>) :

@@ -1,7 +1,7 @@
 package com.teckzi.rickandmorty.presentation.di.episode
 
 import com.teckzi.rickandmorty.di.annotation.FragmentScope
-import com.teckzi.rickandmorty.presentation.screens.episode_screen.EpisodeFragment
+import com.teckzi.rickandmorty.presentation.screens.episodescreen.EpisodeFragment
 import dagger.Subcomponent
 
 @FragmentScope

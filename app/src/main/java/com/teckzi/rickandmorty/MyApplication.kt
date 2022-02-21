@@ -8,6 +8,6 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Injector.crateAppComponent(this)
+        Injector.createAppComponent(this)
     }
 }

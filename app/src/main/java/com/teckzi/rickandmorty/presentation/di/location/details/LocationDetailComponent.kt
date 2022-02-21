@@ -1,7 +1,7 @@
 package com.teckzi.rickandmorty.presentation.di.location.details
 
 import com.teckzi.rickandmorty.di.annotation.FragmentScope
-import com.teckzi.rickandmorty.presentation.screens.location_detail_screen.LocationDetailFragment
+import com.teckzi.rickandmorty.presentation.screens.locationdetailscreen.LocationDetailFragment
 import dagger.Subcomponent
 
 @FragmentScope

@@ -13,12 +13,12 @@ import com.teckzi.rickandmorty.data.mappers.toCharacterModel
 import com.teckzi.rickandmorty.data.mappers.toEpisodeModel
 import com.teckzi.rickandmorty.data.mappers.toLocationModel
 import com.teckzi.rickandmorty.data.network.RickAndMortyApi
-import com.teckzi.rickandmorty.data.paging_source.character_paging.CharacterPagingSource
-import com.teckzi.rickandmorty.data.paging_source.character_paging.SearchCharacterSource
-import com.teckzi.rickandmorty.data.paging_source.episode_paging.EpisodePagingSource
-import com.teckzi.rickandmorty.data.paging_source.episode_paging.SearchEpisodeSource
-import com.teckzi.rickandmorty.data.paging_source.location_paging.LocationPagingSource
-import com.teckzi.rickandmorty.data.paging_source.location_paging.SearchLocationSource
+import com.teckzi.rickandmorty.data.pagingsource.character_paging.CharacterPagingSource
+import com.teckzi.rickandmorty.data.pagingsource.character_paging.SearchCharacterSource
+import com.teckzi.rickandmorty.data.pagingsource.episode_paging.EpisodePagingSource
+import com.teckzi.rickandmorty.data.pagingsource.episode_paging.SearchEpisodeSource
+import com.teckzi.rickandmorty.data.pagingsource.location_paging.LocationPagingSource
+import com.teckzi.rickandmorty.data.pagingsource.location_paging.SearchLocationSource
 import kotlinx.coroutines.flow.Flow
 
 class RemoteDataSourceImpl(

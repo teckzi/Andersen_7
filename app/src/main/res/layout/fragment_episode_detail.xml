@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_color"
-    tools:context=".presentation.screens.episode_detail_screen.EpisodeDetailFragment">
+    tools:context=".presentation.screens.episodedetailscreen.EpisodeDetailFragment">
 
     <ImageButton
         android:id="@+id/backButton"

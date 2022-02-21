@@ -13,8 +13,8 @@ import coil.transform.CircleCropTransformation
 import com.teckzi.domain.model.CharacterModel
 import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.ItemCharacterBinding
-import com.teckzi.rickandmorty.presentation.screens.episode_detail_screen.EpisodeDetailFragmentDirections
-import com.teckzi.rickandmorty.presentation.screens.location_detail_screen.LocationDetailFragmentDirections
+import com.teckzi.rickandmorty.presentation.screens.episodedetailscreen.EpisodeDetailFragmentDirections
+import com.teckzi.rickandmorty.presentation.screens.locationdetailscreen.LocationDetailFragmentDirections
 import com.teckzi.rickandmorty.util.Constants.EPISODE_TYPE
 import com.teckzi.rickandmorty.util.Constants.LOCATION_TYPE
 

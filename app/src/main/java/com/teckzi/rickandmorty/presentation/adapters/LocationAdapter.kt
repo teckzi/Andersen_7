@@ -11,7 +11,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.teckzi.domain.model.LocationModel
 import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.ItemLocationBinding
-import com.teckzi.rickandmorty.presentation.screens.location_screen.LocationFragmentDirections
+import com.teckzi.rickandmorty.presentation.screens.locationscreen.LocationFragmentDirections
 
 class LocationAdapter(context: Context) :
     PagingDataAdapter<LocationModel, LocationViewHolder>(DiffUtil()) {

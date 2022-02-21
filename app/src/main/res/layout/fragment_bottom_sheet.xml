@@ -7,7 +7,7 @@
     android:background="@color/main_color"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".presentation.common.bottom_sheet.BottomSheet">
+    tools:context=".presentation.common.bottomsheet.BottomSheet">
 
     <TextView
         android:id="@+id/textViewStatus"

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.teckzi.rickandmorty.presentation.screens.splash_screen.SplashFragment"
+        android:name="com.teckzi.rickandmorty.presentation.screens.splashscreen.SplashFragment"
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action

@@ -22,7 +22,7 @@ object Injector {
     private var episodeFragmentComponent: EpisodeFragmentComponent? = null
     private var episodeDetailComponent: EpisodeDetailComponent? = null
 
-    fun crateAppComponent(context: Context) {
+    fun createAppComponent(context: Context) {
         appComponent = DaggerAppComponent
             .builder()
             .appModule(AppModule(context))

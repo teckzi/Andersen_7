@@ -14,7 +14,7 @@ import coil.transform.CircleCropTransformation
 import com.teckzi.domain.model.CharacterModel
 import com.teckzi.rickandmorty.R
 import com.teckzi.rickandmorty.databinding.ItemCharacterBinding
-import com.teckzi.rickandmorty.presentation.screens.character_screen.CharacterFragmentDirections
+import com.teckzi.rickandmorty.presentation.screens.characterscreen.CharacterFragmentDirections
 
 class CharacterAdapter(context: Context) :
     PagingDataAdapter<CharacterModel, CharacterViewHolder>(DiffUtil()) {
